@@ -53,20 +53,23 @@
     <br>
     <hr>
 
-    {% include 'data_tables/ability_score_table.html' %}
-    {% include 'data_tables/skill_table.html' %}
+    <div id="data-tables">
+        {% include 'data_tables/ability_score_table.html' %}
+        {% include 'data_tables/skill_table.html' %}
+    </div>
 
-    <h3>Backstory</h3>
-    <div id="backstory">{{ character.backstory }}</div>
-    <h3>Personality</h3>
-    <div id="personality">{{ character.personality }}</div>
-
-    <ul id="messages">
-        {% for message in character.messages %}
-            <li class="message">
-                <span>{{ message.sender.name }}</span>:
-                <span>{{ message.content }}</span>
-            </li>
-        {% endfor %}
-    </ul>
+    <div id="character-footer">
+        <h3>Backstory</h3>
+        <div id="backstory">{{ character.backstory }}</div>
+        <h3>Personality</h3>
+        <div id="personality">{{ character.personality }}</div>
+        <ul id="messages">
+            {% for message in character.messages %}
+                <li class="message">
+                    <span>{{ message.sender.name }}</span>:
+                    <span>{{ message.content }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock body %}

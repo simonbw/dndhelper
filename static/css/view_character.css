@@ -57,3 +57,18 @@
     float: left;
     padding-left: 20px;
 }
+.data-table {
+    width: 50%;
+    float: left;
+}
+.data-table table {
+    margin: 15px;
+}
+.data-table table td {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#data-tables {
+    overflow: auto;
+}
+
