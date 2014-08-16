@@ -24,7 +24,6 @@
     /**
      *
      * @param attribute
-     * @param tag_id
      */
     function addSimpleIdHandler(attribute) {
         var tag_id = attribute.replace('_', '-');
@@ -40,10 +39,10 @@
      */
     function updateAttribute(attribute) {
         return function (value) {
-            console.log(attribute + " : " + value);
+            console.log("SETTING: " + attribute + " = " + value);
             var data = {};
             data[attribute] = value;
-            $.getJSON(bundle['url_update'], data, handleResponse);
+            $.getJSON(bundle['update_url'], data, handleResponse);
         }
     }
 
@@ -51,15 +50,17 @@
      * Allow attributes to be edited.
      */
     function enableEdit() {
+        console.log('enabled editing');
         editingEnabled = true;
-        $('#enableedit').hide();
-        $('#disableedit').show();
+        $('#enable-edit').hide();
+        $('#disable-edit').show();
     }
 
     /**
      * Don't allow attributes to be edited.
      */
     function disableEdit() {
+        console.log('disabled editing');
         editingEnabled = false;
         $('#enable-edit').show();
         $('#disable-edit').hide();
@@ -131,8 +132,10 @@
                 console.log(update);
                 switch (update['type']) {
                     case 'redirect':
-                        console.log('redirecting to: ' + update['location']);
-                        window.location.replace(update['location']);
+                        if (update['location'] != window.location.pathname) {
+                            console.log('redirecting from ' + window.location.pathname + ' to: ' + update['location']);
+                            window.location.replace(update['location']);
+                        }
                         break;
                     case 'message':
                         addMessage(update['sender'], update['content']);
@@ -167,6 +170,6 @@
 
         updateHealthBar();
 
-        getUpdates();
+        updates.addUpdateHandler();
     });
 })();

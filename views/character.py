@@ -1,8 +1,12 @@
+from time import sleep
+
 from flask.blueprints import Blueprint
+
 from flask.templating import render_template
-from flask import redirect, url_for, make_response, request, flash, jsonify
+from flask import redirect, url_for, make_response, request, flash, Response, jsonify
 
 from models import db
+
 from models.abilities import list_abilities
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
@@ -22,7 +26,6 @@ update_handlers = {}
 def view(name):
     character = get_character(name)
     if character:
-        print 'races:', list_races()
         response = make_response(
             render_template('view_character.html', character=character, races=list_races(), skills=list_skills(),
                             abilities=list_abilities()))
@@ -61,6 +64,20 @@ def fetch_updates(name):
     return {'updates': updates.get_updates(name)}
 
 
+@character_app.route('/<name>/update_stream')
+def stream_updates(name):
+    print "stream_updates called"
+    return Response(update_stream(name), mimetype="text/event-stream")
+
+
+def update_stream(name):
+    print "creating update stream"
+    while True:
+        if updates.has_update(name):
+            return jsonify({'updates': updates.get_update(name)})
+        sleep(0.1)  # do we need this?
+
+
 def handler(handler_name):
     def wrapper(f):
         update_handlers[handler_name] = f
@@ -72,9 +89,10 @@ def handler(handler_name):
 @handler('name')
 def update_name(character, value):
     old_name = character.name
-    character.name = str(value)
-    db.session.commit()
-    updates.add_redirect_update(old_name, character.view_url)
+    if old_name != value:
+        character.name = str(value)
+        db.session.commit()
+        updates.add_redirect_update(old_name, character.view_url)
 
 
 @handler('max_hitpoints')
