@@ -170,14 +170,14 @@
     function initTabListeners() {
         $('#tab-bar').children().filter('div').each(
             function(ind, button) {
-                button.click(
+                $(button).click(
                     function () {
                         var curOpen = $('div.open');
-                        var buttonId = button[0].id;
+                        var buttonId = button.id;
                         var tabId = buttonId.substr(0, buttonId.lastIndexOf('-button'));
                         curOpen.removeClass('open');
                         $('#' + tabId).addClass('open');
-                        button.addClass('open');
+                        $(button).addClass('open');
                     }
                 );
             }
