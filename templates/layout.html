@@ -4,6 +4,7 @@
     <title>{% block title %}{% endblock %}</title>
     {% block all_scripts %}
         <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/dice_roller.js') }}"></script>
         {% block scripts %}{% endblock scripts %}
     {% endblock all_scripts %}
     {% block all_styles %}

@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% import 'dice_roller.html' as dice_roller %}
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/character.js') }}"></script>
@@ -21,5 +22,7 @@
         {% endfor %}
     </ul>
 
-    <input type="text" id="chatbox">
+    {{ dice_roller.dice_roller() }}
+
+    <input type="text" id="chat-box">
 {% endblock %}
