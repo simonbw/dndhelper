@@ -3,7 +3,6 @@ from flask.templating import render_template
 from flask import redirect, url_for, make_response, request, flash
 
 from models import db
-
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
 from models.races import list_races
@@ -70,9 +69,10 @@ def handler(handler_name):
 
 @handler('name')
 def update_name(character, value):
+    old_name = character.name
     character.name = str(value)
     db.session.commit()
-    updates.add_redirect_update(character.name, character.view_url)
+    updates.add_redirect_update(old_name, character.view_url)
 
 
 @handler('max_hitpoints')
