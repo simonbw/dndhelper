@@ -1,5 +1,6 @@
 {% extends 'data_tables/data_table.html' %}
 
+{% block data %}
 <table>
     {% for ability_score in character.ability_scores %}
         <tr>
@@ -8,3 +9,4 @@
         </tr>
     {% endfor %}
 </table>
+{% endblock data %}

@@ -1,5 +1,6 @@
 {% extends 'data_tables/data_table.html' %}
 
+{% block data %}
 <table>
     {% for skill_level in character.skill_levels %}
         <tr title="{{ skill_level.skill.description }}">
@@ -8,3 +9,6 @@
         </tr>
     {% endfor %}
 </table>
+{% endblock data %}
+
+
