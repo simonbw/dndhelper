@@ -1,12 +1,11 @@
-from flask import render_template, request
+from flask import render_template, request, Response
 from flask.blueprints import Blueprint
 
 from models import db
-
 from models.campaign import get_main_campaign
 from models.characters import get_character
 from models.messages import Message
-from updates import add_message_update
+from updates import add_message_update, update_stream, get_updates
 from util import json_service
 
 
@@ -17,6 +16,18 @@ dm_app = Blueprint('dm', __name__)
 def dashboard():
     campaign = get_main_campaign()
     return render_template("dm_dashboard.html", campaign=campaign)
+
+
+@dm_app.route('/fetch_updates')
+@json_service
+def fetch_updates():
+    return {'updates': get_updates('DM')}
+
+
+@dm_app.route('/update_stream')
+def stream_updates():
+    print "stream_updates called"
+    return Response(update_stream('DM'), mimetype="text/event-stream")
 
 
 @dm_app.route('/chat', methods=["POST"])

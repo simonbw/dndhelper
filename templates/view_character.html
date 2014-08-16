@@ -8,8 +8,9 @@
         bundle['skills'] = {{ skills|tojson }};
         bundle['abilities'] = {{ abilities|tojson }};
         bundle['character_data'] = {{ character|tojson }};
-        bundle['url_update'] = "{{ url_for('characters.update', name=character.name) }}";
-        bundle['url_get_updates'] = "{{ url_for('characters.fetch_updates', name=character.name) }}";
+        bundle['update_url'] = "{{ url_for('characters.update', name=character.name) }}";
+        bundle['fetch_updates_url'] = "{{ url_for('characters.fetch_updates', name=character.name) }}";
+        bundle['stream_updates_url'] = "{{ url_for('characters.stream_updates', name=character.name) }}";
     </script>
     <script src="{{ url_for('static', filename='js/character.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
