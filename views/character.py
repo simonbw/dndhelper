@@ -22,11 +22,10 @@ update_handlers = {}
 def view(name):
     character = get_character(name)
     if character:
-        races = [jsonify(race) for race in list_races()]
-        skills = [jsonify(skill) for skill in list_skills()]
-        abilities = [jsonify(ability) for ability in list_abilities()]
-        response = make_response(render_template('view_character.html', character=character, races=races, skills=skills,
-                                                 abilities=abilities))
+        print 'races:', list_races()
+        response = make_response(
+            render_template('view_character.html', character=character, races=list_races(), skills=list_skills(),
+                            abilities=list_abilities()))
         response.set_cookie('character', name)
         return response
     else:

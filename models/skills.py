@@ -65,6 +65,13 @@ class Skill(db.Model):
         self.ability = ability
         self.description = description
 
+    def __serialize__(self):
+        return {
+            'name': self.name,
+            'description': self.description,
+            'ability': getattr(self.ability, 'name', '')
+        }
+
 
 class SkillLevel(db.Model):
     character_id = db.Column(db.Integer, db.ForeignKey('character.id'), primary_key=True)
@@ -78,3 +85,9 @@ class SkillLevel(db.Model):
         self.skill = skill
         self.character = character
         self.level = level
+
+    def __serialize__(self):
+        return {
+            'skill': getattr(self.skill, 'name', ''),
+            'character': getattr(self.character, 'name', '')
+        }

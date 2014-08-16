@@ -36,6 +36,12 @@ class Ability(db.Model):
         self.name = name
         self.description = description
 
+    def __serialize__(self):
+        return {
+            'name': self.name,
+            'description': self.description
+        }
+
 
 class AbilityScore(db.Model):
     character_id = db.Column(db.Integer, db.ForeignKey('character.id'), primary_key=True)

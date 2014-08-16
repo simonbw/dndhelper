@@ -30,3 +30,8 @@ class Race(db.Model):
 
     def __init__(self, name):
         self.name = name
+
+    def __serialize__(self):
+        return {
+            'name': self.name
+        }

@@ -5,9 +5,9 @@
     <script src="{{ url_for('static', filename='js/view_character.js') }}"></script>
     <script>
         var bundle = {
-            'races': {{ races }},
-            'skills': {{ skills }},
-            'abilities': {{ abilities }},
+            'races': {{ races|tojson }},
+            'skills': {{ skills|tojson }},
+            'abilities': {{ abilities|tojson }},
             'url_update': "{{ url_for('characters.update', name=character.name) }}",
             'url_get_updates': "{{ url_for('characters.fetch_updates', name=character.name) }}",
             'character_data': {{ character|tojson }}
