@@ -26,7 +26,7 @@
     <a id="disable-edit">Disable Editing</a>
     <br><br>
     <div id="character-header">
-        <div class="character-top-header">
+        <div id="character-top-header">
             <div class="half-container">
                 <span id="name">{{ character.name }}</span>
             </div>
@@ -40,10 +40,18 @@
                 </div>
             </div>
         </div>
-        <br>
-        <span id="race">{{ character.race.name }}</span> -
-        <span id="class">{{ character.character_class.name }}</span>
+        <div id="character-bottom-header">
+            <div class="half-container">
+                <span id="race">{{ character.race.name }}</span>
+            </div>
+            <div class="half-container">
+                <span id="separator">-</span>
+                <span id="class">{{ character.character_class.name }}</span>
+            </div>
+        </div>
     </div>
+    <br>
+    <hr>
 
     <table>
         {% for ability_score in character.ability_scores %}

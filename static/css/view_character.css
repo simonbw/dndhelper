@@ -33,8 +33,27 @@
 .half-container {
     width: 50%;
     float: left;
+    position: relative;
 }
 
-.character-top-header {
+#character-top-header {
     overflow: auto;
+}
+
+#character-bottom-header {
+    font-size: 30px;
+    position: relative;
+}
+
+#separator {
+    position: absolute;
+    left: -8px;
+}
+#race {
+    float: right;
+    padding-right: 20px;
+}
+#class {
+    float: left;
+    padding-left: 20px;
 }
