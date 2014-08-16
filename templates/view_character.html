@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/view_character.js') }}"></script>
+    <script>
+        var bundle = {
+            'races': {{ race_names|tojson }},
+            'url_update': "{{ url_for('characters.update', name=character.name) }}",
+            'url_get_updates': "{{ url_for('characters.fetch_updates', name=character.name) }}"
+        };
+        view_character_init(bundle);
+    </script>
+{% endblock scripts %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view_character.css') }}">
+{% endblock styles %}
+
+{% block body %}
+    <a id="enableedit">Enable Editing</a>
+    <a id="disableedit">Disable Editing</a>
+
+    <h1 id="name">{{ character.name }}</h1>
+    <h2><span id="hitpoints">{{ character.hitpoints }}</span> / <span
+            id="maxhitpoints">{{ character.max_hitpoints }}</span></h2>
+    <h2 id="race">{{ character.race.name }}</h2>
+    <h2 id="class">{{ character.character_class.name }}</h2>
+
+    <table>
+        {% for ability_score in character.ability_scores %}
+            <tr>
+                <td>{{ ability_score.ability.name }}</td>
+                <td>{{ ability_score.score }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table>
+        {% for skill_level in character.skill_levels %}
+            <tr title="{{ skill_level.skill.description }}">
+                <td>{{ skill_level.skill.name }}</td>
+                <td>{{ skill_level.level }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Backstory</h3>
+    <div id="backstory">{{ character.backstory }}</div>
+    <h3>Personality</h3>
+    <div id="personality">{{ character.personality }}</div>
+
+    <ul id="messages">
+        {% for message in character.messages %}
+            <li class="message">
+                <span>{{ message.sender.name }}</span>:
+                <span>{{ message.content }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock body %}

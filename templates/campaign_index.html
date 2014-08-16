@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $('#newcharacterbutton').click(function () {
+                var name = prompt("Name for new character");
+                window.location.href = "{{ url_for('characters.create', name='___') }}".replace('___', name);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    Campaign
+    <ul>
+        {% for character in campaign.characters %}
+            <li><a href="{{ character.view_url }}">{{ character.name }}</a></li>
+        {% endfor %}
+        <li><a id="newcharacterbutton">New Character</a></li>
+    </ul>
+{% endblock body %}

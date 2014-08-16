@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% block all_scripts %}
+        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        {% block scripts %}{% endblock scripts %}
+    {% endblock all_scripts %}
+    {% block all_styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        {% block styles %}
+        {% endblock styles %}
+    {% endblock all_styles %}
+</head>
+<body>
+{% block flashes %}
+    <div id="flashes">
+        {% for flash in get_flashed_messages() %}
+            {{ flash }}
+        {% endfor %}
+    </div>
+{% endblock flashes %}
+<main>
+    {% block body %}{% endblock body %}
+</main>
+<a href="{{ url_for('admin.reset') }}">Reset</a>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/character.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dm_dashboard.js') }}"></script>
+    <script>
+        var bundle = {
+            'characters': {{ campaign.characters|tojson }},
+            'chat_url': "{{ url_for('dm.chat') }}"
+        };
+        dm_dashboard_init(bundle)
+    </script>
+{% endblock scripts %}
+
+{% block body %}
+    DM
+    <ul>
+        {% for character in campaign.characters %}
+            <li>{{ character.name }} - {{ character.hitpoints }} / {{ character.max_hitpoints }}</li>
+        {% endfor %}
+    </ul>
+
+    <input type="text" id="chatbox">
+{% endblock %}
