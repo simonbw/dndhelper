@@ -21,12 +21,12 @@
 {% endblock styles %}
 
 {% block body %}
-    <a id="enableedit">Enable Editing</a>
-    <a id="disableedit">Disable Editing</a>
+    <a id="enable-edit">Enable Editing</a>
+    <a id="disable-edit">Disable Editing</a>
 
     <h1 id="name">{{ character.name }}</h1>
-    <h2><span id="hitpoints">{{ character.hitpoints }}</span> / <span
-            id="maxhitpoints">{{ character.max_hitpoints }}</span></h2>
+    <h2><span id="hit-points">{{ character.hitpoints }}</span> / <span
+            id="max-hit-points">{{ character.max_hitpoints }}</span></h2>
     <h2 id="race">{{ character.race.name }}</h2>
     <h2 id="class">{{ character.character_class.name }}</h2>
 
