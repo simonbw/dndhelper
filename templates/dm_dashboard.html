@@ -2,16 +2,17 @@
 {% import 'dice_roller.html' as dice_roller %}
 
 {% block scripts %}
+    <script>
+        if (window.bundle === undefined) {
+            window.bundle = {};
+        }
+        bundle['characters'] = {{ campaign.characters|tojson }};
+        bundle['chat_url'] = "{{ url_for('dm.chat') }}";
+    </script>
     <script src="{{ url_for('static', filename='js/character.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dm_dashboard.js') }}"></script>
-    <script>
-        var bundle = {
-            'characters': {{ campaign.characters|tojson }},
-            'chat_url': "{{ url_for('dm.chat') }}"
-        };
-        dm_dashboard_init(bundle)
-    </script>
+    <script src="{{ url_for('static', filename='js/updates.js') }}"></script>
 {% endblock scripts %}
 
 {% block body %}

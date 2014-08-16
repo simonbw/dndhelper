@@ -1,5 +1,7 @@
-function view_character_init(bundle) {
-    const updatePeriod = 3000;
+(function () {
+    if (window.bundle === undefined) {
+        window.bundle = {};
+    }
     var editingEnabled;
     var character = new Character(bundle['character_data']);
 
@@ -11,42 +13,6 @@ function view_character_init(bundle) {
     });
 
     skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
-
-    /**
-     * Retrieve updates from the server.
-     */
-    function getUpdates() {
-        $.get(bundle['url_get_updates'], {}, handleResponse);
-        setTimeout(getUpdates, updatePeriod);
-    }
-
-    /**
-     * Process the response data and update stuff.
-     * @param data
-     */
-    function handleResponse(data) {
-        if (data.success) {
-            const updates = data['updates'];
-            for (var i = 0; i < updates.length; i++) {
-                const update = updates[i];
-                console.log(update);
-                switch (update['type']) {
-                    case 'redirect':
-                        console.log('redirecting to: ' + update['location']);
-                        window.location.replace(update['location']);
-                        break;
-                    case 'message':
-                        addMessage(update['sender'], update['content']);
-                        break;
-                    case 'attribute':
-                        character.applyUpdate(update);
-                        break;
-                }
-            }
-        } else {
-            console.log(data);
-        }
-    }
 
     /**
      *
@@ -146,10 +112,33 @@ function view_character_init(bundle) {
         return f;
     }
 
-    $(function () {
-        disableEdit();
-    });
-
+    /**
+     * Process the response data and update stuff.
+     * @param data
+     */
+    function handleResponse(data) {
+        if (data.success) {
+            const updates = data['updates'];
+            for (var i = 0; i < updates.length; i++) {
+                const update = updates[i];
+                console.log(update);
+                switch (update['type']) {
+                    case 'redirect':
+                        console.log('redirecting to: ' + update['location']);
+                        window.location.replace(update['location']);
+                        break;
+                    case 'message':
+                        addMessage(update['sender'], update['content']);
+                        break;
+                    case 'attribute':
+                        character.applyUpdate(update);
+                        break;
+                }
+            }
+        } else {
+            console.log(data);
+        }
+    }
 
     $(function () {
         disableEdit();
@@ -171,4 +160,4 @@ function view_character_init(bundle) {
 
         getUpdates();
     });
-}
+})();

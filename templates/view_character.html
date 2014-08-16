@@ -1,19 +1,20 @@
 {% extends 'layout.html' %}
 {% block scripts %}
+    <script>
+        if (window.bundle === undefined) {
+            window.bundle = {};
+        }
+        bundle['races'] = {{ races|tojson }};
+        bundle['skills'] = {{ skills|tojson }};
+        bundle['abilities'] = {{ abilities|tojson }};
+        bundle['character_data'] = {{ character|tojson }};
+        bundle['url_update'] = "{{ url_for('characters.update', name=character.name) }}";
+        bundle['url_get_updates'] = "{{ url_for('characters.fetch_updates', name=character.name) }}";
+    </script>
     <script src="{{ url_for('static', filename='js/character.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/updates.js') }}"></script>
     <script src="{{ url_for('static', filename='js/view_character.js') }}"></script>
-    <script>
-        var bundle = {
-            'races': {{ races|tojson }},
-            'skills': {{ skills|tojson }},
-            'abilities': {{ abilities|tojson }},
-            'url_update': "{{ url_for('characters.update', name=character.name) }}",
-            'url_get_updates': "{{ url_for('characters.fetch_updates', name=character.name) }}",
-            'character_data': {{ character|tojson }}
-        };
-        view_character_init(bundle);
-    </script>
 {% endblock scripts %}
 
 {% block styles %}
