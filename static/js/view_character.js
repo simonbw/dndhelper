@@ -56,6 +56,7 @@ function view_character_init(bundle) {
      */
     function addSimpleIdHandler(attribute, tag_id) {
         tag_id = tag_id === undefined ? attribute : tag_id;
+        tag_id.replace('_', '-');
         character.addHandler('backstory', function (value) {
             $('#' + tag_id).text(value);
         });
@@ -89,8 +90,8 @@ function view_character_init(bundle) {
      */
     function disableEdit() {
         editingEnabled = false;
-        $('#enableedit').show();
-        $('#disableedit').hide();
+        $('#enable-edit').show();
+        $('#disable-edit').hide();
     }
 
     /**
@@ -155,13 +156,13 @@ function view_character_init(bundle) {
     $(function () {
         disableEdit();
 
-        $('#enableedit').click(enableEdit);
-        $('#disableedit').click(disableEdit);
+        $('#enable-edit').click(enableEdit);
+        $('#disable-edit').click(disableEdit);
 
         $('#backstory').click(editWithContenteditable(updateAttribute('backstory')));
         $('#personality').click(editWithContenteditable(updateAttribute('personality')));
         $('#name').click(editWithContenteditable(updateAttribute('name')));
-        $('#maxhitpoints').click(editWithNumber(updateAttribute('max_hitpoints')));
+        $('#max-hit-points').click(editWithNumber(updateAttribute('max_hitpoints')));
 
         $('#strength').click(editWithNumber(updateAttribute('strength')));
         $('#dexterity').click(editWithNumber(updateAttribute('dexterity')));
