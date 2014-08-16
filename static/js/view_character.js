@@ -53,9 +53,8 @@ function view_character_init(bundle) {
      * @param attribute
      * @param tag_id
      */
-    function addSimpleIdHandler(attribute, tag_id) {
-        tag_id = tag_id === undefined ? attribute : tag_id;
-        tag_id.replace('_', '-');
+    function addSimpleIdHandler(attribute) {
+        var tag_id = attribute.replace('_', '-');
         character.addHandler(attribute, function (value) {
             $('#' + tag_id).text(value);
         });
