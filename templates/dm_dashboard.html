@@ -7,8 +7,8 @@
         }
         bundle['characters'] = {{ campaign.characters|tojson }};
         bundle['chat_url'] = "{{ url_for('dm.chat') }}";
-        bundle['fetch_updates_url'] = "{{ url_for('characters.fetch_updates', name=character.name) }}";
-        bundle['stream_updates_url'] = "{{ url_for('characters.stream_updates', name=character.name) }}";
+        bundle['fetch_updates_url'] = "{{ url_for('dm.fetch_updates') }}";
+        bundle['stream_updates_url'] = "{{ url_for('dm.stream_updates') }}";
     </script>
     <script src="{{ url_for('static', filename='js/character.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>

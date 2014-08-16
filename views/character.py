@@ -1,9 +1,8 @@
-from time import sleep
-
 from flask.blueprints import Blueprint
 
 from flask.templating import render_template
-from flask import redirect, url_for, make_response, request, flash, Response, jsonify
+
+from flask import redirect, url_for, make_response, request, flash, Response
 
 from models import db
 
@@ -67,15 +66,7 @@ def fetch_updates(name):
 @character_app.route('/<name>/update_stream')
 def stream_updates(name):
     print "stream_updates called"
-    return Response(update_stream(name), mimetype="text/event-stream")
-
-
-def update_stream(name):
-    print "creating update stream"
-    while True:
-        if updates.has_update(name):
-            return jsonify({'updates': updates.get_update(name)})
-        sleep(0.1)  # do we need this?
+    return Response(updates.update_stream(name), mimetype="text/event-stream")
 
 
 def handler(handler_name):
