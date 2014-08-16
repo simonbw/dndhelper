@@ -11,6 +11,7 @@ from models.skills import SkillLevel, list_skills, get_skill
 
 def init_characters():
     character = Character('Simieth', 12)
+    character.hitpoints = 8
     character.campaign = get_main_campaign()
     db.session.add(character)
     db.session.commit()
@@ -103,7 +104,7 @@ class Character(db.Model):
             'backstory': self.backstory,
             'personality': self.personality,
             'hitpoints': self.hitpoints,
-            'max_hitpoints': self.hitpoints
+            'max_hitpoints': self.max_hitpoints
         }
         for skill in list_skills():
             serialized[skill.name] = self.get_skill_level(skill)
