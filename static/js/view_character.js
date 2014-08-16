@@ -12,6 +12,13 @@ function view_character_init(bundle) {
 
     skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
 
+    function updateHealthBar() {
+        var health = character.get('hitpoints');
+        var maxHealth = character.get('max_hitpoints');
+        var percentHealth = Math.floor(health * 100 / maxHealth);
+        $('#health').css('width', '' + percentHealth + '%');
+    }
+
     /**
      * Retrieve updates from the server.
      */
@@ -168,6 +175,8 @@ function view_character_init(bundle) {
         $('#intelligence').click(editWithNumber(updateAttribute('strength')));
         $('#wisdom').click(editWithNumber(updateAttribute('wisdom')));
         $('#charisma').click(editWithNumber(updateAttribute('charisma')));
+
+        updateHealthBar();
 
         getUpdates();
     });
