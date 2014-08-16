@@ -147,9 +147,7 @@
         }
     }
 
-    $(function () {
-        disableEdit();
-
+    function initEditListeners() {
         $('#enable-edit').click(enableEdit);
         $('#disable-edit').click(disableEdit);
 
@@ -164,6 +162,31 @@
         $('#intelligence').click(editWithNumber(updateAttribute('strength')));
         $('#wisdom').click(editWithNumber(updateAttribute('wisdom')));
         $('#charisma').click(editWithNumber(updateAttribute('charisma')));
+    }
+
+    function initTabListeners() {
+        $('#tab-bar').children().filter('div').each(
+            function(ind, button) {
+                button.click(
+                    function () {
+                        var curOpen = $('div.open');
+                        var buttonId = button[0].id;
+                        var tabId = buttonId.substr(0, buttonId.lastIndexOf('-button'));
+                        curOpen.removeClass('open');
+                        $('#' + tabId).addClass('open');
+                        button.addClass('open');
+                    }
+                );
+            }
+        );
+    }
+
+    $(function () {
+        disableEdit();
+
+        initEditListeners();
+
+        initTabListeners();
 
         updateHealthBar();
 

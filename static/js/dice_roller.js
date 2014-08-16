@@ -1,5 +1,5 @@
 
-$(document).ready(function() {
+$(function() {
     $('.dice-roller').each(
         function (roller) {
             $('button', roller).click(
