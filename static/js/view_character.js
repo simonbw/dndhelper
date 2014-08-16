@@ -43,8 +43,7 @@ function view_character_init(bundle) {
                         break;
                 }
             }
-        }
-        else {
+        } else {
             console.log(data);
         }
     }
@@ -57,10 +56,10 @@ function view_character_init(bundle) {
     function addSimpleIdHandler(attribute, tag_id) {
         tag_id = tag_id === undefined ? attribute : tag_id;
         tag_id.replace('_', '-');
-        character.addHandler('backstory', function (value) {
+        character.addHandler(attribute, function (value) {
             $('#' + tag_id).text(value);
         });
-    };
+    }
 
     /**
      * Create a function that updates an attribute
