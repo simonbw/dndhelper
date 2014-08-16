@@ -53,23 +53,8 @@
     <br>
     <hr>
 
-    <table>
-        {% for ability_score in character.ability_scores %}
-            <tr>
-                <td>{{ ability_score.ability.name }}</td>
-                <td>{{ ability_score.score }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <table>
-        {% for skill_level in character.skill_levels %}
-            <tr title="{{ skill_level.skill.description }}">
-                <td>{{ skill_level.skill.name }}</td>
-                <td>{{ skill_level.level }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    {% include 'data_tables/ability_score_table.html' %}
+    {% include 'data_tables/skill_table.html' %}
 
     <h3>Backstory</h3>
     <div id="backstory">{{ character.backstory }}</div>

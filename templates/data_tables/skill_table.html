@@ -1,0 +1,10 @@
+{% extends 'data_table.html' %}
+
+<table>
+    {% for skill_level in character.skill_levels %}
+        <tr title="{{ skill_level.skill.description }}">
+            <td>{{ skill_level.skill.name }}</td>
+            <td>{{ skill_level.level }}</td>
+        </tr>
+    {% endfor %}
+</table>
