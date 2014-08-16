@@ -72,9 +72,9 @@ class Character(db.Model):
         """
         :rtype: int
         """
-        if isinstance(skill, basestring):
+        if isinstance(skill, str):
             skill = get_skill(skill)
-        return getattr(SkillLevel.query.filter_by(character=self, skill=skill).first(), 0)
+        return getattr(SkillLevel.query.filter_by(character=self, skill=skill).first(), 'level', 0)
 
     def set_skill_level(self, skill, level):
         if isinstance(skill, basestring):
@@ -87,7 +87,7 @@ class Character(db.Model):
         """
         if isinstance(ability, basestring):
             ability = get_ability(ability)
-        return getattr(AbilityScore.query.filter_by(character=self, ability=ability).first().level, 10)
+        return getattr(AbilityScore.query.filter_by(character=self, ability=ability).first(), 'score', 10)
 
     def set_ability_score(self, ability, score):
         if isinstance(ability, basestring):
