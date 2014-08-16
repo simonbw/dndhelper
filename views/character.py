@@ -1,11 +1,13 @@
 from flask.blueprints import Blueprint
 from flask.templating import render_template
-from flask import redirect, url_for, make_response, request, flash
+from flask import redirect, url_for, make_response, request, flash, jsonify
 
 from models import db
+from models.abilities import list_abilities
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
 from models.races import list_races
+from models.skills import list_skills
 import updates
 from util import json_service
 
@@ -20,10 +22,11 @@ update_handlers = {}
 def view(name):
     character = get_character(name)
     if character:
-        races = list_races()
-        race_names = [race.name for race in races]
-        response = make_response(render_template('view_character.html', character=character, races=races,
-                                                 race_names=race_names))
+        races = [jsonify(race) for race in list_races()]
+        skills = [jsonify(skill) for skill in list_skills()]
+        abilities = [jsonify(ability) for ability in list_abilities()]
+        response = make_response(render_template('view_character.html', character=character, races=races, skills=skills,
+                                                 abilities=abilities))
         response.set_cookie('character', name)
         return response
     else:

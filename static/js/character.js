@@ -28,7 +28,7 @@ Character.prototype.set = function (attribute, value) {
     if (attribute in this.handlers) {
         var handlerList = this.handlers[attribute];
         for (var i = 0; i < handlerList.length; i++) {
-            handlerList[i].text(value);
+            handlerList[i](value);
         }
     }
 
@@ -46,14 +46,14 @@ Character.prototype.applyUpdate = function (update) {
     this.set(update['attribute'], update['value']);
 };
 
-Character.prototype.addDomHandler = function (attribute, element) {
+Character.prototype.addHandler = function (attribute, handler) {
     if (!(attribute in  this.handlers)) {
         this.handlers[attribute] = [];
     }
-    this.handlers[attribute].push(element);
+    this.handlers[attribute].push(handler);
 };
 
 
 Character.getAbilityModifier = function (n) {
     return (n - 10) / 2;
-}
+};

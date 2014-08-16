@@ -1,6 +1,24 @@
 function view_character_init(bundle) {
     const updatePeriod = 3000;
     var editingEnabled;
+    var character = new Character(bundle['character_data']);
+
+    var abilityNames = bundle['abilities'].map(function (ability) {
+        return ability.name;
+    });
+    var skillNames = bundle['skills'].map(function (skill) {
+        return skill.name;
+    });
+
+    skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
+
+    /**
+     * Retrieve updates from the server.
+     */
+    function getUpdates() {
+        $.get(bundle['url_get_updates'], {}, handleResponse);
+        setTimeout(getUpdates, updatePeriod);
+    }
 
     /**
      * Process the response data and update stuff.
@@ -20,6 +38,9 @@ function view_character_init(bundle) {
                     case 'message':
                         addMessage(update['sender'], update['content']);
                         break;
+                    case 'attribute':
+                        character.applyUpdate(update);
+                        break;
                 }
             }
         }
@@ -28,29 +49,17 @@ function view_character_init(bundle) {
         }
     }
 
-    function addMessage(sender, content) {
-        const $li = $('<li>', {
-            'class': 'message'
-        });
-        $li.append($('<span>', {
-            'class': 'sender',
-            'text': sender
-        }));
-        $li.append(" : ");
-        $li.append($('<span>', {
-            'class': 'content',
-            'text': content
-        }));
-        $('#messages').prepend($li);
-    }
-
     /**
-     * Retrieve updates from the server.
+     *
+     * @param attribute
+     * @param tag_id
      */
-    function getUpdates() {
-        $.get(bundle['url_get_updates'], {}, handleResponse);
-        setTimeout(getUpdates, updatePeriod);
-    }
+    function addSimpleIdHandler(attribute, tag_id) {
+        tag_id = tag_id === undefined ? attribute : tag_id;
+        character.addHandler('backstory', function (value) {
+            $('#' + tag_id).text(value);
+        });
+    };
 
     /**
      * Create a function that updates an attribute
@@ -100,7 +109,7 @@ function view_character_init(bundle) {
                         event.preventDefault();
                         $this.focusout();
                     }
-                })
+                });
 
                 $this.focusout(function () {
                     $this.off('keydown');
@@ -137,6 +146,11 @@ function view_character_init(bundle) {
 
         return f;
     }
+
+    $(function () {
+        disableEdit();
+    });
+
 
     $(function () {
         disableEdit();

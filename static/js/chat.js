@@ -19,3 +19,19 @@ function ChatBox() {
         }
     });
 }
+
+function addMessage(sender, content) {
+    const $li = $('<li>', {
+        'class': 'message'
+    });
+    $li.append($('<span>', {
+        'class': 'sender',
+        'text': sender
+    }));
+    $li.append(" : ");
+    $li.append($('<span>', {
+        'class': 'content',
+        'text': content
+    }));
+    $('#messages').prepend($li);
+}

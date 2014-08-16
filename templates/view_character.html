@@ -1,11 +1,16 @@
 {% extends 'layout.html' %}
 {% block scripts %}
+    <script src="{{ url_for('static', filename='js/character.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
     <script src="{{ url_for('static', filename='js/view_character.js') }}"></script>
     <script>
         var bundle = {
-            'races': {{ race_names|tojson }},
+            'races': {{ races }},
+            'skills': {{ skills }},
+            'abilities': {{ abilities }},
             'url_update': "{{ url_for('characters.update', name=character.name) }}",
-            'url_get_updates': "{{ url_for('characters.fetch_updates', name=character.name) }}"
+            'url_get_updates': "{{ url_for('characters.fetch_updates', name=character.name) }}",
+            'character_data': {{ character|tojson }}
         };
         view_character_init(bundle);
     </script>
