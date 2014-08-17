@@ -30,8 +30,8 @@ def view(name):
         g.bundle['fetch_updates_url'] = url_for('characters.fetch_updates', name=character.name)
         g.bundle['stream_updates_url'] = url_for('characters.stream_updates', name=character.name)
 
-        require_scripts('chat', 'character', 'updates', 'view_character')
-        require_styles('character', 'view_character')
+        require_scripts('chat', 'character', 'updates', 'tabs', 'view_character')
+        require_styles('character', 'tabs', 'view_character')
 
         response = make_response(render_template('view_character.html', character=character))
         response.set_cookie('character', name)

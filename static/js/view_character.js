@@ -38,11 +38,9 @@
     function updateAttribute(attribute) {
         return function (value) {
             console.log("SETTING: " + attribute + " = " + value);
-            var requestData = {};
-            requestData[attribute] = value;
-            $.getJSON(bundle['update_url'], requestData, function (responseData) {
-                updates.processResponseData(responseData);
-            });
+            var data = {};
+            data[attribute] = value;
+            $.getJSON(bundle['update_url'], data, handleResponse);
         }
     }
 
@@ -140,6 +138,20 @@
         $('.wisdom').click(editWithNumber(updateAttribute('wisdom')));
         $('.charisma').click(editWithNumber(updateAttribute('charisma')));
     }
+
+    /**
+     *
+     */
+    function initTabListeners() {
+        $('.tab-button').click(function () {
+            $('.tab-button').removeClass('open');
+            $('.tab').removeClass('open');
+            $(this).addClass('open');
+            var tabName = $(this).data('tab');
+            $('#' + tabName + '-tab').addClass('open');
+        });
+    }
+
 
     /**
      * Make the tab buttons switch tabs.

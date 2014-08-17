@@ -24,32 +24,6 @@
 }
 
 .data-table table td {
-    padding: 2px 15px;
-}
-
-#stat-tab {
-    overflow: auto;
-}
-
-.tab {
-    display: none;
-}
-
-.tab.open {
-    display: initial;
-}
-
-#tab-bar div {
-    font-size: 20px;
-    background: lightgray;
-    width: 25%;
-    float: left;
-    text-align: center;
-    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
-    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
-    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
-}
-
-#tab-bar div.open {
-    background: lightblue;
+    padding-left: 15px;
+    padding-right: 15px;
 }
