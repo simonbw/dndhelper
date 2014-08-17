@@ -1,4 +1,4 @@
-from flask import render_template, request, Response, g
+from flask import render_template, request, Response, g, url_for
 from flask.blueprints import Blueprint
 
 from models import db
@@ -15,7 +15,7 @@ dm_app = Blueprint('dm', __name__)
 @dm_app.route('/')
 def dashboard():
     campaign = get_main_campaign()
-    g.bundle['characters'] = {{campaign.characters | tojson}};
+    g.bundle['characters'] = campaign.characters
     g.bundle['chat_url'] = url_for('dm.chat')
     g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
     g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
