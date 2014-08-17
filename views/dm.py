@@ -1,4 +1,4 @@
-from flask import render_template, request, Response
+from flask import render_template, request, Response, g
 from flask.blueprints import Blueprint
 
 from models import db
@@ -6,7 +6,7 @@ from models.campaign import get_main_campaign
 from models.characters import get_character
 from models.messages import Message
 from updates import add_message_update, update_stream, get_updates
-from util import json_service
+from util import json_service, require_scripts
 
 
 dm_app = Blueprint('dm', __name__)
@@ -14,6 +14,12 @@ dm_app = Blueprint('dm', __name__)
 
 @dm_app.route('/')
 def dashboard():
+    g.bundle['characters'] = {{campaign.characters | tojson}};
+    g.bundle['chat_url'] = url_for('dm.chat')
+    g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
+    g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
+
+    require_scripts('chat', 'character', 'updates', 'dm_dashboard')
     campaign = get_main_campaign()
     return render_template("dm_dashboard.html", campaign=campaign)
 

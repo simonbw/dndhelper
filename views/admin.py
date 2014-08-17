@@ -1,6 +1,7 @@
 from flask import current_app, render_template, redirect
 from flask.blueprints import Blueprint
 
+from descriptions import init_descriptions
 from models import db
 from models.abilities import init_abilities
 from models.characters import init_characters
@@ -28,6 +29,7 @@ def reset():
 def init_all():
     db.drop_all()
     db.create_all()
+    init_descriptions(current_app.file_root)
     init_abilities()
     init_races()
     init_skills()

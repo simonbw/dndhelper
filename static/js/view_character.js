@@ -126,17 +126,17 @@
         $('#enable-edit').click(enableEdit);
         $('#disable-edit').click(disableEdit);
 
-        $('#backstory').click(editWithContenteditable(updateAttribute('backstory')));
-        $('#personality').click(editWithContenteditable(updateAttribute('personality')));
-        $('#name').click(editWithContenteditable(updateAttribute('name')));
-        $('#max-hit-points').click(editWithNumber(updateAttribute('max_hitpoints')));
+        $('.backstory').click(editWithContenteditable(updateAttribute('backstory')));
+        $('.personality').click(editWithContenteditable(updateAttribute('personality')));
+        $('.name').click(editWithContenteditable(updateAttribute('name')));
+        $('.max-hit-points').click(editWithNumber(updateAttribute('max_hitpoints')));
 
-        $('#strength').click(editWithNumber(updateAttribute('strength')));
-        $('#dexterity').click(editWithNumber(updateAttribute('dexterity')));
-        $('#constitution').click(editWithNumber(updateAttribute('constitution')));
-        $('#intelligence').click(editWithNumber(updateAttribute('strength')));
-        $('#wisdom').click(editWithNumber(updateAttribute('wisdom')));
-        $('#charisma').click(editWithNumber(updateAttribute('charisma')));
+        $('.strength').click(editWithNumber(updateAttribute('strength')));
+        $('.dexterity').click(editWithNumber(updateAttribute('dexterity')));
+        $('.constitution').click(editWithNumber(updateAttribute('constitution')));
+        $('.intelligence').click(editWithNumber(updateAttribute('strength')));
+        $('.wisdom').click(editWithNumber(updateAttribute('wisdom')));
+        $('.charisma').click(editWithNumber(updateAttribute('charisma')));
     }
 
     /**

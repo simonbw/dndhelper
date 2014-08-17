@@ -1,7 +1,10 @@
 """
 Create the app and run the server
 """
-from flask import Flask
+from collections import OrderedDict
+import os
+
+from flask import Flask, g
 
 from models import db
 from models.abilities import list_abilities
@@ -19,6 +22,8 @@ def create_app(debug=False):
     app.debug = debug
     app.secret_key = 'this is a secret'
     app.json_encoder = Jsonifier
+
+    app.file_root = os.path.abspath(os.path.dirname(__file__))
 
     app.before_request(before_request)
     app.after_request(after_request)
@@ -38,19 +43,27 @@ def create_app(debug=False):
 
 
 def before_request():
-    pass
+    """ Called before every request. """
+    g.bundle = OrderedDict()
+    g.scripts = ['jquery', 'dice_roller']
+    g.stylesheets = ['style', 'chat']
 
 
 def after_request(response):
+    """ Called after every request. """
     db.session.commit()
     return response
 
 
 def context_processor():
+    """ Defines things sent to the template context. """
     d = {
         'list_abilities': list_abilities,
         'list_skills': list_skills,
-        'list_races': list_races
+        'list_races': list_races,
+        'bundle': g.bundle,
+        'scripts': g.scripts,
+        'stylesheets': g.stylesheets
     }
     return d
 

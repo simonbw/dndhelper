@@ -1,0 +1,17 @@
+STR
+Strength measures bodily power, athletic training, and the extent to which you can exert raw physical force.
+
+DEX
+Dexterity measures agility, reflexes, and balance.
+
+CON
+Constitution measures health, stamina, and vital force.
+
+INT
+Intelligence measures mental acuity, accuracy of recall, and the ability to reason.
+
+WIS
+Wisdom reflects how attuned you are to the world around you and represents perceptiveness and intuition.
+
+CHA
+Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.

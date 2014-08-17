@@ -1,7 +1,7 @@
 from functools import wraps
 import traceback
 
-from flask import jsonify
+from flask import jsonify, g
 from flask.json import JSONEncoder
 
 
@@ -39,3 +39,36 @@ def json_service(f):
             return jsonify({'success': False, 'error': str(e)})
 
     return decorated_function
+
+
+def require_script(script):
+    """
+    :type scripts: str
+    """
+    if script not in g.scripts:
+        g.scripts.append(script)
+
+
+def require_scripts(*scripts):
+    """
+    :type scripts: str
+    """
+    for script in scripts:
+        require_script(script)
+
+
+def require_style(stylesheet):
+    """
+    :type stylesheet: str
+    """
+    if stylesheet not in g.stylesheets:
+        g.stylesheets.append(stylesheet)
+
+
+def require_styles(*stylesheets):
+    """
+    :type stylesheets: str
+    """
+    for stylesheet in stylesheets:
+        require_style(stylesheet)
+

@@ -1,3 +1,4 @@
+from descriptions import get_description
 from models import db
 from models.abilities import get_ability
 
@@ -9,7 +10,7 @@ def init_skills():
     wisdom = get_ability('wisdom')
     charisma = get_ability('charisma')
 
-    make_skill('Athletics', strength, 'How athletic you are')
+    make_skill('Athletics', strength)
     make_skill('Acrobatics', dexterity)
     make_skill('Sleight of hand', dexterity)
     make_skill('Stealth', dexterity)
@@ -31,8 +32,9 @@ def init_skills():
     db.session.commit()
 
 
-def make_skill(name, ability, description='...'):
+def make_skill(name, ability):
     if get_skill(name) is None:
+        description = get_description('skill_' + name)
         db.session.add(Skill(name, ability, description))
 
 

@@ -1,22 +1,6 @@
 {% extends 'layout.html' %}
 {% import 'character.html' as characterMacros %}
 
-{% block scripts %}
-    <script>
-        if (window.bundle === undefined) {
-            window.bundle = {};
-        }
-        bundle['characters'] = {{ campaign.characters|tojson }};
-        bundle['chat_url'] = "{{ url_for('dm.chat') }}";
-        bundle['fetch_updates_url'] = "{{ url_for('dm.fetch_updates') }}";
-        bundle['stream_updates_url'] = "{{ url_for('dm.stream_updates') }}";
-    </script>
-    <script src="{{ url_for('static', filename='js/character.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/dm_dashboard.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/updates.js') }}"></script>
-{% endblock scripts %}
-
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dm_dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/character.css') }}">

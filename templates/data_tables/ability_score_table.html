@@ -1,12 +1,12 @@
 {% extends 'data_tables/data_table.html' %}
 
 {% block data %}
-<table>
-    {% for ability_score in character.ability_scores %}
-        <tr>
-            <td>{{ ability_score.ability.name }}</td>
-            <td>{{ ability_score.score }}</td>
-        </tr>
-    {% endfor %}
-</table>
+    <table>
+        {% for ability_score in character.ability_scores %}
+            <tr title="{{ ability_score.ability.description }}">
+                <td>{{ ability_score.ability.name }}</td>
+                <td class="ability {{ ability_score.ability.name }}">{{ ability_score.score }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock data %}

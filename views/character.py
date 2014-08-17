@@ -2,7 +2,7 @@ from flask.blueprints import Blueprint
 
 from flask.templating import render_template
 
-from flask import redirect, url_for, make_response, request, flash, Response
+from flask import redirect, url_for, make_response, request, flash, Response, g
 
 from models import db
 
@@ -12,7 +12,7 @@ from models.characters import Character, get_character
 from models.races import list_races
 from models.skills import list_skills
 import updates
-from util import json_service
+from util import json_service, require_scripts, require_styles
 
 
 character_app = Blueprint('characters', __name__)
@@ -25,9 +25,18 @@ update_handlers = {}
 def view(name):
     character = get_character(name)
     if character:
-        response = make_response(
-            render_template('view_character.html', character=character, races=list_races(), skills=list_skills(),
-                            abilities=list_abilities()))
+        g.bundle['races'] = list_races()
+        g.bundle['skills'] = list_skills()
+        g.bundle['abilities'] = list_abilities()
+        g.bundle['character_data'] = character
+        g.bundle['update_url'] = url_for('characters.update', name=character.name)
+        g.bundle['fetch_updates_url'] = url_for('characters.fetch_updates', name=character.name)
+        g.bundle['stream_updates_url'] = url_for('characters.stream_updates', name=character.name)
+
+        require_scripts('chat', 'character', 'updates', 'view_character')
+        require_styles('character', 'view_character')
+
+        response = make_response(render_template('view_character.html', character=character))
         response.set_cookie('character', name)
         return response
     else:

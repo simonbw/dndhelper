@@ -1,30 +1,6 @@
 {% extends 'layout.html' %}
 {% import 'character.html' as characterMacros %}
 
-{% block scripts %}
-    <script>
-        if (window.bundle === undefined) {
-            window.bundle = {};
-        }
-        bundle['races'] = {{ races|tojson }};
-        bundle['skills'] = {{ skills|tojson }};
-        bundle['abilities'] = {{ abilities|tojson }};
-        bundle['character_data'] = {{ character|tojson }};
-        bundle['update_url'] = "{{ url_for('characters.update', name=character.name) }}";
-        bundle['fetch_updates_url'] = "{{ url_for('characters.fetch_updates', name=character.name) }}";
-        bundle['stream_updates_url'] = "{{ url_for('characters.stream_updates', name=character.name) }}";
-    </script>
-    <script src="{{ url_for('static', filename='js/character.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/updates.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/view_character.js') }}"></script>
-{% endblock scripts %}
-
-{% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/view_character.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/character.css') }}">
-{% endblock styles %}
-
 {% block body %}
     <a id="enable-edit">Enable Editing</a>
     <a id="disable-edit">Disable Editing</a>
@@ -43,25 +19,19 @@
     </div>
     <div id="tab-content">
         <div id="stats-tab" class="tab open">
-            {% include 'data_tables/ability_score_table.html' %}
-            {% include 'data_tables/skill_table.html' %}
+            {% include 'character/stats_tab.html' %}
         </div>
 
         <div id="inventory-tab" class="tab">
-            inventory tab is empty now
+            {% include 'character/inventory_tab.html' %}
         </div>
 
         <div id="spell-tab" class="tab">
-            spell tab is empty now
+            {% include 'character/spells_tab.html' %}
         </div>
 
         <div id="character-tab" class="tab">
-            <h3>Backstory</h3>
-
-            <div id="backstory">{{ character.backstory }}</div>
-            <h3>Personality</h3>
-
-            <div id="personality">{{ character.personality }}</div>
+            {% include 'character/character_tab.html' %}
         </div>
     </div>
 
