@@ -24,13 +24,8 @@
 #stat-tab {
     overflow: auto;
 }
-.tab {
-    display: none;
-}
-.tab.open {
-    display: initial;
-}
-#tab-bar div {
+.tab-button {
+    cursor: pointer;
     font-size: 20px;
     background: lightgray;
     width: 25%;
@@ -40,6 +35,12 @@
     -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
     box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
 }
-#tab-bar div.open {
+.tab-button.open {
     background: lightblue;
+}
+.tab {
+    display: none;
+}
+.tab.open {
+    display: initial;
 }
