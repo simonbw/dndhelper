@@ -12,8 +12,6 @@
         return skill.name;
     });
 
-    skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
-
     function updateHealthBar() {
         var health = character.get('hitpoints');
         var maxHealth = character.get('max_hitpoints');
@@ -120,36 +118,10 @@
         return f;
     }
 
-    /**
-     * Process the response data and update stuff.
-     * @param data
-     */
-    function handleResponse(data) {
-        if (data.success) {
-            const updates = data['updates'];
-            for (var i = 0; i < updates.length; i++) {
-                const update = updates[i];
-                console.log(update);
-                switch (update['type']) {
-                    case 'redirect':
-                        if (update['location'] != window.location.pathname) {
-                            console.log('redirecting from ' + window.location.pathname + ' to: ' + update['location']);
-                            window.location.replace(update['location']);
-                        }
-                        break;
-                    case 'message':
-                        addMessage(update['sender'], update['content']);
-                        break;
-                    case 'attribute':
-                        character.applyUpdate(update);
-                        break;
-                }
-            }
-        } else {
-            console.log(data);
-        }
-    }
 
+    /**
+     * Make all the things editable
+     */
     function initEditListeners() {
         $('#enable-edit').click(enableEdit);
         $('#disable-edit').click(disableEdit);
@@ -167,6 +139,9 @@
         $('#charisma').click(editWithNumber(updateAttribute('charisma')));
     }
 
+    /**
+     *
+     */
     function initTabListeners() {
         $('.tab-button').click(function () {
             $('.tab-button').removeClass('open');
@@ -178,6 +153,7 @@
     }
 
 
+    // called onload
     $(function () {
         disableEdit();
 
@@ -187,6 +163,20 @@
 
         updateHealthBar();
 
-        updates.addUpdateHandler();
-    });
+        // simple update handlers on skills and abilities
+        skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
+
+        updates.addUpdateHandler('attribute', function (update) {
+            character.applyUpdate(update);
+        });
+        updates.addUpdateHandler('message', function (update) {
+            chat.recieveMessage(update['sender'], update['content']);
+        });
+        updates.addUpdateHandler('redirect', function (update) {
+            if (update['location'] != window.location.pathname) {
+                console.log('redirecting from ' + window.location.pathname + ' to: ' + update['location']);
+                window.location.replace(update['location']);
+            }
+        });
+    }
 })();

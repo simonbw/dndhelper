@@ -1,0 +1,18 @@
+#chat-pane {
+    position: fixed;
+    bottom: 0;
+    left: 0px;
+    /*overflow: hidden;*/
+    border-top: 1px solid black;
+    width: 100%;
+
+    padding: 2px;
+}
+
+#chat-pane .messages {
+    
+}
+
+#chat-pane input[type=text] {
+    width: 100%;
+}

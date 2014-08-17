@@ -79,11 +79,12 @@ def add_message_update(message):
         'content': message.content
     }
     add_update(message.recipient_name, update)
+    add_update(message.sender_name, update)
 
 
 def update_stream(name):
     print "creating update stream"
     while True:
         if _updates.has_update(name):
-            return jsonify({'updates': get_update(name)})
+            return jsonify({'updates': get_updates(name)})
         sleep(0.1)  # do we need this?

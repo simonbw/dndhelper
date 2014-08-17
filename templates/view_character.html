@@ -65,14 +65,16 @@
         </div>
     </div>
 
-    <div id="character-footer">
-        <ul id="messages">
-            {% for message in character.messages %}
-                <li class="message">
-                    <span>{{ message.sender.name }}</span>:
-                    <span>{{ message.content }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% include 'chat.html' %}
+    {#    #}
+    {#    <div id="character-footer">#}
+    {#        <ul id="messages">#}
+    {#            {% for message in character.messages %}#}
+    {#                <li class="message">#}
+    {#                    <span>{{ message.sender.name }}</span>:#}
+    {#                    <span>{{ message.content }}</span>#}
+    {#                </li>#}
+    {#            {% endfor %}#}
+    {#        </ul>#}
+    {#    </div>#}
 {% endblock body %}
