@@ -17,7 +17,8 @@ def load_descriptions_from_file(name, prefix=''):
         for chunk in chunks:
             lines = chunk.split('\n')
             name = format_name(prefix + lines[0].strip())
-            _descriptions[name] = '\n'.join(lines[1:])
+            description = str('\n'.join(lines[1:]))
+            _descriptions[name] = description
 
 
 def format_name(name):
