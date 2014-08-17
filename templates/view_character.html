@@ -55,13 +55,13 @@
     <hr>
 
     <div id="tab-bar">
-        <div class="open" id="stat-tab-button">Stats</div>
-        <div id="inventory-tab-button">Inventory</div>
-        <div id="spell-tab-button">Spells</div>
-        <div id="character-tab-button">Character</div>
+        <div class="tab-button open" data-tab="stats">Stats</div>
+        <div class="tab-button" data-tab="inventory">Inventory</div>
+        <div class="tab-button" data-tab="spells">Spells</div>
+        <div class="tab-button" data-tab="character">Character</div>
     </div>
     <div id="tab-content">
-        <div id="stat-tab" class="tab open">
+        <div id="stats-tab" class="tab open">
             {% include 'data_tables/ability_score_table.html' %}
             {% include 'data_tables/skill_table.html' %}
         </div>
@@ -76,8 +76,10 @@
 
         <div id="character-tab" class="tab">
             <h3>Backstory</h3>
+
             <div id="backstory">{{ character.backstory }}</div>
             <h3>Personality</h3>
+
             <div id="personality">{{ character.personality }}</div>
         </div>
     </div>
