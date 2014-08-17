@@ -1,61 +1,14 @@
 #backstory {
     border: 1px solid #AAAAAA;
 }
-
-#name {
-    float: right;
-    padding-right: 20px;
+#view-character-header .name {
     font-size: 50px;
 }
-
-#health-bar-background {
-    margin-left: 20px;
-    margin-top: 22px;
-    background-color: #b22222;
-    text-align: center;
-    position: relative;
-    height: 20px;
-}
-
-#health {
-    background-color: #228b22;
-    height: 20px;
-    width: 100%;
-    position: absolute;
-}
-
-#hit-points {
-    position: relative;
-    z-index: 10;
-    color: white;
-}
-
-.half-container {
-    width: 50%;
-    float: left;
-    position: relative;
-}
-
-#character-top-header {
-    overflow: auto;
-}
-
-#character-bottom-header {
+#view-character-header .character-bottom-header {
     font-size: 30px;
-    position: relative;
 }
-
-#separator {
-    position: absolute;
-    left: -8px;
-}
-#race {
-    float: right;
-    padding-right: 20px;
-}
-#class {
-    float: left;
-    padding-left: 20px;
+#view-character-header .health-bar-background {
+    margin-top: 22px;
 }
 .data-table {
     width: 50%;

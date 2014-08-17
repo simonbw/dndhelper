@@ -1,4 +1,6 @@
 {% extends 'layout.html' %}
+{% import 'character.html' as characterMacros %}
+
 {% block scripts %}
     <script>
         if (window.bundle === undefined) {
@@ -20,36 +22,15 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/view_character.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/character.css') }}">
 {% endblock styles %}
 
 {% block body %}
     <a id="enable-edit">Enable Editing</a>
     <a id="disable-edit">Disable Editing</a>
     <br><br>
-    <div id="character-header">
-        <div id="character-top-header">
-            <div class="half-container">
-                <span id="name">{{ character.name }}</span>
-            </div>
-            <div class="half-container">
-                <div id="health-bar-background">
-                    <div id="health"></div>
-                    <span id="hit-points">
-                        <span id="current-hit-points">{{ character.hitpoints }}</span> /
-                        <span id="max-hit-points">{{ character.max_hitpoints }}</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div id="character-bottom-header">
-            <div class="half-container">
-                <span id="race">{{ character.race.name }}</span>
-            </div>
-            <div class="half-container">
-                <span id="separator">-</span>
-                <span id="class">{{ character.character_class.name }}</span>
-            </div>
-        </div>
+    <div id="view-character-header">
+        {{ characterMacros.characterHeader(character) }}
     </div>
     <br>
     <hr>

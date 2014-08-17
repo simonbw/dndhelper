@@ -10,3 +10,21 @@ main {
     padding: 8px;
     max-width: 800px;
 }
+
+.half-container {
+    width: 50%;
+    float: left;
+    position: relative;
+}
+
+.third-container {
+    width: 33%;
+    float: left;
+    position: relative;
+}
+
+.two-third-container {
+    width: 67%;
+    float: left;
+    position: relative;
+}

@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% import 'character.html' as characterMacros %}
 
 {% block scripts %}
     <script>
@@ -16,13 +17,31 @@
     <script src="{{ url_for('static', filename='js/updates.js') }}"></script>
 {% endblock scripts %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dm_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/character.css') }}">
+{% endblock styles %}
+
+{% macro characterView(character) %}
+    <div id="character-{{ character.id }}" class="character">
+        <div class="third-container">
+            <div class="character-important">
+                {{ characterMacros.characterHeader(character) }}
+            </div>
+        </div>
+        <div class="two-third-container">
+            <div class="character-information">
+                What should go here?
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 {% block body %}
     DM
-    <ul>
-        {% for character in campaign.characters %}
-            <li>{{ character.name }} - {{ character.hitpoints }} / {{ character.max_hitpoints }}</li>
-        {% endfor %}
-    </ul>
+    {% for character in campaign.characters %}
+        {{ characterView(character) }}
+    {% endfor %}
 
     {% include 'dice_roller.html' %}
 

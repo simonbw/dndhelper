@@ -18,7 +18,7 @@
         var health = character.get('hitpoints');
         var maxHealth = character.get('max_hitpoints');
         var percentHealth = Math.floor(health * 100 / maxHealth);
-        $('#health').css('width', '' + percentHealth + '%');
+        $('.health').css('width', '' + percentHealth + '%');
     }
 
     /**

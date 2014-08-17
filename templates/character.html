@@ -1,0 +1,29 @@
+
+{% macro characterHeader(character) %}
+    <div class="character-header">
+        <div class="character-top-header">
+            <div class="half-container">
+                <span class="name">{{ character.name }}</span>
+            </div>
+            <div class="half-container">
+                <div class="health-bar-background">
+                    <div class="health"></div>
+                    <span class="hit-points">
+                        <span class="current-hit-points">{{ character.hitpoints }}</span> /
+                        <span class="max-hit-points">{{ character.max_hitpoints }}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="character-bottom-header">
+            <div class="half-container">
+                <span class="race">{{ character.race.name }}</span>
+            </div>
+            <div class="half-container">
+                <span class="separator">-</span>
+                <span class="class">{{ character.character_class.name }}</span>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+

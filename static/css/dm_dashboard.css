@@ -1,0 +1,16 @@
+.character {
+    overflow: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
+    box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
+}
+.character-important {
+    padding-right: 15px;
+}
+.character-information {
+    padding-left: 15px;
+}
