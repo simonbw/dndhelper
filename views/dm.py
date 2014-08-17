@@ -6,7 +6,7 @@ from models.campaign import get_main_campaign
 from models.characters import get_character
 from models.messages import Message
 from updates import add_message_update, update_stream, get_updates
-from util import json_service, require_scripts
+from util import json_service, require_scripts, require_styles
 
 
 dm_app = Blueprint('dm', __name__)
@@ -20,7 +20,7 @@ def dashboard():
     g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
     g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
     require_scripts('chat', 'character', 'updates', 'dm_dashboard')
-
+    require_styles('character', 'dm_dashboard')
     return render_template("dm_dashboard.html", campaign=campaign)
 
 

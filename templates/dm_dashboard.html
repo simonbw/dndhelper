@@ -1,11 +1,6 @@
 {% extends 'layout.html' %}
 {% import 'character.html' as characterMacros %}
 
-{% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dm_dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/character.css') }}">
-{% endblock styles %}
-
 {% macro characterView(character) %}
     <div id="character-{{ character.id }}" class="character">
         <div class="third-container">
