@@ -4,7 +4,7 @@ var updates = (function () {
     if (window.bundle === undefined) {
         window.bundle = {};
     }
-    const pollWait = 3000;
+    var pollWait = 3000;
     var handlers = {};
     var updates_url = bundle['update_stream_url'];
 

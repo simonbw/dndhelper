@@ -178,5 +178,5 @@
                 window.location.replace(update['location']);
             }
         });
-    }
+    });
 })();
