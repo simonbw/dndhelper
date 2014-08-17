@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-y:scroll;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -32,3 +36,29 @@ main {
     float: left;
     position: relative;
 }
+
+.icon-wrapper {
+    background: lightblue;
+    overflow: auto;
+    float: left;
+    margin: 5px;
+    border-radius: 8px;
+    border: 2px solid #4682b4;
+}
+.icon {
+    background: url(../images/icons.png);
+    width: 30px;
+    height: 25px;
+    margin: 5px;
+}
+.icon-message {
+    background-position: -30px -26px;
+}
+.icon-dice {
+    background-position: -185px -26px;
+}
+.icon-health {
+    background-position: -391px -129px;
+}
+
+
