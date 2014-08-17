@@ -4,16 +4,18 @@ Create the app and run the server
 from collections import OrderedDict
 import os
 
-from flask import Flask, g
+from flask import Flask, g, url_for
 
 from models import db
 from models.abilities import list_abilities
+from models.messages import Message
 from models.races import list_races
 from models.skills import list_skills
 from util import Jsonifier
 from views.admin import admin_app, init_all
 from views.campaign import campaign_app
 from views.character import character_app
+from views.chat import chat_app
 from views.dm import dm_app
 
 
@@ -38,6 +40,7 @@ def create_app(debug=False):
     app.register_blueprint(campaign_app)
     app.register_blueprint(character_app, url_prefix="/character")
     app.register_blueprint(dm_app, url_prefix="/dm")
+    app.register_blueprint(chat_app, url_prefix="/chat")
 
     return app
 
@@ -45,6 +48,8 @@ def create_app(debug=False):
 def before_request():
     """ Called before every request. """
     g.bundle = OrderedDict()
+    g.bundle['chat_url'] = url_for('chat.chat')
+
     g.scripts = ['jquery', 'dice_roller']
     g.stylesheets = ['style', 'chat']
 
@@ -69,4 +74,5 @@ def context_processor():
 
 
 if __name__ == '__main__':
+    # Run the development server.
     create_app(True).run(threaded=True)

@@ -47,7 +47,6 @@ def get_description(name):
 def init_descriptions(root):
     global _root
     _root = os.path.join(root, 'descriptions')
-    print 'descriptions root:' + root
     load_descriptions_from_file('abilities.txt', 'ability_')
     load_descriptions_from_file('skills.txt', 'skill_')
     load_descriptions_from_file('classes.txt', 'class_')

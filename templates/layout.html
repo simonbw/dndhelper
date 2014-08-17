@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     {% block all_scripts %}
         {% block bundle %}
@@ -13,6 +14,8 @@
                 <script src="{{ url_for('static', filename='js/' + script + '.js') }}"></script>
             {% endfor %}
         {% endblock scripts %}
+        {% block extrascripts %}
+        {% endblock extrascripts %}
     {% endblock all_scripts %}
     {% block all_styles %}
         {% block styles %}

@@ -38,9 +38,11 @@
     function updateAttribute(attribute) {
         return function (value) {
             console.log("SETTING: " + attribute + " = " + value);
-            var data = {};
-            data[attribute] = value;
-            $.getJSON(bundle['update_url'], data, handleResponse);
+            var requestData = {};
+            requestData[attribute] = value;
+            $.getJSON(bundle['update_url'], requestData, function (responseData) {
+                updates.processResponseData(responseData);
+            });
         }
     }
 
@@ -140,7 +142,7 @@
     }
 
     /**
-     *
+     * Make the tab buttons switch tabs.
      */
     function initTabListeners() {
         $('.tab-button').click(function () {
@@ -150,6 +152,40 @@
             var tabName = $(this).data('tab');
             $('#' + tabName + '-tab').addClass('open');
         });
+    }
+
+    /**
+     * Handle updates.
+     */
+    function initUpdateHandlers() {
+        updates.openUpdateStream();
+
+        // handlers for character updates
+        // simple update handlers on skills and abilities
+        skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
+        // TODO: handle all character updates
+
+        //handlers for updates sent from server
+        updates.addUpdateHandler('attribute', function (update) {
+            character.applyUpdate(update);
+        });
+        updates.addUpdateHandler('message', function (update) {
+            chat.receiveMessage(update['sender'], update['content']);
+        });
+        updates.addUpdateHandler('redirect', function (update) {
+            if (update['location'] != window.location.pathname) {
+                console.log('redirecting from ' + window.location.pathname + ' to: ' + update['location']);
+                window.location.replace(update['location']);
+            }
+        });
+    }
+
+    /**
+     * Initialize the chat system.
+     */
+    function initChat() {
+        chat.setSender(character);
+        chat.addRecipient('DM');
     }
 
 
@@ -163,20 +199,9 @@
 
         updateHealthBar();
 
-        // simple update handlers on skills and abilities
-        skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
+        initUpdateHandlers();
 
-        updates.addUpdateHandler('attribute', function (update) {
-            character.applyUpdate(update);
-        });
-        updates.addUpdateHandler('message', function (update) {
-            chat.recieveMessage(update['sender'], update['content']);
-        });
-        updates.addUpdateHandler('redirect', function (update) {
-            if (update['location'] != window.location.pathname) {
-                console.log('redirecting from ' + window.location.pathname + ' to: ' + update['location']);
-                window.location.replace(update['location']);
-            }
-        });
+        initChat();
+
     });
 })();

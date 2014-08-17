@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block scripts %}
+{% block extrascripts %}
     <script>
         $(function () {
             $('#newcharacterbutton').click(function () {
@@ -9,7 +9,7 @@
             });
         });
     </script>
-{% endblock %}
+{% endblock extrascripts %}
 
 {% block body %}
     Campaign
@@ -19,4 +19,5 @@
         {% endfor %}
         <li><a id="new-character-button">New Character</a></li>
     </ul>
+    <a href="{{ url_for('dm.dashboard') }}">DM</a>
 {% endblock body %}

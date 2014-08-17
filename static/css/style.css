@@ -3,7 +3,7 @@
 }
 
 html {
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 body {
@@ -17,6 +17,23 @@ main {
     margin: auto;
     padding: 8px;
     max-width: 800px;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.tab-button {
+    cursor: pointer;
+}
+
+section {
+    /*border: 1px solid black;*/
+    padding: 15px;
+    margin: 10px;
 }
 
 .half-container {
@@ -45,18 +62,22 @@ main {
     border-radius: 8px;
     border: 2px solid #4682b4;
 }
+
 .icon {
     background: url(../images/icons.png);
     width: 30px;
     height: 25px;
     margin: 5px;
 }
+
 .icon-message {
     background-position: -30px -26px;
 }
+
 .icon-dice {
     background-position: -185px -26px;
 }
+
 .icon-health {
     background-position: -391px -129px;
 }

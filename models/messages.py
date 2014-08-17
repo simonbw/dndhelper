@@ -23,7 +23,7 @@ class Message(db.Model):
 
     @property
     def recipient_name(self):
-        return getattr(self.sender, 'name', "DM")
+        return getattr(self.recipient, 'name', "DM")
 
     def __serialize__(self):
         return {

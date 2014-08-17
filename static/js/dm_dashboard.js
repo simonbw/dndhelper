@@ -17,5 +17,10 @@
 
     $(function () {
         updateHealthBars();
+
+        updates.openUpdateStream();
+
+        chat.setSender('DM');
+        chat.setRecipients(characters);
     });
 })();

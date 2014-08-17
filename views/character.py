@@ -1,11 +1,8 @@
 from flask.blueprints import Blueprint
-
 from flask.templating import render_template
-
 from flask import redirect, url_for, make_response, request, flash, Response, g
 
 from models import db
-
 from models.abilities import list_abilities
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
@@ -49,7 +46,6 @@ def view(name):
 def update(name):
     character = get_character(name)
     if character is not None:
-        print request.args
         for key in request.args:
             if key in update_handlers:
                 update_handlers.get(key)(character, request.args[key])
@@ -66,7 +62,7 @@ def create(name):
     return redirect(url_for('characters.view', name=name))
 
 
-@character_app.route('/<name>/get_updates')
+@character_app.route('/<name>/fetch_updates')
 @json_service
 def fetch_updates(name):
     return {'updates': updates.get_updates(name)}
@@ -74,7 +70,6 @@ def fetch_updates(name):
 
 @character_app.route('/<name>/update_stream')
 def stream_updates(name):
-    print "stream_updates called"
     return Response(updates.update_stream(name), mimetype="text/event-stream")
 
 

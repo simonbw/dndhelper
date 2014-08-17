@@ -1,45 +1,55 @@
 #backstory {
     border: 1px solid #AAAAAA;
 }
+
 #view-character-header .name {
     font-size: 50px;
 }
+
 #view-character-header .character-bottom-header {
     font-size: 30px;
 }
+
 #view-character-header .health-bar-background {
     margin-top: 22px;
 }
-.data-table {
-    width: 50%;
-    float: left;
-}
+
 .data-table table {
-    margin: 15px;
+    border-collapse: collapse;
+    width: 100%;
 }
+
+.data-table tr:nth-last-of-type(odd) {
+    background: #DDDDDD;
+}
+
 .data-table table td {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 2px 15px;
 }
+
 #stat-tab {
     overflow: auto;
 }
+
 .tab {
     display: none;
 }
+
 .tab.open {
     display: initial;
 }
+
 #tab-bar div {
     font-size: 20px;
     background: lightgray;
     width: 25%;
     float: left;
     text-align: center;
-    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
-    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
-    box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
 }
+
 #tab-bar div.open {
     background: lightblue;
 }

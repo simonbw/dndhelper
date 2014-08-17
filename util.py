@@ -71,4 +71,3 @@ def require_styles(*stylesheets):
     """
     for stylesheet in stylesheets:
         require_style(stylesheet)
-
