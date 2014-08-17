@@ -1,0 +1,25 @@
+
+#tab-bar {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.tab-button {
+    cursor: pointer;
+    font-size: 20px;
+    background: lightgray;
+    display: table-cell;
+    text-align: center;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
+    box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1);
+}
+.tab-button.open {
+    background: lightblue;
+}
+.tab {
+    display: none;
+}
+.tab.open {
+    display: initial;
+}

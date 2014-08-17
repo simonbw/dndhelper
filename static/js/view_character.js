@@ -139,27 +139,11 @@
         $('.charisma').click(editWithNumber(updateAttribute('charisma')));
     }
 
-    /**
-     *
-     */
-    function initTabListeners() {
-        $('.tab-button').click(function () {
-            $('.tab-button').removeClass('open');
-            $('.tab').removeClass('open');
-            $(this).addClass('open');
-            var tabName = $(this).data('tab');
-            $('#' + tabName + '-tab').addClass('open');
-        });
-    }
-
-
     // called onload
     $(function () {
         disableEdit();
 
         initEditListeners();
-
-        initTabListeners();
 
         updateHealthBar();
 
