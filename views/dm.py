@@ -14,13 +14,13 @@ dm_app = Blueprint('dm', __name__)
 
 @dm_app.route('/')
 def dashboard():
+    campaign = get_main_campaign()
     g.bundle['characters'] = {{campaign.characters | tojson}};
     g.bundle['chat_url'] = url_for('dm.chat')
     g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
     g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
-
     require_scripts('chat', 'character', 'updates', 'dm_dashboard')
-    campaign = get_main_campaign()
+
     return render_template("dm_dashboard.html", campaign=campaign)
 
 
