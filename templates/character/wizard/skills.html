@@ -1,0 +1,8 @@
+{% extends 'character/wizard/wizard_layout.html' %}
+
+{% block wizard_body %}
+    <h1>Skills</h1>
+    {% for skill_level in character.skill_levels %}
+        {{ skill_level.skill.name }} - {{ skill_level.level }}
+    {% endfor %}
+{% endblock wizard_body %}

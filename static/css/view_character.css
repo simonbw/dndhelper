@@ -23,3 +23,8 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+
+#enable-edit, #disable-edit {
+    text-decoration: underline;
+    cursor: pointer;
+}

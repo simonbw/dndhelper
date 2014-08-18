@@ -33,8 +33,10 @@
         {% endfor %}
     </div>
 {% endblock flashes %}
-<main>
-    {% block body %}{% endblock body %}
-</main>
+{% block body %}
+    <main>
+        {% block main %}{% endblock main %}
+    </main>
+{% endblock body %}
 </body>
 </html>

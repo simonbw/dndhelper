@@ -40,9 +40,11 @@
     function updateAttribute(attribute) {
         return function (value) {
             console.log("SETTING: " + attribute + " = " + value);
-            var data = {};
-            data[attribute] = value;
-            $.getJSON(bundle['update_url'], data, handleResponse);
+            var requestData = {};
+            requestData[attribute] = value;
+            $.getJSON(bundle['update_url'], requestData, function (responseData) {
+                updates.processResponseData(responseData);
+            });
         }
     }
 
@@ -88,6 +90,7 @@
                     $this.off('keydown');
                     $this.off('focusout');
                     $this[0].contentEditable = false;
+                    $this[0].spellCheck = false;
                     callback($this.html());
                 });
             }

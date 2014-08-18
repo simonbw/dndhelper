@@ -54,12 +54,39 @@ def update(name):
     return {'updates': updates.get_updates(name)}
 
 
-@character_app.route('/<name>/create')
-def create(name):
-    character = Character(name)
-    character.campaign = get_main_campaign()
-    db.session.add(character)
-    return redirect(url_for('characters.view', name=name))
+wizard_phases = ['abilities', 'skills', 'done']
+
+
+@character_app.route('/create/', methods=["GET", "POST"])
+def create():
+    if request.method == "POST":
+        name = request.form['name']
+        character = Character(name)
+        character.campaign = get_main_campaign()
+        db.session.add(character)
+        return redirect(url_for('characters.wizard', name=name, phase='abilities'))
+    else:
+        require_styles('wizard')
+        phase = 'name'
+        next_phase = wizard_phases[0]
+        return render_template('character/wizard/name.html', phase=phase, next_phase=next_phase)
+
+
+@character_app.route('/<name>/wizard/', defaults={'phase': wizard_phases[0]})
+@character_app.route('/<name>/wizard/<phase>')
+def wizard(name, phase):
+    if phase not in wizard_phases:
+        print "phase doesn't exist", phase
+        return redirect(url_for('campaign.view'))
+    if phase == 'done':
+        return redirect(url_for('characters.view', name=name))
+    require_styles('wizard')
+    require_scripts('wizard')
+    character = get_character(name)
+    g.bundle['update_url'] = url_for('characters.update', name=name)
+    next_phase = wizard_phases[wizard_phases.index(phase) + 1]
+    return render_template('character/wizard/' + phase + '.html', character=character, phases=wizard_phases,
+                           next_phase=next_phase)
 
 
 @character_app.route('/<name>/fetch_updates')

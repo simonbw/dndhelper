@@ -1,23 +1,12 @@
 {% extends 'layout.html' %}
 
-{% block extrascripts %}
-    <script>
-        $(function () {
-            $('#newcharacterbutton').click(function () {
-                var name = prompt("Name for new character");
-                window.location.href = "{{ url_for('characters.create', name='___') }}".replace('___', name);
-            });
-        });
-    </script>
-{% endblock extrascripts %}
-
-{% block body %}
+{% block main %}
     Campaign
     <ul>
         {% for character in campaign.characters %}
             <li><a href="{{ character.view_url }}">{{ character.name }}</a></li>
         {% endfor %}
-        <li><a id="new-character-button">New Character</a></li>
+        <li><a href="{{ url_for('characters.create') }}">New Character</a></li>
     </ul>
     <a href="{{ url_for('dm.dashboard') }}">DM</a>
-{% endblock body %}
+{% endblock main %}
