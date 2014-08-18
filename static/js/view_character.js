@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
     if (window.bundle === undefined) {
         window.bundle = {};
@@ -140,49 +142,19 @@
     }
 
     /**
-     *
-     */
-    function initTabListeners() {
-        $('.tab-button').click(function () {
-            $('.tab-button').removeClass('open');
-            $('.tab').removeClass('open');
-            $(this).addClass('open');
-            var tabName = $(this).data('tab');
-            $('#' + tabName + '-tab').addClass('open');
-        });
-    }
-
-
-    /**
-     * Make the tab buttons switch tabs.
-     */
-    function initTabListeners() {
-        $('.tab-button').click(function () {
-            $('.tab-button').removeClass('open');
-            $('.tab').removeClass('open');
-            $(this).addClass('open');
-            var tabName = $(this).data('tab');
-            $('#' + tabName + '-tab').addClass('open');
-        });
-    }
-
-    /**
      * Handle updates.
      */
     function initUpdateHandlers() {
-        updates.openUpdateStream();
-
         // handlers for character updates
         // simple update handlers on skills and abilities
         skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
         // TODO: handle all character updates
+        character.addHandler('hitpoints', updateHealthBar);
+        character.addHandler('max_hitpoints', updateHealthBar);
 
         //handlers for updates sent from server
         updates.addUpdateHandler('attribute', function (update) {
             character.applyUpdate(update);
-        });
-        updates.addUpdateHandler('message', function (update) {
-            chat.receiveMessage(update['sender'], update['content']);
         });
         updates.addUpdateHandler('redirect', function (update) {
             if (update['location'] != window.location.pathname) {
@@ -207,13 +179,13 @@
 
         initEditListeners();
 
-        initTabListeners();
+        // this happens automatically right now. Should it?
+        // tabs.initTabListeners();
 
         updateHealthBar();
 
         initUpdateHandlers();
 
         initChat();
-
     });
 })();

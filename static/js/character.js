@@ -25,17 +25,16 @@ Character.prototype.get = function (attribute) {
  * @param {String} attribute
  */
 Character.prototype.set = function (attribute, value) {
+    if (attribute in this.data) {
+        this.data[attribute] = value;
+    } else {
+        throw new Error("Could not set " + attribute);
+    }
     if (attribute in this.handlers) {
         var handlerList = this.handlers[attribute];
         for (var i = 0; i < handlerList.length; i++) {
             handlerList[i](value);
         }
-    }
-
-    if (attribute in this.data) {
-        this.data[attribute] = value;
-    } else {
-        throw new Error("Could not set " + attribute);
     }
 };
 

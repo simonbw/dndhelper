@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
     if (window.bundle === undefined) {
         window.bundle = {};
@@ -17,9 +19,6 @@
 
     $(function () {
         updateHealthBars();
-
-        updates.openUpdateStream();
-
         chat.setSender('DM');
         chat.setRecipients(characters);
     });

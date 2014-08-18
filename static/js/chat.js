@@ -2,14 +2,13 @@ var chat = (function () {
     var recipients = [];
     var sender = '';
 
-    $(function () {
-        $('#chat-input').keydown(function (event) {
-            if ($('#chat-input').val().length > 0 && event.which == 13) {
-                sendMessage($(this).val(), getRecipients(), getSender());
-                $(this).val('');
-            }
-        });
-    });
+    function enable() {
+        $('#chat-pane').slideDown();
+    }
+
+    function disable() {
+        $('#chat-pane').slideUp();
+    }
 
     /**
      * Given a character or a character's name, return the character's name.
@@ -148,6 +147,12 @@ var chat = (function () {
     }
 
     $(function () {
+        $('#chat-input').keydown(function (event) {
+            if ($('#chat-input').val().length > 0 && event.which == 13) {
+                sendMessage($(this).val(), getRecipients(), getSender());
+                $(this).val('');
+            }
+        });
         updates.addUpdateHandler('message', function (data) {
             receiveMessage(data.sender, data.content)
         });
@@ -160,7 +165,9 @@ var chat = (function () {
         'removeRecipient': removeRecipient,
         'setRecipients': setRecipients,
         'setSender': setSender,
-        'getSender': getSender
+        'getSender': getSender,
+        'enable': enable,
+        'disable': disable
     };
 })
 ();
