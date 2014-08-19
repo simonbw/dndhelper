@@ -35,15 +35,19 @@
 #wizard-content {
 }
 
-#wizard-previous-button {
+#wizard-previous-button, #wizard-next-button, #wizard-done-button {
     position: absolute;
     bottom: 0;
+    color: #0000EE;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#wizard-previous-button {
     left: 0;
 }
 
 #wizard-next-button, #wizard-done-button {
-    position: absolute;
-    bottom: 0;
     right: 0;
 }
 
@@ -69,6 +73,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.wizard-chooser .choices .choice:hover {
+    background: #EEEEEE;
 }
 
 .wizard-chooser .choices .choice.chosen {

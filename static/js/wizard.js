@@ -14,12 +14,14 @@ window.wizard = (function () {
     function initChoosers() {
         $('.wizard-chooser').each(function () {
             $(this).find(' > .choices > .choice').click(function () {
-                $(this).siblings('.chosen').removeClass('chosen');
-                $(this).addClass('chosen');
-                var $descriptionBox = $(this).parents('.wizard-chooser').find('.choice-descriptions');
-                $descriptionBox.find('.choice-description.chosen').removeClass('chosen');
-                var $chosen = $descriptionBox.find('.choice-description[data-choice=' + $(this).data('choice') + ']');
-                $chosen.addClass('chosen');
+                if (!($(this)).hasClass('chosen')) {
+                    $(this).siblings('.chosen').removeClass('chosen');
+                    $(this).addClass('chosen');
+                    var $descriptionBox = $(this).parents('.wizard-chooser').find('.choice-descriptions');
+                    var $chosen = $descriptionBox.find('.choice-description[data-choice=' + $(this).data('choice') + ']');
+                    $descriptionBox.find('.choice-description.chosen').removeClass('chosen');
+                    $chosen.addClass('chosen');
+                }
             });
         });
     }

@@ -89,9 +89,10 @@ def creation_wizard(name, phase=None):
     g.bundle['character'] = character
     g.bundle['wizard_current_phase'] = phase
     g.bundle['wizard_phases'] = creation_phases
+    g.bundle['update_url'] = url_for('characters.update', name=name)
     done_url = url_for('characters.view', name=name)
     return render_template('wizard/wizard.html', current_phase=phase, phases=creation_phases,
-                           done_url=done_url)
+                           done_url=done_url, character=character)
 
 
 @character_app.route('/<name>/fetch_updates')

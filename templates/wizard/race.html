@@ -4,14 +4,14 @@
 <div class="wizard-chooser" id="race-chooser">
     <div class="choices">
         {% for race in races %}
-            <div class="choice" data-choice="{{ race.name }}">
+            <div class="choice{{ ' chosen' if race == character.race }}" data-choice="{{ race.name }}">
                 {{ race.name }}
             </div>
         {% endfor %}
     </div>
     <div class="choice-descriptions">
         {% for race in races %}
-            <div class="choice-description" data-choice="{{ race.name }}">
+            <div class="choice-description{{ ' chosen' if race == character.race }}" data-choice="{{ race.name }}">
                 This is a description of {{ race.name }}.
                 This is a description of {{ race.name }}.
                 This is a description of {{ race.name }}.
