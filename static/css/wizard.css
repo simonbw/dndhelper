@@ -1,14 +1,90 @@
 #wizard-body {
-    height: 100%;
+    width: 100%;
+    padding-bottom: 40px;
+    position: relative;
 }
 
 #wizard-phase-list {
-    list-style: none;
     margin: 0;
     padding: 0;
+
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    align-content: stretch;
+    justify-content: flex-start;
 }
 
-#wizard-phase-list li {
-    display: inline;
+.wizard-phase-button {
     padding: 2px 8px;
+    margin: 0;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    flex-grow: 1;
+    flex-basis: 1;
+    text-align: center;
+}
+
+#wizard-phase-list > div.current {
+    background: #DDDDDD;
+}
+
+#wizard-content {
+}
+
+#wizard-previous-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#wizard-next-button, #wizard-done-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.wizard-chooser {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.wizard-chooser .choices {
+    display: flex;
+    flex-flow: column wrap;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    width: 200px;
+}
+
+.wizard-chooser .choices .choice {
+    padding: 12px;
+    flex-grow: 1;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.wizard-chooser .choices .choice.chosen {
+    background: #DDDDDD;
+}
+
+.wizard-chooser .choice-descriptions {
+    border: 1px solid #DDDDDD;
+    flex-grow: 1;
+    padding: 12px;
+}
+
+.wizard-chooser .choice-descriptions .choice-description {
+    display: none;
+}
+
+.wizard-chooser .choice-descriptions .choice-description.chosen {
+    display: initial;
 }

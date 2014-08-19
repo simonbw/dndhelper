@@ -17,6 +17,9 @@ character_app = Blueprint('characters', __name__)
 update_handlers = {}
 """:type: dict[str, func]"""
 
+creation_phases = ['race', 'class', 'abilities', 'background', 'skills']
+"""The phases to go through when creating a character."""
+
 
 @character_app.route('/<name>/')
 def view(name):
@@ -54,9 +57,6 @@ def update(name):
     return {'updates': updates.get_updates(name)}
 
 
-wizard_phases = ['abilities', 'skills', 'done']
-
-
 @character_app.route('/create/', methods=["GET", "POST"])
 def create():
     if request.method == "POST":
@@ -64,29 +64,34 @@ def create():
         character = Character(name)
         character.campaign = get_main_campaign()
         db.session.add(character)
-        return redirect(url_for('characters.wizard', name=name, phase='abilities'))
+        return redirect(url_for('characters.creation_wizard', name=name))
     else:
         require_styles('wizard')
         phase = 'name'
-        next_phase = wizard_phases[0]
-        return render_template('character/wizard/name.html', phase=phase, next_phase=next_phase)
+        next_phase = creation_phases[0]
+        return render_template('wizard/name.html', phase=phase, next_phase=next_phase)
 
 
-@character_app.route('/<name>/wizard/', defaults={'phase': wizard_phases[0]})
-@character_app.route('/<name>/wizard/<phase>')
-def wizard(name, phase):
-    if phase not in wizard_phases:
-        print "phase doesn't exist", phase
+@character_app.route('/<name>/create')
+@character_app.route('/<name>/create/<phase>')
+def creation_wizard(name, phase=None):
+    if phase is None:
+        phase = creation_phases[0]
+    if phase not in creation_phases:
+        flash(phase + ' not a valid phase')
         return redirect(url_for('campaign.view'))
-    if phase == 'done':
-        return redirect(url_for('characters.view', name=name))
-    require_styles('wizard')
-    require_scripts('wizard')
     character = get_character(name)
-    g.bundle['update_url'] = url_for('characters.update', name=name)
-    next_phase = wizard_phases[wizard_phases.index(phase) + 1]
-    return render_template('character/wizard/' + phase + '.html', character=character, phases=wizard_phases,
-                           next_phase=next_phase)
+    if character is None:
+        flash('character' + name + ' does not exist')
+        return redirect(url_for('campaign.view'))
+    require_scripts('wizard')
+    require_styles('wizard')
+    g.bundle['character'] = character
+    g.bundle['wizard_current_phase'] = phase
+    g.bundle['wizard_phases'] = creation_phases
+    done_url = url_for('characters.view', name=name)
+    return render_template('wizard/wizard.html', current_phase=phase, phases=creation_phases,
+                           done_url=done_url)
 
 
 @character_app.route('/<name>/fetch_updates')

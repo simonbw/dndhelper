@@ -1,0 +1,22 @@
+{% set classes = list_classes() %}
+
+<h1>Class</h1>
+<div class="wizard-chooser" id="class-chooser">
+    <div class="choices">
+        {% for class in classes %}
+            <div class="choice" data-choice="{{ class.name }}">
+                {{ class.name }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="choice-descriptions">
+        {% for class in classes %}
+            <div class="choice-description" data-choice="{{ class.name }}">
+                This is a description of {{ class.name }}.
+                This is a description of {{ class.name }}.
+                This is a description of {{ class.name }}.
+                This is a description of {{ class.name }}.
+            </div>
+        {% endfor %}
+    </div>
+</div>

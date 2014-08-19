@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <div id="wizard-body">
+        <div id="wizard-phase-list">
+            {% for phase in phases %}
+                <div class="wizard-phase-button" data-phase="{{ phase }}">{{ phase }}</div>
+            {% endfor %}
+        </div>
+
+        <div id="wizard-content">
+            {% for phase in phases %}
+                <div class="wizard-phase" data-phase="{{ phase }}">
+                    {% set template = 'wizard/' + phase + '.html' %} {% include template %}
+                </div>
+            {% endfor %}
+        </div>
+        <a href="#" id="wizard-previous-button">Previous</a>
+        <a href="#" id="wizard-next-button">Next</a>
+        <a id="wizard-done-button" href="{{ done_url }}">Done</a>
+    </div>
+{% endblock main %}

@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body %}
-    <a href="{{ url_for('admin.reset') }}">reset</a>
-{% endblock body %}
+{% block main %}
+    <a href="{{ url_for('admin.reset') }}">Reset Database</a>
+    <a href="{{ url_for('campaign.view') }}">Back</a>
+{% endblock main %}

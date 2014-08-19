@@ -1,8 +1,0 @@
-{% extends 'character/wizard/wizard_layout.html' %}
-
-{% block wizard_body %}
-    <h1>Abilities</h1>
-    {% for ability_score in character.ability_scores %}
-        {{ ability_score.ability.name }} - {{ ability_score.score }}
-    {% endfor %}
-{% endblock wizard_body %}
