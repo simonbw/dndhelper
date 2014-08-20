@@ -25,6 +25,7 @@ window.wizard = (function () {
                 if (!($(this)).hasClass('chosen')) {
                     $(this).siblings('.chosen').removeClass('chosen');
                     $(this).addClass('chosen');
+                    $(this).trigger('chosen');
                     var $descriptionBox = $(this).parents('.wizard-chooser').find('.choice-descriptions');
                     var $chosen = $descriptionBox.find('.choice-description[data-choice=' + $(this).data('choice') + ']');
                     $descriptionBox.find('.choice-description.chosen').removeClass('chosen');

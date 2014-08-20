@@ -24,11 +24,9 @@
      * Save data.
      * @param data
      */
-    function saveData(data) {
+    function saveData(data, callback) {
         console.log('saving data:', data);
-        $.getJSON(character['update_url'], data, function (responseData) {
-            console.log(responseData);
-        });
+        $.getJSON(character['update_url'], data, callback);
     }
 
     /**
@@ -44,8 +42,14 @@
                 $('#name-input').blur();
             }
         });
-        wizard.addDoneCallback(function (phase) {
-            window.location.href = character['view_url'];
+        wizard.addDoneCallback(function () {
+            saveData({'creation_phase': 'done'}, function (responseData) {
+                if (responseData.success) {
+                    window.location.href = character['view_url'];
+                } else {
+                    alert(responseData);
+                }
+            });
         });
     }
 
@@ -53,8 +57,14 @@
      * Bind inputs to save data.
      */
     function initBinds() {
-        $('#name-input').on('input', function () {
+        $('#name-input').on('change', function () {
             saveAttribute('name', $(this).val());
+        });
+        $('#race-chooser').find('.choice').on('chosen', function () {
+            saveAttribute('race', $(this).data('choice'));
+        });
+        $('#class-chooser').find('.choice').on('chosen', function () {
+            saveAttribute('class', $(this).data('choice'));
         });
     }
 

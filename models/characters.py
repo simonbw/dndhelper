@@ -75,27 +75,19 @@ class Character(db.Model):
 
     @property
     def update_url(self):
-        if self.name:
-            return url_for('characters.update', name=self.name)
         return url_for('characters.update', character_id=self.id)
 
     @property
     def fetch_updates_url(self):
-        if self.name:
-            return url_for('characters.fetch_updates', name=self.name)
         return url_for('characters.fetch_updates', character_id=self.id)
 
     @property
     def stream_updates_url(self):
-        if self.name:
-            return url_for('characters.stream_updates', name=self.name)
         return url_for('characters.stream_updates', character_id=self.id)
 
     @property
     def creation_wizard_url(self):
         phase = None #self.creation_phase
-        if self.name:
-            return url_for('characters.creation_wizard', name=self.name, phase=phase)
         return url_for('characters.creation_wizard', character_id=self.id, phase=phase)
 
     def get_recent_messages(self):

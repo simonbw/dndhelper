@@ -6,7 +6,8 @@ from models import db
 from models.abilities import list_abilities
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
-from models.races import list_races
+from models.classes import get_class
+from models.races import list_races, get_race
 from models.skills import list_skills
 import updates
 from util import json_service, require_scripts, require_styles
@@ -131,7 +132,8 @@ def update_name(character, value):
     if old_name != value:
         character.name = str(value)
         db.session.commit()
-        updates.add_redirect_update(character.id, character.view_url)
+        updates.add_update(character.id, {'name', character.name})
+        updates.add_update(character.id, {'view_url', character.view_url})
 
 
 @handler('max_hitpoints')
@@ -165,6 +167,18 @@ def update_personality(character, value):
 @handler('creation_phase')
 def update_creation_phase(character, value):
     character.creation_phase = value
+    db.session.commit()
+
+
+@handler('race')
+def update_race(character, value):
+    character.race = get_race(value)
+    db.session.commit()
+
+
+@handler('class')
+def update_class(character, value):
+    character.character_class = get_class(value)
     db.session.commit()
 
 
