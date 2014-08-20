@@ -1,12 +1,20 @@
+'use strict';
+/*global bundle*/
+
 window.wizard = (function () {
     var currentPhase;
     var phases = bundle['wizard_phases'];
+    var phaseCallbacks = [];
+    var doneCallbacks = [];
 
-    $(function () {
-        initButtons();
+    /**
+     * Initialize the wizard.
+     */
+    function init() {
         initChoosers();
+        initButtons();
         setPhase(bundle['wizard_current_phase']);
-    });
+    }
 
     /**
      * Make all the chooser things do what they should.
@@ -35,6 +43,11 @@ window.wizard = (function () {
         $('.wizard-phase').hide();
         $('.wizard-phase-button').click(function () {
             setPhase($(this).data('phase'));
+        });
+        $('#wizard-done-button').click(function () {
+            doneCallbacks.every(function (callback) {
+                return callback() !== false;
+            });
         });
     }
 
@@ -77,7 +90,6 @@ window.wizard = (function () {
             $('#wizard-previous-button').show();
         }
 
-        console.log('setting phase:', phase);
         currentPhase = phase;
         $('.wizard-phase.current').hide().removeClass('current');
         var $current = $('.wizard-phase[data-phase=' + currentPhase + ']');
@@ -85,10 +97,31 @@ window.wizard = (function () {
         $current.addClass('current');
         $('.wizard-phase-button.current').removeClass('current');
         $('.wizard-phase-button[data-phase=' + currentPhase + ']').addClass('current');
+
+        phaseCallbacks.forEach(function (callback) {
+            return callback(phase) !== false;
+        });
+    }
+
+    /**
+     * Add a function to be called when the phase changes.
+     */
+    function addPhaseCallback(callback) {
+        phaseCallbacks.push(callback);
+    }
+
+    /**
+     * Add a function to be called when the done button is clicked.
+     */
+    function addDoneCallback(callback) {
+        doneCallbacks.push(callback);
     }
 
     return {
+        'phases': phases,
         'setPhase': setPhase,
-        'phases': phases
+        'addPhaseCallback': addPhaseCallback,
+        'addDoneCallback': addDoneCallback,
+        'init': init,
     };
 })();

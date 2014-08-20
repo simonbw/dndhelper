@@ -96,3 +96,21 @@
 .wizard-chooser .choice-descriptions .choice-description.chosen {
     display: initial;
 }
+
+#wizard-body input[type=text] {
+    width: 100%;
+    margin: auto;
+    display: block;
+    padding: 4px;
+    text-align: center;
+    font-size: 32px;
+    outline: none;
+    border: 1px solid transparent;
+    background: #FAFAFA;
+    color: #333333;
+}
+
+#wizard-body input[type=text]:focus {
+    border-bottom: 1px solid #DDDDDD;
+    color: #111111;
+}

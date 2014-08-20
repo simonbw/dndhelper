@@ -4,7 +4,12 @@
     Campaign
     <ul>
         {% for character in campaign.characters %}
-            <li><a href="{{ character.view_url }}">{{ character.name }}</a></li>
+            <li>
+                <a href="{{ character.view_url }}">
+                    {{ character.name if character.name else 'unnamed' }}
+                    {{ '(incomplete)' if character.creation_phase != 'done' }}
+                </a>
+            </li>
         {% endfor %}
         <li><a href="{{ url_for('characters.create') }}">New Character</a></li>
     </ul>

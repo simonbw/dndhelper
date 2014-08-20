@@ -26,6 +26,9 @@ creation_phases = ['name', 'race', 'class', 'abilities', 'background', 'skills']
 def view(character_id=None, name=None):
     character = get_character(character_id or name)
     if character:
+        if character.creation_phase != 'done':
+            return redirect(character.creation_wizard_url)
+
         g.bundle['races'] = list_races()
         g.bundle['skills'] = list_skills()
         g.bundle['abilities'] = list_abilities()
@@ -50,12 +53,14 @@ def view(character_id=None, name=None):
 @json_service
 def update(character_id=None, name=None):
     character = get_character(character_id or name)
-    if character is not None:
-        for key in request.args:
-            if key in update_handlers:
-                update_handlers.get(key)(character, request.args[key])
-            else:
-                raise Exception('Invalid attribute: ' + key)
+    if character is None:
+        raise ValueError('Could not find character: ' + str((character_id, name)))
+    print 'updating', request.args
+    for key in request.args:
+        if key in update_handlers.keys():
+            update_handlers.get(key)(character, request.args[key])
+        else:
+            raise Exception('Invalid attribute: ' + key)
     return {'updates': updates.get_updates(character.id)}
 
 
@@ -73,23 +78,23 @@ def create():
 @character_app.route('/<int:character_id>/create/<phase>')
 @character_app.route('/<name>/create/<phase>')
 def creation_wizard(character_id=None, name=None, phase=None):
-    if phase is None:
-        phase = creation_phases[0]
-    if phase not in creation_phases:
-        flash(phase + ' not a valid phase')
-        return redirect(url_for('campaign.view'))
     character = get_character(character_id or name)
     if character is None:
         flash('character' + (name or str(character_id)) + ' does not exist')
         return redirect(url_for('campaign.view'))
-    require_scripts('wizard')
+    if not phase:
+        phase = character.creation_phase
+    if not phase:
+        phase = creation_phases[0]
+    if phase not in creation_phases:
+        flash('phase "' + phase + '" is not a valid phase')
+        return redirect(url_for('campaign.view'))
+
+    require_scripts('wizard', 'character_creation_wizard')
     require_styles('wizard')
     g.bundle['character'] = character
     g.bundle['wizard_current_phase'] = phase
     g.bundle['wizard_phases'] = creation_phases
-    g.bundle['update_url'] = character.update_url
-    g.bundle['fetch_updates_url'] = character.fetch_updates_url
-    g.bundle['stream_updates_url'] = character.stream_updates_url
     done_url = character.view_url
     return render_template('wizard/wizard.html', current_phase=phase, phases=creation_phases,
                            done_url=done_url, character=character)
@@ -154,6 +159,12 @@ def update_backstory(character, value):
 def update_personality(character, value):
     value = value.replace('<br>', '\n')
     character.personality = value
+    db.session.commit()
+
+
+@handler('creation_phase')
+def update_creation_phase(character, value):
+    character.creation_phase = value
     db.session.commit()
 
 

@@ -31,8 +31,8 @@ def get_character(id_or_name):
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))  # not unique because we might have multiple no names
     campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'))
+    creation_phase = db.Column(db.String(256))
 
     race_id = db.Column(db.Integer, db.ForeignKey('race.id'))
     race = db.relationship("Race")
@@ -40,6 +40,7 @@ class Character(db.Model):
     class_id = db.Column(db.Integer, db.ForeignKey('character_class.id'))
     character_class = db.relationship("CharacterClass")
 
+    name = db.Column(db.String(128))  # not unique because we might have multiple no names
     backstory = db.Column(db.Text)
     personality = db.Column(db.Text)
     hitpoints = db.Column(db.Integer)
@@ -90,6 +91,13 @@ class Character(db.Model):
             return url_for('characters.stream_updates', name=self.name)
         return url_for('characters.stream_updates', character_id=self.id)
 
+    @property
+    def creation_wizard_url(self):
+        phase = None #self.creation_phase
+        if self.name:
+            return url_for('characters.creation_wizard', name=self.name, phase=phase)
+        return url_for('characters.creation_wizard', character_id=self.id, phase=phase)
+
     def get_recent_messages(self):
         return self.messages.order_by(Message.id.desc()).limit(20)
 
@@ -128,7 +136,12 @@ class Character(db.Model):
             'backstory': self.backstory,
             'personality': self.personality,
             'hitpoints': self.hitpoints,
-            'max_hitpoints': self.max_hitpoints
+            'max_hitpoints': self.max_hitpoints,
+            'view_url': self.view_url,
+            'update_url': self.update_url,
+            'fetch_updates_url': self.fetch_updates_url,
+            'stream_updates_url': self.stream_updates_url,
+            'creation_wizard_url': self.creation_wizard_url
         }
         for skill in list_skills():
             serialized[skill.name] = self.get_skill_level(skill)
