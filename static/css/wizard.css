@@ -84,7 +84,7 @@
 }
 
 .wizard-chooser .choice-descriptions {
-    border: 1px solid #DDDDDD;
+    border-left: 1px solid #DDDDDD;
     flex-grow: 1;
     padding: 12px;
 }
@@ -113,4 +113,9 @@
 #wizard-body input[type=text]:focus {
     border-bottom: 1px solid #DDDDDD;
     color: #111111;
+}
+
+#wizard-body textarea {
+    width: 100%;
+    font-family: monospace;
 }
