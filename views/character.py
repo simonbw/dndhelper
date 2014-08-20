@@ -17,93 +17,99 @@ character_app = Blueprint('characters', __name__)
 update_handlers = {}
 """:type: dict[str, func]"""
 
-creation_phases = ['race', 'class', 'abilities', 'background', 'skills']
+creation_phases = ['name', 'race', 'class', 'abilities', 'background', 'skills']
 """The phases to go through when creating a character."""
 
 
+@character_app.route('/<int:character_id>/')
 @character_app.route('/<name>/')
-def view(name):
-    character = get_character(name)
+def view(character_id=None, name=None):
+    character = get_character(character_id or name)
     if character:
         g.bundle['races'] = list_races()
         g.bundle['skills'] = list_skills()
         g.bundle['abilities'] = list_abilities()
         g.bundle['character_data'] = character
-        g.bundle['update_url'] = url_for('characters.update', name=character.name)
-        g.bundle['fetch_updates_url'] = url_for('characters.fetch_updates', name=character.name)
-        g.bundle['stream_updates_url'] = url_for('characters.stream_updates', name=character.name)
+        g.bundle['update_url'] = character.update_url
+        g.bundle['fetch_updates_url'] = character.fetch_updates_url
+        g.bundle['stream_updates_url'] = character.stream_updates_url
 
         require_scripts('chat', 'character', 'updates', 'tabs', 'view_character')
         require_styles('character', 'tabs', 'view_character')
 
         response = make_response(render_template('view_character.html', character=character))
-        response.set_cookie('character', name)
+        response.set_cookie('character', str(character.id))
         return response
     else:
-        flash("Character not found: " + name)
+        flash("Character not found: " + (name or str(character_id)))
         return redirect('/')
 
 
+@character_app.route('/<int:character_id>/update')
 @character_app.route('/<name>/update')
 @json_service
-def update(name):
-    character = get_character(name)
+def update(character_id=None, name=None):
+    character = get_character(character_id or name)
     if character is not None:
         for key in request.args:
             if key in update_handlers:
                 update_handlers.get(key)(character, request.args[key])
             else:
                 raise Exception('Invalid attribute: ' + key)
-    return {'updates': updates.get_updates(name)}
+    return {'updates': updates.get_updates(character.id)}
 
 
-@character_app.route('/create/', methods=["GET", "POST"])
+@character_app.route('/new/')
 def create():
-    if request.method == "POST":
-        name = request.form['name']
-        character = Character(name)
-        character.campaign = get_main_campaign()
-        db.session.add(character)
-        return redirect(url_for('characters.creation_wizard', name=name))
-    else:
-        require_styles('wizard')
-        phase = 'name'
-        next_phase = creation_phases[0]
-        return render_template('wizard/name.html', phase=phase, next_phase=next_phase)
+    character = Character()
+    character.campaign = get_main_campaign()
+    db.session.add(character)
+    db.session.commit()
+    return redirect(url_for('characters.creation_wizard', character_id=character.id))
 
 
+@character_app.route('/<int:character_id>/create')
 @character_app.route('/<name>/create')
+@character_app.route('/<int:character_id>/create/<phase>')
 @character_app.route('/<name>/create/<phase>')
-def creation_wizard(name, phase=None):
+def creation_wizard(character_id=None, name=None, phase=None):
     if phase is None:
         phase = creation_phases[0]
     if phase not in creation_phases:
         flash(phase + ' not a valid phase')
         return redirect(url_for('campaign.view'))
-    character = get_character(name)
+    character = get_character(character_id or name)
     if character is None:
-        flash('character' + name + ' does not exist')
+        flash('character' + (name or str(character_id)) + ' does not exist')
         return redirect(url_for('campaign.view'))
     require_scripts('wizard')
     require_styles('wizard')
     g.bundle['character'] = character
     g.bundle['wizard_current_phase'] = phase
     g.bundle['wizard_phases'] = creation_phases
-    g.bundle['update_url'] = url_for('characters.update', name=name)
-    done_url = url_for('characters.view', name=name)
+    g.bundle['update_url'] = character.update_url
+    g.bundle['fetch_updates_url'] = character.fetch_updates_url
+    g.bundle['stream_updates_url'] = character.stream_updates_url
+    done_url = character.view_url
     return render_template('wizard/wizard.html', current_phase=phase, phases=creation_phases,
                            done_url=done_url, character=character)
 
 
+@character_app.route('/<int:character_id>/fetch_updates')
 @character_app.route('/<name>/fetch_updates')
 @json_service
-def fetch_updates(name):
-    return {'updates': updates.get_updates(name)}
+def fetch_updates(character_id=None, name=None):
+    if character_id is None:
+        character_id = get_character(name).id
+    return {'updates': updates.get_updates(character_id)}
 
 
+@character_app.route('/<int:character_id>/update_stream')
 @character_app.route('/<name>/update_stream')
-def stream_updates(name):
-    return Response(updates.update_stream(name), mimetype="text/event-stream")
+def stream_updates(character_id=None, name=None):
+    if character_id is None:
+        character_id = get_character(name).id
+    return Response(updates.update_stream(character_id), mimetype="text/event-stream")
 
 
 def handler(handler_name):
@@ -120,7 +126,7 @@ def update_name(character, value):
     if old_name != value:
         character.name = str(value)
         db.session.commit()
-        updates.add_redirect_update(old_name, character.view_url)
+        updates.add_redirect_update(character.id, character.view_url)
 
 
 @handler('max_hitpoints')

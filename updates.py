@@ -1,5 +1,5 @@
 """
-Update queues for all characters.
+Update queues for all characters. NOTE: 0 is used for the id of the DM.
 """
 
 from Queue import Empty, Queue
@@ -11,102 +11,106 @@ from util import Jsonifier
 
 _updates = {}
 """
-:type : dict[str, Queue]
+:type : dict[int, Queue]
 """
 
 
-def ensure_exists(character):
+def ensure_exists(character_id):
+    """
+    :type character_id: int
+    """
     lock = Lock()
     lock.acquire()
     try:
-        if character not in _updates:
-            _updates[character] = Queue()
+        if character_id not in _updates:
+            _updates[character_id] = Queue()
     except Exception as e:
         print "something went wrong in ensure_exists", e
     finally:
         lock.release()
 
 
-def has_update(character):
+def has_update(character_id):
     """
-    :type character: str
+    :type character_id: int
     :rtype: bool
     """
-    ensure_exists(character)
-    return not _updates[character].empty()
+    ensure_exists(character_id)
+    return not _updates[character_id].empty()
 
 
-def add_update(character, update):
+def add_update(character_id, update):
     """
-    :type character: str
+    :type character_id: int
     :type update: object
     """
-    ensure_exists(character)
-    print "updates.py:48 - updating for: " + character
-    _updates[character].put(update)
-    # test_queue.put(update)
-    print "updates.py:51 - updated for: " + character
+    ensure_exists(character_id)
+    _updates[character_id].put(update)
 
 
-def get_update(character, block=False):
+def get_update(character_id, block=False):
     """
+    :type character_id: int
     :rtype : object
     """
-    ensure_exists(character)
-    queue = _updates[character]
+    ensure_exists(character_id)
+    queue = _updates[character_id]
     update = queue.get(block)
     queue.task_done()
     return update
 
 
-def get_updates(character):
+def get_updates(character_id):
     """
+    :type character_id: int
     :rtype : list[object]
     """
     u = []
-    while has_update(character):
-        u.append(get_update(character))
+    while has_update(character_id):
+        u.append(get_update(character_id))
     return u
 
 
-def add_redirect_update(character, location):
+def add_redirect_update(character_id, location):
     """
-    :type character: str
+    :type character_id: int
     :type location: str
     """
     update = {
         'type': 'redirect',
         'location': location
     }
-    add_update(character, update)
+    add_update(character_id, update)
 
 
 def add_message_update(message):
     """
     :type message: models.messages.Message
     """
+    sender_id = getattr(message.sender, 'id', 0)
+    recipient_id = getattr(message.recipient, 'id', 0)
     update = {
         'type': 'message',
         'id': message.id,
-        'sender': message.sender_name,
-        'recipient': message.recipient_name,
+        'sender': sender_id,
+        'recipient': recipient_id,
         'content': message.content
     }
-    add_update(message.recipient_name, update)
-    add_update(message.sender_name, update)
+    add_update(sender_id, update)
+    add_update(recipient_id, update)
 
 
-def update_stream(name):
+def update_stream(character_id):
     """
     Create an update stream for a character or the DM.
-    :param name:
+    :type character_id: int
     :return:
     """
     jsonifier = Jsonifier()
     while True:
         try:
-            if has_update(name):
-                updates = [get_update(name)]
+            if has_update(character_id):
+                updates = [get_update(character_id)]
                 data = jsonifier.encode({'updates': updates})
                 yield 'data: ' + 'test data\n'
         except Empty as e:

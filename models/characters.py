@@ -17,18 +17,21 @@ def init_characters():
     db.session.commit()
 
 
-def get_character(name):
+def get_character(id_or_name):
     """
     Load the first character from the database with that name
-    :type name: str
+    :type id_or_name: str|int
     :rtype: Character
     """
-    return Character.query.filter_by(name=name).first()
+    if isinstance(id_or_name, int):
+        return Character.query.get(id_or_name)
+    else:
+        return Character.query.filter_by(name=id_or_name).first()
 
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), unique=True)
+    name = db.Column(db.String(128))  # not unique because we might have multiple no names
     campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'))
 
     race_id = db.Column(db.Integer, db.ForeignKey('race.id'))
@@ -41,12 +44,13 @@ class Character(db.Model):
     personality = db.Column(db.Text)
     hitpoints = db.Column(db.Integer)
     max_hitpoints = db.Column(db.Integer)
+    initiative = db.Column(db.Integer)
 
     # abilities
     # skills
     # messages
 
-    def __init__(self, name, max_hit_points=10, backstory='...', personality='...',
+    def __init__(self, name='', max_hit_points=10, backstory='...', personality='...',
                  race='Human', character_class='Fighter', **kwargs):
         self.name = name
         self.max_hitpoints = max_hit_points
@@ -57,14 +61,34 @@ class Character(db.Model):
         self.character_class = get_class(character_class)
 
         for ability in list_abilities():
-            db.session.add(AbilityScore(ability, self, 10))
+            db.session.add(AbilityScore(ability, self, kwargs.get(ability.name, 10)))
 
         for skill in list_skills():
-            db.session.add(SkillLevel(skill, self, 1))
+            db.session.add(SkillLevel(skill, self, kwargs.get(skill.name, 10)))
 
     @property
     def view_url(self):
-        return url_for('characters.view', name=self.name)
+        if self.name:
+            return url_for('characters.view', name=self.name)
+        return url_for('characters.view', character_id=self.id)
+
+    @property
+    def update_url(self):
+        if self.name:
+            return url_for('characters.update', name=self.name)
+        return url_for('characters.update', character_id=self.id)
+
+    @property
+    def fetch_updates_url(self):
+        if self.name:
+            return url_for('characters.fetch_updates', name=self.name)
+        return url_for('characters.fetch_updates', character_id=self.id)
+
+    @property
+    def stream_updates_url(self):
+        if self.name:
+            return url_for('characters.stream_updates', name=self.name)
+        return url_for('characters.stream_updates', character_id=self.id)
 
     def get_recent_messages(self):
         return self.messages.order_by(Message.id.desc()).limit(20)
