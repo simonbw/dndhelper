@@ -1,0 +1,29 @@
+{% import 'character.html' as characterMacros %}
+
+{% macro characterView(character) %}
+    <div id="character-{{ character.id }}" class="character">
+        <div class="third-container">
+            <div class="character-important">
+                {{ characterMacros.characterHeader(character) }}
+            </div>
+        </div>
+        <div class="two-third-container">
+            <div class="character-information">
+                <div class="icon-wrapper">
+                    <div class="icon icon-message"></div>
+                </div>
+                <div class="icon-wrapper">
+                    <div class="icon icon-dice"></div>
+                </div>
+                <div class="icon-wrapper">
+                    <div class="icon icon-health"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% for character in campaign.characters %}
+    {{ characterView(character) }}
+{% endfor %}
+

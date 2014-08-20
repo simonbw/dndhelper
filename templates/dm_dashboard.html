@@ -1,28 +1,4 @@
 {% extends 'layout.html' %}
-{% import 'character.html' as characterMacros %}
-
-{% macro characterView(character) %}
-    <div id="character-{{ character.id }}" class="character">
-        <div class="third-container">
-            <div class="character-important">
-                {{ characterMacros.characterHeader(character) }}
-            </div>
-        </div>
-        <div class="two-third-container">
-            <div class="character-information">
-                <div class="icon-wrapper">
-                    <div class="icon icon-message"></div>
-                </div>
-                <div class="icon-wrapper">
-                    <div class="icon icon-dice"></div>
-                </div>
-                <div class="icon-wrapper">
-                    <div class="icon icon-health"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endmacro %}
 
 {% block main %}
     <div id="dm-header">
@@ -31,27 +7,27 @@
     <br>
     <hr>
 
-
     <div id="tab-bar">
         <div class="tab-button open" data-tab="party">Party</div>
         <div class="tab-button" data-tab="campaign">Campaign</div>
         <div class="tab-button" data-tab="encounter">Encounter</div>
+        <div class="tab-button" data-tab="monster">Monsters</div>
     </div>
     <div id="tab-content">
-        <div>
-            <div id="party-tab" class="tab open">
-                {% for character in campaign.characters %}
-                    {{ characterView(character) }}
-                {% endfor %}
-            </div>
+        <div id="party-tab" class="tab open">
+            {% include 'dm/party_tab.html' %}
         </div>
 
         <div id="campaign-tab" class="tab">
-            Campaign tab is empty.
+            {% include 'dm/campaign_tab.html' %}
         </div>
 
         <div id="encounter-tab" class="tab">
-            Encounter tab is empty.
+            {% include 'dm/encounter_tab.html' %}
+        </div>
+
+        <div id="monster-tab" class="tab">
+            {% include 'dm/monster_tab.html' %}
         </div>
     </div>
 
