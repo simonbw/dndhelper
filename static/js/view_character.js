@@ -1,9 +1,7 @@
 'use strict';
+/*global bundle*/
 
 (function () {
-    if (window.bundle === undefined) {
-        window.bundle = {};
-    }
     var editingEnabled;
     var character = new Character(bundle['character_data']);
 

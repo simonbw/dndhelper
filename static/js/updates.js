@@ -1,9 +1,7 @@
 'use strict';
+/*global bundle*/
 
 var updates = (function () {
-    if (window.bundle === undefined) {
-        window.bundle = {};
-    }
     var pollWait = 3000;
     var handlers = {};
     var updates_url = bundle['stream_updates_url'];

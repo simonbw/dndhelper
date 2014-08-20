@@ -1,3 +1,6 @@
+'use strict'
+/*global bundle*/
+
 var chat = (function () {
     var recipients = [];
     var sender = '';
@@ -31,9 +34,7 @@ var chat = (function () {
      * @param recipient
      */
     function addRecipient(recipient) {
-        if (recipient instanceof Character) {
-            recipient = recipient.get('name');
-        }
+        recipient = characterName(recipient);
         if (recipients.indexOf(recipient) < 0) {
             recipients.push(recipient);
         }
@@ -44,9 +45,7 @@ var chat = (function () {
      * @param recipient
      */
     function removeRecipient(recipient) {
-        if (recipient instanceof Character) {
-            recipient = recipient.get('name');
-        }
+        recipient = characterName(recipient);
         var i = recipients.indexOf(recipient);
         if (i >= 0) {
             recipients.splice(i, 1);
@@ -58,10 +57,7 @@ var chat = (function () {
      * @param s
      */
     function setSender(s) {
-        if (s instanceof Character) {
-            s = s.get('name');
-            console.log('sender:', s);
-        }
+        s = characterName(s);
         sender = s;
         console.log("New Sender:", sender);
     }
@@ -135,13 +131,13 @@ var chat = (function () {
 
     /**
      * Hash
-     * @param name
+     * @param str
      */
     function stringToColor(str) {
         // str to hash
         for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
         // int/hash to hex
-        for (var i = 0, color = "#"; i < 3; color += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+        for (var j = 0, color = "#"; j < 3; color += ("00" + ((hash >> j++ * 8) & 0xFF).toString(16)).slice(-2));
 
         return color;
     }
