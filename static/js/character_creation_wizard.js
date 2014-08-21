@@ -30,11 +30,12 @@
     function initWizardCallbacks() {
         wizard.addPhaseCallback(function (phase) {
             character.saveAttribute('creation_phase', phase);
+            var $nameInput = $('#name-input');
             if (phase == 'name') {
-                console.log('name phase');
-                $('#name-input').focus();
+                $nameInput.focus();
+                $nameInput.select();
             } else {
-                $('#name-input').blur();
+                $nameInput.blur();
             }
         });
         wizard.addDoneCallback(function () {

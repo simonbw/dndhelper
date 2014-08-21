@@ -65,7 +65,7 @@ class Character(db.Model):
             db.session.add(AbilityScore(ability, self, kwargs.get(ability.name, 10)))
 
         for skill in list_skills():
-            db.session.add(SkillLevel(skill, self, kwargs.get(skill.name, 10)))
+            db.session.add(SkillLevel(skill, self, kwargs.get(skill.name, 0)))
 
     @property
     def view_url(self):
@@ -120,21 +120,38 @@ class Character(db.Model):
         AbilityScore.query.filter_by(character=self, ability=ability).first().score = int(score)
 
     def __serialize__(self):
+        # serialized = {attribute: getattr(self, attribute) for attribute in Character.list_attribute_names()}
         serialized = {
-            'id': self.id,
-            'name': self.name,
-            'class': self.character_class.name,
-            'race': self.race.name,
             'backstory': self.backstory,
+            'race': getattr(self.race, 'name', ''),
+            'character_class': getattr(self.character_class, 'name', ''),
             'personality': self.personality,
             'hitpoints': self.hitpoints,
             'max_hitpoints': self.max_hitpoints,
+            'creation_phase': self.creation_phase,
             'view_url': self.view_url,
             'update_url': self.update_url,
             'fetch_updates_url': self.fetch_updates_url,
             'stream_updates_url': self.stream_updates_url,
-            'creation_wizard_url': self.creation_wizard_url
+            'creation_wizard_url': self.creation_wizard_url,
         }
         for skill in list_skills():
             serialized[skill.name] = self.get_skill_level(skill)
+        for ability in list_abilities():
+            serialized[ability.name] = self.get_ability_score(ability)
         return serialized
+
+    @staticmethod
+    def list_attribute_names():
+        """
+        Return a list of the names of all attributes that can be accessed directly.
+        :rtype: list[str]
+        """
+        attributes = ['id', 'name', 'backstory', 'personality', 'hitpoints', 'max_hitpoints',
+                      'view_url', 'update_url', 'fetch_updates_url', 'stream_updates_url', 'creation_wizard_url',
+                      'creation_phase', 'initiative']
+        # for skill in list_skills():
+        # attributes.append(skill.name)
+        # for ability in list_abilities():
+        # attributes.append(ability.name)
+        return attributes

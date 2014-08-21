@@ -8,6 +8,7 @@ from models.characters import init_characters
 from models.classes import init_classes
 from models.races import init_races
 from models.skills import init_skills
+from views.character import init_handlers
 
 
 admin_app = Blueprint('admin', __name__)
@@ -35,3 +36,4 @@ def init_all():
     init_skills()
     init_classes()
     init_characters()
+    init_handlers()

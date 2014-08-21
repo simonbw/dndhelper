@@ -81,7 +81,7 @@ var updates = (function () {
                             console.log(handlers);
                         }
                     } else {
-                        console.log('Invalid Update: ', update);
+                        console.log('Update missing type: ', update);
                     }
                 }
             }

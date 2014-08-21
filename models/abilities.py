@@ -27,7 +27,7 @@ def make_ability(name, abbreviation):
 def get_ability(name):
     """
     Load the race from the database with that name
-    :type name: str
+    :type name: basestring
     :rtype: Ability
     """
     return Ability.query.filter_by(name=name).first()

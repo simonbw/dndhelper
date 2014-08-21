@@ -21,6 +21,7 @@ class Jsonifier(JSONEncoder):
 def json_service(f):
     """
     Wraps a function that returns a json object.
+    :type f: types.FunctionType
     """
 
     @wraps(f)
@@ -35,6 +36,7 @@ def json_service(f):
                 results['success'] = True
             return jsonify(results)
         except Exception as e:
+            print "error in: ", f.__name__
             print traceback.print_exc()
             return jsonify({'success': False, 'error': str(e)})
 

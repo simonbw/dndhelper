@@ -128,59 +128,99 @@ def handler(handler_name):
     return wrapper
 
 
-@handler('name')
-def update_name(character, value):
-    old_name = character.name
-    if old_name != value:
-        character.name = str(value)
+def init_handlers():
+    @handler('name')
+    def update_name(character, value):
+        old_name = character.name
+        if old_name != value:
+            character.name = str(value)
+            db.session.commit()
+            updates.add_character_update(character.id, 'name', character.name)
+            updates.add_character_update(character.id, 'view_url', character.view_url)
+
+
+    @handler('max_hitpoints')
+    def update_max_hitpoints(character, value):
+        value = int(value)
+        character.hitpoints += value - character.max_hitpoints
+        character.max_hitpoints = value
         db.session.commit()
-        updates.add_update(character.id, {'name', character.name})
-        updates.add_update(character.id, {'view_url', character.view_url})
+        updates.add_character_update(character.id, 'max_hitpoints', character.max_hitpoints)
 
 
-@handler('max_hitpoints')
-def update_max_hitpoints(character, value):
-    value = int(value)
-    character.hitpoints += value - character.max_hitpoints
-    character.max_hitpoints = value
-    db.session.commit()
+    @handler('hitpoints')
+    def update_max_hitpoints(character, value):
+        character.hitpoints = int(value)
+        db.session.commit()
+        updates.add_character_update(character.id, 'hitpoints', character.hitpoints)
 
 
-@handler('hitpoints')
-def update_max_hitpoints(character, value):
-    character.hitpoints = int(value)
-    db.session.commit()
+    @handler('backstory')
+    def update_backstory(character, value):
+        value = value.replace('<br>', '\n')
+        character.backstory = value
+        db.session.commit()
+        updates.add_character_update(character.id, 'backstory', character.backstory)
 
 
-@handler('backstory')
-def update_backstory(character, value):
-    value = value.replace('<br>', '\n')
-    character.backstory = value
-    db.session.commit()
+    @handler('personality')
+    def update_personality(character, value):
+        value = value.replace('<br>', '\n')
+        character.personality = value
+        db.session.commit()
+        updates.add_character_update(character.id, 'personality', character.personality)
 
 
-@handler('personality')
-def update_personality(character, value):
-    value = value.replace('<br>', '\n')
-    character.personality = value
-    db.session.commit()
+    @handler('creation_phase')
+    def update_creation_phase(character, value):
+        character.creation_phase = value
+        db.session.commit()
+        updates.add_character_update(character.id, 'creation_phase', character.creation_phase)
 
 
-@handler('creation_phase')
-def update_creation_phase(character, value):
-    character.creation_phase = value
-    db.session.commit()
+    @handler('race')
+    def update_race(character, value):
+        character.race = get_race(value)
+        db.session.commit()
+        updates.add_character_update(character.id, 'race', character.race)
 
 
-@handler('race')
-def update_race(character, value):
-    character.race = get_race(value)
-    db.session.commit()
+    @handler('class')
+    def update_class(character, value):
+        character.character_class = get_class(value)
+        db.session.commit()
+        updates.add_character_update(character.id, 'class', character.character_class)
 
+    # this is me getting a little to0 functional with python
+    def make_attribute_handler(attribute_name):
+        def attribute_handler(character, value):
+            setattr(character, attribute_name, value)
+            db.session.commit()
+            updates.add_character_update(character.id, attribute_name, getattr(character, attribute_name))
 
-@handler('class')
-def update_class(character, value):
-    character.character_class = get_class(value)
-    db.session.commit()
+        return attribute_handler
 
+    for attribute in Character.list_attribute_names():
+        handler(attribute)(make_attribute_handler(attribute))
 
+    def make_skill_handler(skill):
+        def skill_handler(character, value):
+            character.set_skill_level(skill, value)
+            db.session.commit()
+            updates.add_character_update(character.id, skill.name, character.get_skill_level(skill))
+
+        return skill_handler
+
+    for skill in list_skills():
+        handler(skill.name)(make_skill_handler(skill))
+
+    def make_ability_handler(ability):
+        def ability_handler(character, value):
+            character.set_ability_score(ability, value)
+            db.session.commit()
+            updates.add_character_update(character.id, ability.name, character.get_ability_score(ability))
+
+        return ability_handler
+
+    for ability in list_abilities():
+        handler(ability.name)(make_ability_handler(ability))

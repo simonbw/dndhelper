@@ -9,6 +9,8 @@ from time import sleep
 from util import Jsonifier
 
 
+DM_ID = 0
+
 _updates = {}
 """
 :type : dict[int, Queue]
@@ -46,6 +48,22 @@ def add_update(character_id, update):
     """
     ensure_exists(character_id)
     _updates[character_id].put(update)
+
+
+def add_character_update(character_id, attribute, value):
+    """
+    :type character_id: int
+    :type attribute: str
+    :type value: *
+    """
+    update = {
+        'type': 'character_update',
+        'id': character_id,
+        'attribute': attribute,
+        'value': value
+    }
+    add_update(character_id, update)
+    add_update(DM_ID, update)
 
 
 def get_update(character_id, block=False):

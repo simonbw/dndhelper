@@ -1,1 +1,12 @@
 <h1>Skills</h1>
+
+<table>
+    {% for skill_level in character.skill_levels %}
+        {% set skill_name = skill_level.skill.name %}
+        {% set level = skill_level.level %}
+        <tr title="{{ skill_level.skill.description }}">
+            <td>{{ skill_name }}</td>
+            <td><input type="number" value="{{ level }}" data-bind-write="{{ skill_name }}"></td>
+        </tr>
+    {% endfor %}
+</table>

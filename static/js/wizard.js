@@ -13,6 +13,7 @@ window.wizard = (function () {
     function init() {
         initChoosers();
         initButtons();
+        initInputs();
         setPhase(bundle['wizard_current_phase']);
     }
 
@@ -53,6 +54,18 @@ window.wizard = (function () {
             doneCallbacks.every(function (callback) {
                 return callback() !== false;
             });
+        });
+    }
+
+    /**
+     * Make the inputs do the right thing.
+     */
+    function initInputs() {
+        $('#wizard-body').find('input[type="text"]').keydown(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                $(this).blur();
+            }
         });
     }
 

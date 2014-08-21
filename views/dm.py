@@ -3,6 +3,7 @@ from flask.blueprints import Blueprint
 
 from models.campaign import get_main_campaign
 from updates import update_stream, get_updates
+import updates
 from util import json_service, require_scripts, require_styles
 
 
@@ -23,10 +24,10 @@ def dashboard():
 @dm_app.route('/fetch_updates')
 @json_service
 def fetch_updates():
-    return {'updates': (get_updates('DM'))}
+    return {'updates': (get_updates(updates.DM_ID))}
 
 
 @dm_app.route('/update_stream')
 def stream_updates():
     print "dm.py:34 - stream_updates called"
-    return Response(update_stream('DM'), mimetype="text/event-stream")
+    return Response(update_stream(updates.DM_ID), mimetype="text/event-stream")

@@ -1,4 +1,5 @@
 /**
+ * Represents a character. Can sync data with the server.
  * @param characterData an object containing all the attributes
  * @constructor
  */
@@ -14,10 +15,6 @@ Character.prototype.get = function (attribute) {
     if (attribute.substring(0, 5) == 'base_') {
         return this.data[attribute.substring(5)];
     }
-    switch (attribute) {
-        case 'initiative':
-            return Character.getAbilityModifier(this.get('dexterity'));
-    }
     return this.data[attribute];
 };
 
@@ -28,7 +25,7 @@ Character.prototype.set = function (attribute, value) {
     if (attribute in this.data) {
         this.data[attribute] = value;
     } else {
-        throw new Error("Could not set " + attribute);
+        throw new Error('Invalid attribute ' + attribute + ' to ' + value);
     }
     if (attribute in this.handlers) {
         var handlerList = this.handlers[attribute];
@@ -64,7 +61,11 @@ Character.prototype.bindUpdates = function () {
     var self = this;
     updates.addUpdateHandler('character_update', function (update) {
         if (update['id'] == self.get('id')) {
-            self.applyUpdate(update);
+            try {
+                self.applyUpdate(update);
+            } catch (e) {
+                console.log('could not apply update', update, e);
+            }
         }
     });
 };
