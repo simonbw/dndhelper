@@ -26,8 +26,12 @@ window.wizard = (function () {
                     $(this).siblings('.chosen').removeClass('chosen');
                     $(this).addClass('chosen');
                     $(this).trigger('chosen');
-                    var $descriptionBox = $(this).parents('.wizard-chooser').find('.choice-descriptions');
-                    var $chosen = $descriptionBox.find('.choice-description[data-choice=' + $(this).data('choice') + ']');
+                    var choice = $(this).data('choice');
+                    var $parent = $(this).parents('.wizard-chooser');
+                    $parent.val(choice);
+                    $parent.trigger('change');
+                    var $descriptionBox = $parent.find('.choice-descriptions');
+                    var $chosen = $descriptionBox.find('.choice-description[data-choice=' + choice + ']');
                     $descriptionBox.find('.choice-description.chosen').removeClass('chosen');
                     $chosen.addClass('chosen');
                 }

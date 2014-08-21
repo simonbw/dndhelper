@@ -2,7 +2,10 @@
 /*global bundle*/
 
 (function () {
-    var character = bundle['character'];
+    /**
+     * @type {Character}
+     */
+    var character;
 
     /** Time when the last request was sent. */
     var lastResponse = 0;
@@ -20,21 +23,13 @@
         saveData(data);
     }
 
-    /**
-     * Save data.
-     * @param data
-     */
-    function saveData(data, callback) {
-        console.log('saving data:', data);
-        $.getJSON(character['update_url'], data, callback);
-    }
 
     /**
      * Add callbacks to the wizard.
      */
     function initWizardCallbacks() {
         wizard.addPhaseCallback(function (phase) {
-            saveData({'creation_phase': phase});
+            character.saveAttribute('creation_phase', phase);
             if (phase == 'name') {
                 console.log('name phase');
                 $('#name-input').focus();
@@ -43,7 +38,7 @@
             }
         });
         wizard.addDoneCallback(function () {
-            saveData({'creation_phase': 'done'}, function (responseData) {
+            character.saveAttribute('creation_phase', 'done', function (responseData) {
                 if (responseData.success) {
                     window.location.href = character['view_url'];
                 } else {
@@ -57,18 +52,15 @@
      * Bind inputs to save data.
      */
     function initBinds() {
-        $('#name-input').on('change', function () {
-            saveAttribute('name', $(this).val());
-        });
-        $('#race-chooser').find('.choice').on('chosen', function () {
-            saveAttribute('race', $(this).data('choice'));
-        });
-        $('#class-chooser').find('.choice').on('chosen', function () {
-            saveAttribute('class', $(this).data('choice'));
+        // TODO: Read binds
+        $('[data-bind-write]').on('change', function () {
+            character.saveAttribute($(this).data('bind-write'), $(this).val());
         });
     }
 
     $(function () {
+        character = new Character(bundle['character']);
+        character.bindUpdates();
         initWizardCallbacks();
         initBinds();
         wizard.init();

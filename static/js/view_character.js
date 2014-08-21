@@ -12,6 +12,9 @@
         return skill.name;
     });
 
+    /**
+     * Update the healthbar to
+     */
     function updateHealthBar() {
         var health = character.get('hitpoints');
         var maxHealth = character.get('max_hitpoints');
@@ -151,12 +154,8 @@
         skillNames.concat(abilityNames).forEach(addSimpleIdHandler);
         // TODO: handle all character updates
         character.addHandler('hitpoints', updateHealthBar);
-        character.addHandler('max_hitpoints', updateHealthBar);
 
-        //handlers for updates sent from server
-        updates.addUpdateHandler('attribute', function (update) {
-            character.applyUpdate(update);
-        });
+        character.addHandler('max_hitpoints', updateHealthBar);
         updates.addUpdateHandler('redirect', function (update) {
             if (update['location'] != window.location.pathname) {
                 console.log('redirecting from ' + window.location.pathname + ' to: ' + update['location']);
@@ -176,6 +175,10 @@
 
     // called onload
     $(function () {
+        updates.openUpdateStream();
+
+        character.bindUpdates();
+
         disableEdit();
 
         initEditListeners();

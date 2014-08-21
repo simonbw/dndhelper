@@ -91,11 +91,13 @@ def creation_wizard(character_id=None, name=None, phase=None):
         flash('phase "' + phase + '" is not a valid phase')
         return redirect(url_for('campaign.view'))
 
-    require_scripts('wizard', 'character_creation_wizard')
+    require_scripts('character', 'updates', 'wizard', 'character_creation_wizard')
     require_styles('wizard')
     g.bundle['character'] = character
     g.bundle['wizard_current_phase'] = phase
     g.bundle['wizard_phases'] = creation_phases
+    g.bundle['fetch_updates_url'] = character.fetch_updates_url
+    g.bundle['stream_updates_url'] = character.stream_updates_url
     done_url = character.view_url
     return render_template('wizard/wizard.html', current_phase=phase, phases=creation_phases,
                            done_url=done_url, character=character)

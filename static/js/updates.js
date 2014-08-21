@@ -90,10 +90,6 @@ var updates = (function () {
         }
     }
 
-    $(function () {
-        openUpdateStream();
-    });
-
     return {
         'addUpdateHandler': addUpdateHandler,
         'openUpdateStream': openUpdateStream,
