@@ -25,6 +25,6 @@
 }
 
 #enable-edit, #disable-edit {
-    text-decoration: underline;
     cursor: pointer;
+    text-decoration: underline;
 }

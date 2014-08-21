@@ -1,28 +1,28 @@
 .name {
     float: right;
-    padding-right: 20px;
     font-size: 20px;
+    padding-right: 20px;
 }
 
 .health-bar-background {
-    margin-left: 20px;
     background-color: #b22222;
-    text-align: center;
-    position: relative;
     height: 20px;
+    margin-left: 20px;
+    position: relative;
+    text-align: center;
 }
 
 .health {
     background-color: #228b22;
     height: 20px;
-    width: 100%;
     position: absolute;
+    width: 100%;
 }
 
 .hit-points {
+    color: white;
     position: relative;
     z-index: 10;
-    color: white;
 }
 
 .character-top-header {
@@ -35,13 +35,15 @@
 }
 
 .separator {
-    position: absolute;
     left: -8px;
+    position: absolute;
 }
+
 .race {
     float: right;
     padding-right: 20px;
 }
+
 .class {
     float: left;
     padding-left: 20px;

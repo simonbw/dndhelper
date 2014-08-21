@@ -1,14 +1,14 @@
 #wizard-body {
-    width: 100%;
     padding-bottom: 40px;
     position: relative;
+    width: 100%;
 }
 
 #wizard-phase-list {
-    margin: 0;
-    padding: 0;
-
     display: flex;
+    margin: 0;
+
+    padding: 0;
     flex-flow: row wrap;
     align-items: stretch;
     align-content: stretch;
@@ -16,16 +16,16 @@
 }
 
 .wizard-phase-button {
-    padding: 2px 8px;
-    margin: 0;
     cursor: default;
+    margin: 0;
+    padding: 2px 8px;
+    text-align: center;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     flex-grow: 1;
     flex-basis: 1;
-    text-align: center;
 }
 
 #wizard-phase-list > div.current {
@@ -36,11 +36,11 @@
 }
 
 #wizard-previous-button, #wizard-next-button, #wizard-done-button {
-    position: absolute;
     bottom: 0;
     color: #0000EE;
-    text-decoration: underline;
     cursor: pointer;
+    position: absolute;
+    text-decoration: underline;
 }
 
 #wizard-previous-button {
@@ -58,17 +58,17 @@
 
 .wizard-chooser .choices {
     display: flex;
+    width: 200px;
     flex-flow: column wrap;
     flex-grow: 0;
-    flex-shrink: 0;
 
-    width: 200px;
+    flex-shrink: 0;
 }
 
 .wizard-chooser .choices .choice {
+    cursor: default;
     padding: 12px;
     flex-grow: 1;
-    cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -85,8 +85,8 @@
 
 .wizard-chooser .choice-descriptions {
     border-left: 1px solid #DDDDDD;
-    flex-grow: 1;
     padding: 12px;
+    flex-grow: 1;
 }
 
 .wizard-chooser .choice-descriptions .choice-description {
@@ -98,16 +98,16 @@
 }
 
 #wizard-body input[type=text] {
-    width: 100%;
-    margin: auto;
+    background: #FAFAFA;
+    border: 1px solid transparent;
+    color: #333333;
     display: block;
+    font-size: 32px;
+    margin: auto;
+    outline: none;
     padding: 4px;
     text-align: center;
-    font-size: 32px;
-    outline: none;
-    border: 1px solid transparent;
-    background: #FAFAFA;
-    color: #333333;
+    width: 100%;
 }
 
 #wizard-body input[type=text]:focus {
@@ -116,6 +116,6 @@
 }
 
 #wizard-body textarea {
-    width: 100%;
     font-family: monospace;
+    width: 100%;
 }

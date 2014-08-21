@@ -1,7 +1,6 @@
-
-$(function() {
+$(function () {
     $('.dice-roller').each(
-        function(ind, roller) {
+        function (ind, roller) {
             $('button', roller).click(
                 function (ev) {
                     var count = parseInt($('input', roller).val());

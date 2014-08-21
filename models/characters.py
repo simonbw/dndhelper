@@ -87,7 +87,7 @@ class Character(db.Model):
 
     @property
     def creation_wizard_url(self):
-        phase = None #self.creation_phase
+        phase = None  # self.creation_phase
         return url_for('characters.creation_wizard', character_id=self.id, phase=phase)
 
     def get_recent_messages(self):

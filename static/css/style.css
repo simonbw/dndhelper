@@ -7,17 +7,17 @@ html {
 }
 
 body {
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     margin: 0;
-    padding: 0;
     /*font-family: "Andale Mono", AndaleMono, monospace;*/
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;;
+    padding: 0;;
 }
 
 main {
-    overflow: hidden;
     margin: auto;
-    padding: 0px;
     max-width: 800px;
+    overflow: hidden;
+    padding: 0px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -25,9 +25,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2 {
+    font-size: 1.5em;
     margin: 0;
     padding: 0;
-    font-size: 1.5em;
     text-align: center;
 }
 
@@ -38,8 +38,8 @@ h3 {
 
 section {
     /*border: 1px solid black;*/
-    padding: 15px;
     margin: 10px;
+    padding: 15px;
 }
 
 .flex-columns {
@@ -51,8 +51,8 @@ section {
 }
 
 .flex-columns > * {
-    flex-grow: 1;
     border: 1px dotted blue;
+    flex-grow: 1;
 }
 
 .flex-rows {
@@ -68,38 +68,38 @@ section {
 }
 
 .half-container {
-    width: 50%;
     float: left;
     position: relative;
+    width: 50%;
 }
 
 .third-container {
-    width: 33%;
     float: left;
     position: relative;
+    width: 33%;
 }
 
 .two-third-container {
-    width: 67%;
     float: left;
     position: relative;
+    width: 67%;
 }
 
 .icon-wrapper {
     background: lightblue;
-    overflow: auto;
+    border: 2px solid #4682b4;
+    border-radius: 8px;
+    cursor: pointer;
     float: left;
     margin: 5px;
-    border-radius: 8px;
-    border: 2px solid #4682b4;
-    cursor: pointer;
+    overflow: auto;
 }
 
 .icon {
     background: url(../images/icons.png);
-    width: 30px;
     height: 25px;
     margin: 5px;
+    width: 30px;
 }
 
 .icon-message {

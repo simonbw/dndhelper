@@ -6,12 +6,12 @@
 }
 
 .tab-button {
-    cursor: pointer;
-    font-size: 20px;
     background: #D3D3D3;
-    display: table-cell;
-    text-align: center;
     border: 1px solid #666666;
+    cursor: pointer;
+    display: table-cell;
+    font-size: 20px;
+    text-align: center;
 }
 
 .tab-button + .tab-button {
@@ -24,8 +24,8 @@
 
 .tab-button.disabled, .tab-button.disabled:hover {
     background: #dddddd;
-    cursor: default;
     color: #666666;
+    cursor: default;
 }
 
 .tab-button.open, .tab-button.open:hover {

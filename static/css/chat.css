@@ -1,19 +1,19 @@
 #chat-pane {
-    position: fixed;
+    background: #FFFFFF;
+    border-top: 1px solid #999999;
     bottom: 0;
     left: 0px;
     overflow: hidden;
-    border-top: 1px solid #999999;
-    width: 100%;
-    background: #FFFFFF;
     padding: 8px;
+    position: fixed;
+    width: 100%;
 }
 
 #chat-messages {
-    padding: 4px;
     font-size: 14px;
-    overflow-y: scroll;
     max-height: 180px;
+    overflow-y: scroll;
+    padding: 4px;
 }
 
 #chat-messages {
