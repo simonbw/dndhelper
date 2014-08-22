@@ -135,7 +135,7 @@
     transition: border 0.1s;
     width: 100%;
     min-height: 100px;
-    max-height: 400px;
+    max-height: 250px;
     overflow: auto;
 }
 
