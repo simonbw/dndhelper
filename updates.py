@@ -132,7 +132,7 @@ def update_stream(character_id):
                 data = jsonifier.encode({'updates': updates})
                 yield 'data: ' + 'test data\n'
         except Empty as e:
-            print "updates.py:121 - Empty Queue Exception"
+            print "updates.py:135 - Empty Queue Exception"
         except Exception as e:
-            print "updates.py:123 - Something went wrong", e
+            print "updates.py:137 - Something went wrong", e
         sleep(0.5)  # do we need this?

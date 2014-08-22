@@ -68,7 +68,6 @@ var updates = (function () {
                 var updateList = data['updates'];
                 for (var i = 0; i < updateList.length; i++) {
                     var update = updateList[i];
-                    console.log("update:", update);
                     if ('type' in update) {
                         var type = update['type'];
                         if (type in handlers) {

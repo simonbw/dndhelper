@@ -54,6 +54,12 @@
 .wizard-chooser {
     display: flex;
     flex-flow: row nowrap;
+    color: #777777;
+}
+
+.wizard-chooser:focus {
+    color: #000000;
+    outline: none;
 }
 
 .wizard-chooser .choices {
@@ -72,6 +78,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+
     user-select: none;
 }
 
@@ -107,6 +114,7 @@
     outline: none;
     padding: 4px;
     text-align: center;
+    transition: border 0.1s;
     width: 100%;
 }
 
@@ -115,7 +123,7 @@
     color: #111111;
 }
 
-#wizard-body textarea {
+#wizard-body [contenteditable=true] {
     background: #FAFAFA;
     border: 1px solid transparent;
     color: #333333;
@@ -123,11 +131,23 @@
     font-size: 16px;
     margin: auto;
     outline: none;
-    padding: 4px;
+    padding: 8px;
+    transition: border 0.1s;
     width: 100%;
+    min-height: 100px;
+    max-height: 400px;
+    overflow: auto;
 }
 
-#wizard-body input[type=text]:focus {
-    border-bottom: 1px solid #DDDDDD;
+#wizard-body [contenteditable=true]:focus {
+    border: 1px solid #DDDDDD;
     color: #111111;
+}
+
+@media (min-width: 600px) {
+    .columns {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
 }

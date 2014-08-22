@@ -1,7 +1,9 @@
 from flask import render_template, Response, g, url_for, flash, redirect
 from flask.blueprints import Blueprint
+from models import db
 
 from models.campaign import get_main_campaign
+from models.monsters import Monster
 from updates import update_stream, get_updates
 import updates
 from util import json_service, require_scripts, require_styles

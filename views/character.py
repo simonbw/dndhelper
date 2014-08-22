@@ -56,7 +56,6 @@ def update(character_id=None, name=None):
     character = get_character(character_id or name)
     if character is None:
         raise ValueError('Could not find character: ' + str((character_id, name)))
-    print 'updating', request.args
     for key in request.args:
         if key in update_handlers.keys():
             update_handlers.get(key)(character, request.args[key])

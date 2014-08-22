@@ -79,7 +79,6 @@ Character.prototype.bindUpdates = function () {
 Character.prototype.saveAttribute = function (attribute, value, callback) {
     var data = {};
     data[attribute] = value;
-    console.log('saving character data', data);
     $.getJSON(this.get('update_url'), data, function (responseData) {
         updates.processResponseData(responseData);
         if (callback) {

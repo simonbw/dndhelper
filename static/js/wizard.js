@@ -14,6 +14,7 @@ window.wizard = (function () {
         initChoosers();
         initButtons();
         initInputs();
+        initControl();
         setPhase(bundle['wizard_current_phase']);
     }
 
@@ -21,22 +22,77 @@ window.wizard = (function () {
      * Make all the chooser things do what they should.
      */
     function initChoosers() {
-        $('.wizard-chooser').each(function () {
-            $(this).find(' > .choices > .choice').click(function () {
-                if (!($(this)).hasClass('chosen')) {
-                    $(this).siblings('.chosen').removeClass('chosen');
-                    $(this).addClass('chosen');
-                    $(this).trigger('chosen');
-                    var choice = $(this).data('choice');
-                    var $parent = $(this).parents('.wizard-chooser');
-                    $parent.val(choice);
-                    $parent.trigger('change');
-                    var $descriptionBox = $parent.find('.choice-descriptions');
-                    var $chosen = $descriptionBox.find('.choice-description[data-choice=' + choice + ']');
-                    $descriptionBox.find('.choice-description.chosen').removeClass('chosen');
+        var $wizardChoosers = $('.wizard-chooser');
+        $wizardChoosers.each(function () {
+            var self = this;
+            self.setChosen = function (choice) {
+                var $chosen;
+                if (typeof s == 'string') {
+                    $chosen = $(self).find('.choice[data-choice=' + choice + ']');
+                } else {
+                    $chosen = $(choice);
+                    choice = $chosen.data('choice');
+                }
+                if (!$chosen.hasClass('chose')) {
+                    $(self).find('.chosen').removeClass('chosen');
                     $chosen.addClass('chosen');
+                    $(self).val($chosen.data('choice'));
+                    $(self).trigger('change');
+                }
+                $(self).find('.choice-description[data-choice=' + choice + ']').addClass('chosen');
+            };
+
+            self.chooseNext = function () {
+                var chosen = $(self).find('.choice.chosen')[0];
+                if (chosen) {
+                    var next = $(chosen).next('.choice')[0];
+                    if (next) {
+                        self.setChosen(next);
+                    }
+                } else {
+                    self.setChosen($(self.find('.choice')[0])); // default to the first choice
+                }
+            };
+
+            self.choosePrevious = function () {
+                var chosen = $(self).find('.choice.chosen')[0];
+                if (chosen) {
+                    var prev = $(chosen).prev('.choice')[0];
+                    if (prev) {
+                        self.setChosen(prev);
+                    }
+                } else {
+                    self.setChosen($(self.find('.choice')[0])); // default to the first choice
+                }
+            };
+
+            $(this).find('.choice').click(function () {
+                if (!($(this)).hasClass('chosen')) {
+                    self.setChosen(this);
                 }
             });
+        });
+
+        $wizardChoosers.prop('tabIndex', -1);
+
+        $wizardChoosers.focus(function () {
+            console.log('chooser has focus');
+        });
+
+        $wizardChoosers.blur(function () {
+            console.log('chooser lost focus');
+        });
+
+        $wizardChoosers.keydown(function (event) {
+            console.log('received');
+            if (event.which == 38) { // up
+                this.choosePrevious();
+            } else if (event.which == 40) { // up
+                this.chooseNext();
+            } else if (event.which == 13) {
+                $(this).blur();
+                return false;
+            }
         });
     }
 
@@ -65,6 +121,25 @@ window.wizard = (function () {
             if (event.which == 13) {
                 event.preventDefault();
                 $(this).blur();
+            }
+        });
+    }
+
+    function initControl() {
+        // when nothing has focus, enter takes you to the next page
+        $(document).keydown(function (event) {
+            if (event.target == document || event.target == document.body || event.target == null) {
+                if (event.which == 13) {
+                    if (event.shiftKey) {
+                        previousPhase();
+                    } else {
+                        nextPhase();
+                    }
+                } else if (event.which == 37) {
+                    previousPhase();
+                } else if (event.which == 39) {
+                    nextPhase();
+                }
             }
         });
     }
@@ -115,6 +190,8 @@ window.wizard = (function () {
         $current.addClass('current');
         $('.wizard-phase-button.current').removeClass('current');
         $('.wizard-phase-button[data-phase=' + currentPhase + ']').addClass('current');
+
+        $current.find('input, .wizard-chooser, textarea, [contenteditable=true]').first().focus(); // focus first input
 
         phaseCallbacks.forEach(function (callback) {
             return callback(phase) !== false;
