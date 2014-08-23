@@ -76,16 +76,17 @@ class Skill(db.Model):
 
 
 class SkillLevel(db.Model):
-    character_id = db.Column(db.Integer, db.ForeignKey('character.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
     level = db.Column(db.Integer)
 
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
     skill = db.relationship('Skill')
-    character = db.relationship('Character', backref="skill_levels")
 
-    def __init__(self, skill, character, level):
+    component_id = db.Column(db.Integer, db.ForeignKey('skills_component.id'), primary_key=True)
+    component = db.relationship('SkillsComponent', backref="skill_levels")
+
+    def __init__(self, skill, component, level):
         self.skill = skill
-        self.character = character
+        self.component = component
         self.level = level
 
     def __serialize__(self):
@@ -93,3 +94,26 @@ class SkillLevel(db.Model):
             'skill': getattr(self.skill, 'name', ''),
             'character': getattr(self.character, 'name', '')
         }
+
+
+class SkillsComponent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # skill_levels
+
+    def set_level(self, skill, level):
+        skill_level = SkillLevel.query.filter_by(component=self, skill=skill).first()
+        if skill_level is None:
+            SkillLevel(skill, self, level)
+        else:
+            skill_level.level = level
+
+    def get_level(self, skill):
+        skill_level = SkillLevel.query.filter_by(component=self, skill=skill).first()
+        if skill_level is None:
+            return 0
+        else:
+            return skill_level.level
+
+    def __iter__(self):
+        for skill_level in self.skill_levels:
+            yield (skill_level.skill, skill_level.level)

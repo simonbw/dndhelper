@@ -1,12 +1,16 @@
 from flask import url_for
 
 from models import db
-from models.abilities import list_abilities, AbilityScore, get_ability
+from models.abilities import list_abilities, get_ability, AbilitiesComponent
 from models.campaign import get_main_campaign
 from models.classes import get_class
 from models.messages import Message
 from models.races import get_race
-from models.skills import SkillLevel, list_skills, get_skill
+from models.skills import list_skills, get_skill, SkillsComponent
+
+DEFAULT_SKILL_LEVEL = 0
+
+DEFAULT_ABILITY_SCORE = 10
 
 
 def init_characters():
@@ -47,8 +51,12 @@ class Character(db.Model):
     max_hitpoints = db.Column(db.Integer)
     initiative = db.Column(db.Integer)
 
-    # abilities
-    # skills
+    abilities_component_id = db.Column(db.ForeignKey("abilities_component.id"))
+    abilities = db.relationship("AbilitiesComponent")
+
+    skills_component_id = db.Column(db.ForeignKey("skills_component.id"))
+    skills = db.relationship("SkillsComponent")
+
     # messages
 
     def __init__(self, name='', max_hit_points=10, backstory='...', personality='...',
@@ -61,11 +69,14 @@ class Character(db.Model):
         self.race = get_race(race)
         self.character_class = get_class(character_class)
 
+        self.abilities = AbilitiesComponent()
+        self.skills = SkillsComponent()
+
         for ability in list_abilities():
-            db.session.add(AbilityScore(ability, self, kwargs.get(ability.name, 10)))
+            self.abilities.set_score(ability, kwargs.get(ability.name, DEFAULT_ABILITY_SCORE))
 
         for skill in list_skills():
-            db.session.add(SkillLevel(skill, self, kwargs.get(skill.name, 0)))
+            self.skills.set_level(skill, kwargs.get(skill.name, DEFAULT_SKILL_LEVEL))
 
     @property
     def view_url(self):
@@ -99,12 +110,16 @@ class Character(db.Model):
         """
         if isinstance(skill, str):
             skill = get_skill(skill)
-        return getattr(SkillLevel.query.filter_by(character=self, skill=skill).first(), 'level', 0)
+        return self.skills.get_level(skill)
 
     def set_skill_level(self, skill, level):
+        """
+        :type skill: Skill|str
+        :type level: int
+        """
         if isinstance(skill, basestring):
             skill = get_skill(skill)
-        SkillLevel.query.filter_by(character=self, skill=skill).first().level = int(level)
+        return self.skills.set_level(skill, level)
 
     def get_ability_score(self, ability):
         """
@@ -112,16 +127,21 @@ class Character(db.Model):
         """
         if isinstance(ability, basestring):
             ability = get_ability(ability)
-        return getattr(AbilityScore.query.filter_by(character=self, ability=ability).first(), 'score', 10)
+        return self.abilities.get_score(ability)
 
     def set_ability_score(self, ability, score):
+        """
+        :type ability: Skill|str
+        :type score: int
+        """
         if isinstance(ability, basestring):
             ability = get_ability(ability)
-        AbilityScore.query.filter_by(character=self, ability=ability).first().score = int(score)
+        self.abilities.set_score(ability, score)
 
     def __serialize__(self):
         # serialized = {attribute: getattr(self, attribute) for attribute in Character.list_attribute_names()}
         serialized = {
+            'name': self.name,
             'backstory': self.backstory,
             'race': getattr(self.race, 'name', ''),
             'character_class': getattr(self.character_class, 'name', ''),
@@ -137,8 +157,8 @@ class Character(db.Model):
         }
         for skill in list_skills():
             serialized[skill.name] = self.get_skill_level(skill)
-        for ability in list_abilities():
-            serialized[ability.name] = self.get_ability_score(ability)
+        for ability, score in self.abilities:
+            serialized[ability.name] = score
         return serialized
 
     @staticmethod

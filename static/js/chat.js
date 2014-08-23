@@ -20,11 +20,11 @@ var chat = (function () {
      */
     function characterName(character) {
         if (character instanceof String) {
-            return String(character);
+            return character;
         } else if (character instanceof Character) {
             return String(character.get('name'));
         } else if (typeof character == "string") {
-            return character
+            return character;
         }
         throw new Error('Not a character: ' + character);
     }
@@ -57,9 +57,7 @@ var chat = (function () {
      * @param s
      */
     function setSender(s) {
-        s = characterName(s);
-        sender = s;
-        console.log("New Sender:", sender);
+        sender = characterName(s);
     }
 
     function getSender() {
@@ -98,6 +96,7 @@ var chat = (function () {
         console.log("Sending Message:", requestData);
         $.post(url, requestData, function (responseData) {
             updates.processResponseData(responseData);
+            console.log(responseData);
         });
     }
 

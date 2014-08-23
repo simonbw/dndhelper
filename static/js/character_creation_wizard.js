@@ -34,8 +34,17 @@
      * Bind inputs to save data.
      */
     function initBinds() {
-        $('[data-bind-read]').each(function () {
-
+        $('[data-bind-text]').each(function () {
+            var self = this;
+            character.addHandler($(this).data("bind-text"), function (value) {
+                self.text(value);
+            });
+        });
+        $('[data-bind-value]').each(function () {
+            var self = this;
+            character.addHandler($(this).data("bind-value"), function (value) {
+                self.val(value);
+            });
         });
 
         $('[data-bind-write]').on('change', function () {

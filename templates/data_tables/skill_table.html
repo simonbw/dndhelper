@@ -2,10 +2,10 @@
 
 {% block data %}
     <table>
-        {% for skill_level in character.skill_levels %}
-            <tr title="{{ skill_level.skill.description }}">
-                <td>{{ skill_level.skill.name }}</td>
-                <td class="skill {{ skill_level.skill.name }}">{{ skill_level.level }}</td>
+        {% for skill, level in character.skills %}
+            <tr title="{{ skill.description }}">
+                <td>{{ skill.name }}</td>
+                <td class="skill {{ skill.name }}">{{ level }}</td>
             </tr>
         {% endfor %}
     </table>

@@ -33,8 +33,7 @@ def view(character_id=None, name=None):
         g.bundle['races'] = list_races()
         g.bundle['skills'] = list_skills()
         g.bundle['abilities'] = list_abilities()
-        g.bundle['character_data'] = character
-        g.bundle['update_url'] = character.update_url
+        g.bundle['character'] = character
         g.bundle['fetch_updates_url'] = character.fetch_updates_url
         g.bundle['stream_updates_url'] = character.stream_updates_url
 

@@ -59,14 +59,38 @@ class Ability(db.Model):
 
 
 class AbilityScore(db.Model):
-    character_id = db.Column(db.Integer, db.ForeignKey('character.id'), primary_key=True)
-    ability_id = db.Column(db.Integer, db.ForeignKey('ability.id'), primary_key=True)
     score = db.Column(db.Integer)
 
+    ability_id = db.Column(db.Integer, db.ForeignKey('ability.id'), primary_key=True)
     ability = db.relationship('Ability')
-    character = db.relationship('Character', backref="ability_scores")
 
-    def __init__(self, ability, character, level):
+    component_id = db.Column(db.Integer, db.ForeignKey('abilities_component.id'), primary_key=True)
+    component = db.relationship('AbilitiesComponent', backref="ability_scores")
+
+    def __init__(self, ability, component, score):
         self.ability = ability
-        self.character = character
-        self.score = int(level)
+        self.component = component
+        self.score = int(score)
+
+
+class AbilitiesComponent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # ability_scores
+
+    def set_score(self, ability, score):
+        ability_score = AbilityScore.query.filter_by(component=self, ability=ability).first()
+        if ability_score is None:
+            AbilityScore(ability, self, score)
+        else:
+            ability_score.score = score
+
+    def get_score(self, ability):
+        ability_score = AbilityScore.query.filter_by(component=self, ability=ability).first()
+        if ability_score is None:
+            return 0
+        else:
+            return ability_score.score
+
+    def __iter__(self):
+        for ability_score in self.ability_scores:
+            yield (ability_score.ability, ability_score.score)

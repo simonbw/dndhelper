@@ -110,8 +110,8 @@ def add_message_update(message):
     update = {
         'type': 'message',
         'id': message.id,
-        'sender': sender_id,
-        'recipient': recipient_id,
+        'sender': message.sender_name,
+        'recipient': message.recipient_name,
         'content': message.content
     }
     add_update(sender_id, update)

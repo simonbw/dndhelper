@@ -2,8 +2,7 @@
 
 <div class="columns">
     <table>
-        {% for skill in list_skills() %}
-            {% set level = character.get_skill_level(skill) %}
+        {% for skill, level in character.skills %}
             <tr title="{{ skill.description }}">
                 <td>{{ skill.name }}</td>
                 <td><input type="number" value="{{ level }}" data-bind-write="{{ skill.name }}"></td>

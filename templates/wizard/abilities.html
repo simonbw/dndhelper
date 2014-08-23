@@ -1,12 +1,10 @@
 <h1>Abilities</h1>
 
 <table>
-    {% for ability_score in character.ability_scores %}
-        {% set ability_name = ability_score.ability.name %}
-        {% set score = ability_score.score %}
-        <tr title="{{ ability_score.ability.description }}">
-            <td>{{ ability_name }}</td>
-            <td><input type="number" value="{{ score }}" data-bind-write="{{ ability_name }}"></td>
+    {% for ability, score in character.abilities %}
+        <tr title="{{ ability.description }}">
+            <td>{{ ability.name }}</td>
+            <td><input type="number" value="{{ score }}" data-bind-write="{{ ability.name }}"></td>
         </tr>
     {% endfor %}
 </table>

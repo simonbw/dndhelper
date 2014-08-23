@@ -3,7 +3,7 @@ from flask import Blueprint, request
 from models import db
 from models.characters import get_character
 from models.messages import Message
-from updates import add_message_update, get_updates
+from updates import add_message_update, get_updates, DM_ID
 from util import json_service
 
 
@@ -25,6 +25,6 @@ def chat():
         add_message_update(message)
 
     if sender is not None:
-        return {'updates': get_updates(sender.name)}
+        return {'updates': get_updates(sender.id)}
     else:
-        return {'updates': get_updates('DM')}
+        return {'updates': get_updates(DM_ID)}

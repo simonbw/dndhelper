@@ -75,16 +75,7 @@ window.wizard = (function () {
 
         $wizardChoosers.prop('tabIndex', -1);
 
-        $wizardChoosers.focus(function () {
-            console.log('chooser has focus');
-        });
-
-        $wizardChoosers.blur(function () {
-            console.log('chooser lost focus');
-        });
-
         $wizardChoosers.keydown(function (event) {
-            console.log('received');
             if (event.which == 38) { // up
                 this.choosePrevious();
             } else if (event.which == 40) { // up
