@@ -17,10 +17,10 @@ DEFAULT_ABILITY_SCORE = 10
 
 def init_characters():
     make_character('Simieth')
+    make_character('Balthor')
     make_character('Tamora')
     make_character('Leora')
     make_character('Glenn')
-    make_character('Balthor')
 
 
 def make_character(name):
