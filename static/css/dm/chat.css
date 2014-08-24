@@ -1,0 +1,24 @@
+.chat-box {
+    display: flex;
+    height: 50%;
+    flex-flow: column nowrap;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.chat-box h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.chat-box .chat-messages {
+    height: 100%;
+    flex-grow: 1;
+    background: #EEEEEE;
+}
+
+.chat-box textarea {
+    border: 1px solid #AAAAAA;
+    margin: 0;
+    overflow: hidden;
+}

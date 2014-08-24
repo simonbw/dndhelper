@@ -5,19 +5,19 @@
     <a href="{{ url_for('campaign.view') }}">Home</a>
     <br><br>
     <div id="view-character-header">
-        {{ characterMacros.characterHeader(character) }}
+        {{ macros.character_header(character) }}
     </div>
     <br>
     <hr>
 
-    <div id="tab-bar">
-        <div class="tab-button open" data-tab="stat">Stats</div>
+    <div class="tab-bar">
+        <div class="tab-button open" data-tab="stats">Stats</div>
         <div class="tab-button" data-tab="inventory">Inventory</div>
         <div class="tab-button" data-tab="spell">Spells</div>
         <div class="tab-button" data-tab="character">Character</div>
     </div>
     <div id="tab-content">
-        <div id="stat-tab" class="tab open">
+        <div id="stats-tab" class="tab open">
             {% include 'character/stats_tab.html' %}
         </div>
 

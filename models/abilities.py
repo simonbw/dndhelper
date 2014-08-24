@@ -57,6 +57,9 @@ class Ability(db.Model):
             'description': self.description
         }
 
+    def __str__(self):
+        return self.name
+
 
 class AbilityScore(db.Model):
     score = db.Column(db.Integer)

@@ -48,7 +48,14 @@ Character.prototype.applyUpdate = function (update) {
  * @param handler
  */
 Character.prototype.addHandler = function (attribute, handler) {
-    if (!(attribute in  this.handlers)) {
+//    console.log(this.get('name') + ' (' + this.get('id') + ') binding: ' + attribute);
+    if (typeof attribute != 'string') {
+        throw new TypeError('Attribute must be string, but is:' + attribute);
+    }
+    if (typeof handler !== 'function') {
+        throw new TypeError('Handler must be a function:' + handler);
+    }
+    if (!(attribute in this.handlers)) {
         this.handlers[attribute] = [];
     }
     this.handlers[attribute].push(handler);
@@ -61,11 +68,7 @@ Character.prototype.bindUpdates = function () {
     var self = this;
     updates.addUpdateHandler('character_update', function (update) {
         if (update['id'] == self.get('id')) {
-            try {
-                self.applyUpdate(update);
-            } catch (e) {
-                console.log('could not apply update', update, e);
-            }
+            self.applyUpdate(update);
         }
     });
 };

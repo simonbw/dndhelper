@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div id="dm-container">
+        <div id="left-bar">
+            {% include 'dm/partylist.html' %}
+        </div>
+        <div id="dm-main">
+            {% for character in campaign.characters %}
+                {% include 'dm/character_info.html' %}
+            {% endfor %}
+        </div>
+        <div id="right-bar">
+            {% include 'dm/roller.html' %}
+            {% include 'dm/chatbox.html' %}
+        </div>
+    </div>
+{% endblock body %}

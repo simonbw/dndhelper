@@ -1,7 +1,5 @@
 .character {
-    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
-    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
+    border: 1px solid #000000;
     float: left;
     margin-bottom: 15px;
     margin-top: 15px;

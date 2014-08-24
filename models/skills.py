@@ -4,11 +4,11 @@ from models.abilities import get_ability
 
 
 def init_skills():
-    strength = get_ability('strength')
-    dexterity = get_ability('dexterity')
-    intelligence = get_ability('intelligence')
-    wisdom = get_ability('wisdom')
-    charisma = get_ability('charisma')
+    strength = get_ability('Strength')
+    dexterity = get_ability('Dexterity')
+    intelligence = get_ability('Intelligence')
+    wisdom = get_ability('Wisdom')
+    charisma = get_ability('Charisma')
 
     make_skill('Athletics', strength)
     make_skill('Acrobatics', dexterity)
@@ -47,10 +47,13 @@ def get_skill(name):
     return Skill.query.filter_by(name=name).first()
 
 
-def list_skills():
+def list_skills(ability=None):
     """
+    :type ability: Ability
     :rtype: list of [Skill]
     """
+    if ability is not None:
+        return Skill.query.filter_by(ability=ability)
     return Skill.query.all()
 
 
@@ -73,6 +76,9 @@ class Skill(db.Model):
             'description': self.description,
             'ability': getattr(self.ability, 'name', '')
         }
+
+    def __str__(self):
+        return self.name
 
 
 class SkillLevel(db.Model):

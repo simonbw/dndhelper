@@ -1,8 +1,7 @@
-
-#tab-bar {
-    display: table;
-    table-layout: fixed;
+.tab-bar {
     width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
 .tab-button {
@@ -12,6 +11,7 @@
     display: table-cell;
     font-size: 20px;
     text-align: center;
+    flex-grow: 1;
 }
 
 .tab-button + .tab-button {

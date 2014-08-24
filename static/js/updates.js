@@ -2,7 +2,7 @@
 /*global bundle*/
 
 var updates = (function () {
-    var pollWait = 3000;
+    var pollWait = 1000;
     var handlers = {};
     var updates_url = bundle['stream_updates_url'];
 
@@ -41,7 +41,7 @@ var updates = (function () {
      */
     function addUpdateHandler(type, handler) {
         console.log('Added update handler for ' + type);
-        if (!('type' in handlers)) {
+        if (!(type in handlers)) {
             handlers[type] = [];
         }
         handlers[type].push(handler);

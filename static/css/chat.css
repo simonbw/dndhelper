@@ -1,29 +1,33 @@
-#chat-pane {
-    background: #FFFFFF;
-    border-top: 1px solid #999999;
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
-    padding: 8px;
-    position: fixed;
-    width: 100%;
-}
-
-#chat-messages {
+.chat-messages {
     font-size: 14px;
-    max-height: 180px;
     overflow-y: auto;
     padding: 4px;
 }
 
-#chat-messages .sender {
+.chat-messages .sender {
     font-weight: bold;
 }
 
-#chat-messages .content {
+.chat-messages .content {
 
 }
 
-#chat-pane input[type=text] {
+.chat-box textarea {
     width: 100%;
+    resize: none;
 }
+
+
+
+
+
+/*#chat-pane {*/
+/*background: #FFFFFF;*/
+/*border-top: 1px solid #999999;*/
+/*bottom: 0;*/
+/*left: 0;*/
+/*overflow: hidden;*/
+/*padding: 8px;*/
+/*position: fixed;*/
+/*width: 100%;*/
+/*}*/

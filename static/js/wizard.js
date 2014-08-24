@@ -22,8 +22,8 @@ window.wizard = (function () {
      * Make all the chooser things do what they should.
      */
     function initChoosers() {
-        var $wizardChoosers = $('.wizard-chooser');
-        $wizardChoosers.each(function () {
+        var $choosers = $('.chooser');
+        $choosers.each(function () {
             var self = this;
             self.setChosen = function (choice) {
                 var $chosen;
@@ -73,9 +73,8 @@ window.wizard = (function () {
             });
         });
 
-        $wizardChoosers.prop('tabIndex', -1);
-
-        $wizardChoosers.keydown(function (event) {
+        $choosers.prop('tabIndex', -1); // can gain focus, but not from pressing tab
+        $choosers.keydown(function (event) {
             if (event.which == 38) { // up
                 this.choosePrevious();
             } else if (event.which == 40) { // up
@@ -182,7 +181,7 @@ window.wizard = (function () {
         $('.wizard-phase-button.current').removeClass('current');
         $('.wizard-phase-button[data-phase=' + currentPhase + ']').addClass('current');
 
-        $current.find('input, .wizard-chooser, textarea, [contenteditable=true]').first().focus(); // focus first input
+        $current.find('input, .chooser, textarea, [contenteditable=true]').first().focus(); // focus first input
 
         phaseCallbacks.forEach(function (callback) {
             return callback(phase) !== false;

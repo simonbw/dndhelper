@@ -118,6 +118,17 @@ def add_message_update(message):
     add_update(recipient_id, update)
 
 
+def add_new_character_update(character):
+    """
+    :type character: Character
+    """
+    update = {
+        'type': 'new_character',
+        'character': character.__serialize__()
+    }
+    add_update(DM_ID, update)
+
+
 def update_stream(character_id):
     """
     Create an update stream for a character or the DM.

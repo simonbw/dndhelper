@@ -1,3 +1,27 @@
+{% macro data_table(data) %}
+    <table class="data-table">
+        {% for row in data %}
+            <tr>
+                {% for column in row %}
+                    <td>{{ column }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endmacro %}
+
+{# For abilities and skills #}
+{% macro stats_table(stats) %}
+    <table class="data-table">
+        {% for stat, value in stats %}
+            <tr title="{{ stat.description }}">
+                <td>{{ stat }}</td>
+                <td data-bind-text="{{ stat }}">{{ value }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endmacro %}
+
 {% macro character_header(character) %}
     <div class="character-header">
         <div class="character-top-header">
@@ -25,4 +49,3 @@
         </div>
     </div>
 {% endmacro %}
-

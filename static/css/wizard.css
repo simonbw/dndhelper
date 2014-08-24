@@ -51,59 +51,6 @@
     right: 0;
 }
 
-.wizard-chooser {
-    display: flex;
-    flex-flow: row nowrap;
-    color: #777777;
-}
-
-.wizard-chooser:focus {
-    color: #000000;
-    outline: none;
-}
-
-.wizard-chooser .choices {
-    display: flex;
-    width: 200px;
-    flex-flow: column wrap;
-    flex-grow: 0;
-
-    flex-shrink: 0;
-}
-
-.wizard-chooser .choices .choice {
-    cursor: default;
-    padding: 12px;
-    flex-grow: 1;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-
-    user-select: none;
-}
-
-.wizard-chooser .choices .choice:hover {
-    background: #EEEEEE;
-}
-
-.wizard-chooser .choices .choice.chosen {
-    background: #DDDDDD;
-}
-
-.wizard-chooser .choice-descriptions {
-    border-left: 1px solid #DDDDDD;
-    padding: 12px;
-    flex-grow: 1;
-}
-
-.wizard-chooser .choice-descriptions .choice-description {
-    display: none;
-}
-
-.wizard-chooser .choice-descriptions .choice-description.chosen {
-    display: initial;
-}
-
 #wizard-body input[type=text] {
     background: #FAFAFA;
     border: 1px solid transparent;

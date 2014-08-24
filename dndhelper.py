@@ -50,7 +50,7 @@ def before_request():
     g.bundle = OrderedDict()
     g.bundle['chat_url'] = url_for('chat.chat')
 
-    g.scripts = ['lib/jquery', 'dice_roller']
+    g.scripts = ['lib/jquery', 'lib/jquery.autocomplete', 'dice_roller']
     g.stylesheets = ['style', 'chat']
 
 

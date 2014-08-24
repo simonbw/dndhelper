@@ -1,26 +1,12 @@
 <div class="half-container">
     <section class="abilities">
         <h2>Abilities</h2>
-        <table>
-            {% for ability, score in character.abilities %}
-                <tr title="{{ ability.description }}">
-                    <td>{{ ability.name }}</td>
-                    <td data-bind-text="{{ ability.name }}">{{ score }}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        {{ macros.data_table(character.abilities) }}
     </section>
 </div>
 <div class="half-container">
     <section class="skills">
         <h2>Skills</h2>
-        <table>
-            {% for skill, level in character.skills %}
-                <tr title="{{ skill.description }}">
-                    <td>{{ skill.name }}</td>
-                    <td data-bind-text="{{ skill.name }}">{{ level }}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        {{ macros.data_table(character.skills) }}
     </section>
 </div>

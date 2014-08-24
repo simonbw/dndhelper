@@ -1,0 +1,59 @@
+.character {
+
+}
+
+.character h2 {
+    border-top: 1px solid #AAAAAA;
+    border-bottom: 1px solid #AAAAAA;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.character h2.closed {
+}
+
+.character h3 {
+
+}
+
+.character h4 {
+    text-align: center;
+}
+
+.character section {
+    margin: 0;
+    padding: 12px;
+}
+
+.character .stats, .character .background {
+    display: flex;
+    width: 100%;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.character .skills, .character .abilities {
+    padding: 12px;
+    flex-grow: 1;
+}
+
+.character .skills .box {
+    column-count: 3;
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-gap: 2px;
+    -moz-column-gap: 2px;
+    -webkit-column-gap: 2px;
+    flex-grow: 1;
+}
+
+.character .personality, .character .backstory {
+    padding: 12px;
+}
+
+.character .inventory .item {
+}

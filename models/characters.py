@@ -1,3 +1,5 @@
+import random
+
 from flask import url_for
 
 from models import db
@@ -14,10 +16,23 @@ DEFAULT_ABILITY_SCORE = 10
 
 
 def init_characters():
-    character = Character('Simieth', 12)
-    character.hitpoints = 8
-    character.campaign = get_main_campaign()
+    make_character('Simieth')
+    make_character('Tamora')
+    make_character('Leora')
+    make_character('Glenn')
+    make_character('Balthor')
+
+
+def make_character(name):
+    character = Character(name, random.randint(8, 16))
     db.session.add(character)
+    db.session.commit()
+    character.hitpoints = random.randint(1, character.max_hitpoints)
+    character.campaign = get_main_campaign()
+    for ability in list_abilities():
+        character.set_ability_score(ability, random.randint(8, 18))
+    for skill in list_skills():
+        character.set_skill_level(skill, random.randint(0, 6))
     db.session.commit()
 
 
@@ -61,6 +76,7 @@ class Character(db.Model):
 
     def __init__(self, name='', max_hit_points=10, backstory='...', personality='...',
                  race='Human', character_class='Fighter', **kwargs):
+        self.name = name
         self.name = name
         self.max_hitpoints = max_hit_points
         self.hitpoints = max_hit_points
@@ -141,6 +157,7 @@ class Character(db.Model):
     def __serialize__(self):
         # serialized = {attribute: getattr(self, attribute) for attribute in Character.list_attribute_names()}
         serialized = {
+            'id': self.id,
             'name': self.name,
             'backstory': self.backstory,
             'race': getattr(self.race, 'name', ''),

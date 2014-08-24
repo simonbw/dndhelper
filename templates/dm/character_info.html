@@ -1,0 +1,39 @@
+{% import 'macros.html' as macros %}
+
+<div class="character" id="character-{{ character.id }}" data-character-id="{{ character.id }}">
+    <h2>Stats</h2>
+    <section class="stats">
+        <div class="abilities">
+            <h4>Abilities</h4>
+
+            <div class="box">
+                {{ macros.stats_table(character.abilities) }}
+            </div>
+        </div>
+        <div class="skills">
+            <h4>Skills</h4>
+
+            <div class="box">
+                {{ macros.stats_table(character.skills) }}
+            </div>
+        </div>
+    </section>
+    <h2>Character Details</h2>
+    <section class="background">
+        <div class="backstory" data-bind-text="backstory">
+            {{ character.backstory }}
+        </div>
+        <div class="personality" data-bind-text="personality">
+            {{ character.personality }}
+        </div>
+    </section>
+    <h2>Inventory</h2>
+    <section class="inventory">
+        <div>An item</div>
+        <div>An item</div>
+        <div>An item</div>
+        <div>An item</div>
+        <div>An item</div>
+        <div>An item</div>
+    </section>
+</div>

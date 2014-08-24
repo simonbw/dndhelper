@@ -1,7 +1,7 @@
 from flask import render_template, Response, g, url_for, flash, redirect
 from flask.blueprints import Blueprint
-from models import db
 
+from models import db
 from models.campaign import get_main_campaign
 from models.monsters import Monster
 from updates import update_stream, get_updates
@@ -14,6 +14,7 @@ dm_app = Blueprint('dm', __name__)
 creation_phases = ['name', 'abilities', 'modifiers', 'description']
 """The phases to go through when creating a monster."""
 
+
 @dm_app.route('/')
 def dashboard():
     campaign = get_main_campaign()
@@ -21,8 +22,8 @@ def dashboard():
     g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
     g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
     require_scripts('chat', 'character', 'updates', 'tabs', 'dm_dashboard')
-    require_styles('character', 'tabs', 'dm_dashboard')
-    return render_template("dm_dashboard.html", campaign=campaign)
+    require_styles('character', 'tabs', 'dm/dashboard', 'dm/party', 'dm/roller', 'dm/chat', 'dm/character_info')
+    return render_template("dm/dashboard.html", campaign=campaign)
 
 
 @dm_app.route('/fetch_updates')

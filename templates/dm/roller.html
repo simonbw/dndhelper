@@ -1,0 +1,16 @@
+<div id="roller">
+    <label>
+        Roll for
+        <select>
+            {% for ability in list_abilities() %}
+                {% if ability.skills %}
+                    <optgroup label="{{ ability.name }}">
+                        {% for skill in ability.skills %}
+                            <option>{{ skill.name }}</option>
+                        {% endfor %}
+                    </optgroup>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </label>
+</div>

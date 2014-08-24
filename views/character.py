@@ -38,7 +38,7 @@ def view(character_id=None, name=None):
         g.bundle['stream_updates_url'] = character.stream_updates_url
 
         require_scripts('chat', 'character', 'updates', 'tabs', 'view_character')
-        require_styles('character', 'tabs', 'view_character')
+        require_styles('character', 'tabs')
 
         response = make_response(render_template('view_character.html', character=character))
         response.set_cookie('character', str(character.id))
@@ -69,6 +69,7 @@ def create():
     character.campaign = get_main_campaign()
     db.session.add(character)
     db.session.commit()
+    updates.add_new_character_update(character)
     return redirect(url_for('characters.creation_wizard', character_id=character.id))
 
 

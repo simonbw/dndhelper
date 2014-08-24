@@ -1,6 +1,21 @@
 'use strict'
 /*global bundle*/
 
+window.Chat = (function () {
+    function Chat($input) {
+        this.$input = $input;
+        this.sender = null;
+    }
+
+    Chat.prototype.setSender = function (sender) {
+        this.sender = sender;
+    };
+
+
+    return Chat;
+})();
+
+
 var chat = (function () {
     var recipients = [];
     var sender = '';
@@ -108,7 +123,7 @@ var chat = (function () {
     function receiveMessage(sender, content) {
         console.log('message recieved', sender, content);
 
-        const $li = $('<div>', {
+        var $li = $('<div>', {
             'class': 'message'
         });
         var $sender = $('<span>', {
@@ -122,7 +137,7 @@ var chat = (function () {
             'class': 'content',
             'text': content
         }));
-        var $messages = $('#chat-messages');
+        var $messages = $('.chat-messages');
         $messages.append($li);
 
         $messages.scrollTop($messages.prop('scrollHeight')); //always scroll to bottom
@@ -142,10 +157,12 @@ var chat = (function () {
     }
 
     $(function () {
-        $('#chat-input').keydown(function (event) {
-            if ($('#chat-input').val().length > 0 && event.which == 13) {
+        $('.chat-box textarea').keypress(function (event) {
+            if (event.which == 13 && !event.shiftKey) {
                 sendMessage($(this).val(), getRecipients(), getSender());
                 $(this).val('');
+                event.preventDefault();
+                return false;
             }
         });
         updates.addUpdateHandler('message', function (data) {
