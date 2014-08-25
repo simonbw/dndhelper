@@ -156,7 +156,7 @@ window.wizard = (function () {
 
     /**
      * Go to a specific phase.
-     * @param phase
+     * @param {string} phase
      */
     function setPhase(phase) {
         if (phase == phases[phases.length - 1]) {
@@ -207,6 +207,6 @@ window.wizard = (function () {
         'setPhase': setPhase,
         'addPhaseCallback': addPhaseCallback,
         'addDoneCallback': addDoneCallback,
-        'init': init,
+        'init': init
     };
 })();

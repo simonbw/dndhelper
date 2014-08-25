@@ -8,7 +8,7 @@
             {% endfor %}
         </div>
 
-        <div id="wizard-content">
+        <div id="wizard-content" {% if character.id %}data-character-id="{{ character.id }}"{% endif %}>
             {% for phase in phases %}
                 <div class="wizard-phase" data-phase="{{ phase }}">
                     {% set template = 'wizard/' + phase + '.html' %} {% include template %}

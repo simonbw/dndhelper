@@ -5,7 +5,7 @@
         {% for skill, level in character.skills %}
             <tr title="{{ skill.description }}">
                 <td>{{ skill.name }}</td>
-                <td><input type="number" value="{{ level }}" data-bind-write="{{ skill.name }}"></td>
+                <td><input type="number" value="{{ level }}" data-bind-write="character.{{ skill.name }}"></td>
             </tr>
         {% endfor %}
     </table>

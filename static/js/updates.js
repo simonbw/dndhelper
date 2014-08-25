@@ -2,9 +2,12 @@
 /*global bundle*/
 
 var updates = (function () {
+    /** Time between poll requests when no stream. */
     var pollWait = 1000;
-    var handlers = {};
+    /** @type {string} */
     var updates_url = bundle['stream_updates_url'];
+    /** @type {Object.<string, Array.<function(Object)>>} */
+    var handlers = {};
 
     if (window.EventSource === undefined || true) {
         console.log("Using polling fallback");
@@ -13,7 +16,7 @@ var updates = (function () {
 
         /**
          * A replacement for EventSource that uses polling instead of Server Sent Events.
-         * @param url
+         * @param {string} url
          * @constructor
          */
         window.EventSource = function (url) {
@@ -36,11 +39,10 @@ var updates = (function () {
 
     /**
      * Bind a function to a certain type of update.
-     * @param type
-     * @param handler
+     * @param {string} type
+     * @param {function(Object)} handler
      */
     function addUpdateHandler(type, handler) {
-        console.log('Added update handler for ' + type);
         if (!(type in handlers)) {
             handlers[type] = [];
         }
@@ -60,7 +62,7 @@ var updates = (function () {
 
     /**
      * Process a response.
-     * @param data
+     * @param {Object} data
      */
     function processResponseData(data) {
         if (data['success']) {
@@ -88,6 +90,7 @@ var updates = (function () {
             console.log(data);
         }
     }
+
 
     return {
         'addUpdateHandler': addUpdateHandler,

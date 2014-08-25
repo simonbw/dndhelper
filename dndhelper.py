@@ -9,6 +9,7 @@ from flask import Flask, g, url_for
 from models import db
 from models.abilities import list_abilities
 from models.classes import list_classes
+from models.inventory import list_items
 from models.races import list_races
 from models.skills import list_skills
 from util import Jsonifier
@@ -17,6 +18,7 @@ from views.campaign import campaign_app
 from views.character import character_app
 from views.chat import chat_app
 from views.dm import dm_app
+from views.items import items_app
 
 
 def create_app(debug=False):
@@ -41,6 +43,7 @@ def create_app(debug=False):
     app.register_blueprint(character_app, url_prefix='/character')
     app.register_blueprint(dm_app, url_prefix='/dm')
     app.register_blueprint(chat_app, url_prefix='/chat')
+    app.register_blueprint(items_app, url_prefix='/items')
 
     return app
 
@@ -67,6 +70,7 @@ def context_processor():
         'list_skills': list_skills,
         'list_races': list_races,
         'list_classes': list_classes,
+        'list_items': list_items,
         'bundle': g.bundle,
         'scripts': g.scripts,
         'stylesheets': g.stylesheets

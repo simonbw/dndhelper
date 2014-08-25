@@ -1,7 +1,7 @@
 <div id="party">
     {% for character in campaign.characters %}
         <div id="party-member-{{ character.id }}" data-character-id="{{ character.id }}" class="party-member">
-            <h3>{{ character.name }}</h3>
+            <h3 data-bind-text="character.name">{{ character.name }}</h3>
 
             <div class="action-bar">
 

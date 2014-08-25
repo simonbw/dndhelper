@@ -12,7 +12,8 @@
     user-select: none;
 }
 
-.character h2.closed {
+.character h2.closed:not(:last-of-type) {
+    margin-bottom: -1px;
 }
 
 .character h3 {
@@ -55,5 +56,16 @@
     padding: 12px;
 }
 
-.character .inventory .item {
+.character .inventory .item-box {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.character .inventory .item-box .item {
+    width: 100px;
+    background: #EEEEEE;
+    margin: 12px;
+    padding: 4px;
+    flex-grow: 1;
 }

@@ -16,7 +16,7 @@
         {% for stat, value in stats %}
             <tr title="{{ stat.description }}">
                 <td>{{ stat }}</td>
-                <td data-bind-text="{{ stat }}">{{ value }}</td>
+                <td data-bind-text="character.{{ stat }}">{{ value }}</td>
             </tr>
         {% endfor %}
     </table>

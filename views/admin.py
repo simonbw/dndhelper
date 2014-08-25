@@ -6,6 +6,7 @@ from models import db
 from models.abilities import init_abilities
 from models.characters import init_characters
 from models.classes import init_classes
+from models.inventory import init_items
 from models.races import init_races
 from models.skills import init_skills
 from views.character import init_handlers
@@ -37,3 +38,4 @@ def init_all():
     init_classes()
     init_characters()
     init_handlers()
+    init_items()

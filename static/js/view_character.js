@@ -2,7 +2,8 @@
 /*global bundle*/
 
 (function () {
-    var character = new Character(bundle['character']);
+
+    var character;
 
     /**
      * Update the healthbar to
@@ -18,19 +19,6 @@
      * Handle updates.
      */
     function initUpdateHandlers() {
-        $('[data-bind-text]').each(function () {
-            var self = this;
-            character.addHandler($(this).data("bind-read"), function (value) {
-                self.text(value);
-            });
-        });
-        $('[data-bind-value]').each(function () {
-            var self = this;
-            character.addHandler($(this).data("bind-read"), function (value) {
-                self.val(value);
-            });
-        });
-
         // update healthbar when health changes
         character.addHandler('hitpoints', updateHealthBar);
         character.addHandler('max_hitpoints', updateHealthBar);
@@ -54,17 +42,16 @@
 
     // called onload
     $(function () {
-        updates.openUpdateStream();
-
-        character.bindUpdates();
+        characters.init(true);
+        character = characters.all[0];
+        binds.init();
 
         // this happens automatically right now. Should it?
         // tabs.initTabListeners();
 
         updateHealthBar();
-
         initUpdateHandlers();
-
         initChat();
+        updates.openUpdateStream();
     });
 })();

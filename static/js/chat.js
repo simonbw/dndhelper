@@ -30,7 +30,7 @@ var chat = (function () {
 
     /**
      * Given a character or a character's name, return the character's name.
-     * @param character
+     * @param {Character|String|string} character
      * @returns {string}
      */
     function characterName(character) {
@@ -46,7 +46,7 @@ var chat = (function () {
 
     /**
      * Add a recipient to the list of recipients.
-     * @param recipient
+     * @param {Character|String|string} recipient
      */
     function addRecipient(recipient) {
         recipient = characterName(recipient);
@@ -57,7 +57,7 @@ var chat = (function () {
 
     /**
      * Remove a list from the list of recipients.
-     * @param recipient
+     * @param {Character|String|string} recipient
      */
     function removeRecipient(recipient) {
         recipient = characterName(recipient);
@@ -69,37 +69,42 @@ var chat = (function () {
 
     /**
      * Set the sender of the messages.
-     * @param s
+     * @param {Character|String|string} s
      */
     function setSender(s) {
         sender = characterName(s);
     }
 
+    /**
+     * @returns {string} - the sender
+     */
     function getSender() {
         return sender;
     }
 
+    /**
+     * @returns {Array} - the recipients
+     */
     function getRecipients() {
         return recipients;
     }
 
     /**
      * Set the list of recipients;
-     * @param r
+     * @param {Array.<string>} r
      */
     function setRecipients(r) {
         recipients.length = 0; // sketchy way to clear an array
         r.forEach(function (recipient) {
             addRecipient(recipient);
         });
-        console.log('recipients:', recipients);
     }
 
     /**
      * Send a message.
-     * @param content
-     * @param recipients
-     * @param sender
+     * @param {string} content
+     * @param {Array<Character|String|string>} recipients
+     * @param {Character|String|string} sender
      */
     function sendMessage(content, recipients, sender) {
         var url = bundle['chat_url'];
@@ -117,8 +122,8 @@ var chat = (function () {
 
     /**
      * Add a message.
-     * @param sender
-     * @param content
+     * @param {Character|String|string} sender
+     * @param {string} content
      */
     function receiveMessage(sender, content) {
         console.log('message recieved', sender, content);
@@ -144,8 +149,9 @@ var chat = (function () {
     }
 
     /**
-     * Hash
-     * @param str
+     * Hash a string to a hex color string.
+     * @param {string} str
+     * @returns {string}
      */
     function stringToColor(str) {
         // str to hash
@@ -156,6 +162,7 @@ var chat = (function () {
         return color;
     }
 
+    
     $(function () {
         $('.chat-box textarea').keypress(function (event) {
             if (event.which == 13 && !event.shiftKey) {

@@ -6,6 +6,7 @@ from models import db
 from models.abilities import list_abilities, get_ability, AbilitiesComponent
 from models.campaign import get_main_campaign
 from models.classes import get_class
+from models.inventory import Inventory
 from models.messages import Message
 from models.races import get_race
 from models.skills import list_skills, get_skill, SkillsComponent
@@ -54,10 +55,10 @@ class Character(db.Model):
     creation_phase = db.Column(db.String(256))
 
     race_id = db.Column(db.Integer, db.ForeignKey('race.id'))
-    race = db.relationship("Race")
+    race = db.relationship('Race')
 
     class_id = db.Column(db.Integer, db.ForeignKey('character_class.id'))
-    character_class = db.relationship("CharacterClass")
+    character_class = db.relationship('CharacterClass')
 
     name = db.Column(db.String(128))  # not unique because we might have multiple no names
     backstory = db.Column(db.Text)
@@ -66,11 +67,14 @@ class Character(db.Model):
     max_hitpoints = db.Column(db.Integer)
     initiative = db.Column(db.Integer)
 
-    abilities_component_id = db.Column(db.ForeignKey("abilities_component.id"))
-    abilities = db.relationship("AbilitiesComponent")
+    abilities_component_id = db.Column(db.ForeignKey('abilities_component.id'))
+    abilities = db.relationship('AbilitiesComponent')
 
-    skills_component_id = db.Column(db.ForeignKey("skills_component.id"))
-    skills = db.relationship("SkillsComponent")
+    skills_component_id = db.Column(db.ForeignKey('skills_component.id'))
+    skills = db.relationship('SkillsComponent')
+
+    inventory_id = db.Column(db.ForeignKey('inventory.id'))
+    inventory = db.relationship("Inventory")
 
     # messages
 
@@ -87,6 +91,7 @@ class Character(db.Model):
 
         self.abilities = AbilitiesComponent()
         self.skills = SkillsComponent()
+        self.inventory = Inventory()
 
         for ability in list_abilities():
             self.abilities.set_score(ability, kwargs.get(ability.name, DEFAULT_ABILITY_SCORE))
@@ -171,6 +176,7 @@ class Character(db.Model):
             'fetch_updates_url': self.fetch_updates_url,
             'stream_updates_url': self.stream_updates_url,
             'creation_wizard_url': self.creation_wizard_url,
+            'inventory': self.inventory
         }
         for skill in list_skills():
             serialized[skill.name] = self.get_skill_level(skill)

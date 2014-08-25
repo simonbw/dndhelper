@@ -3,7 +3,7 @@ from flask.blueprints import Blueprint
 
 from models import db
 from models.campaign import get_main_campaign
-from models.monsters import Monster
+from models.monsters import Monster, get_monster
 from updates import update_stream, get_updates
 import updates
 from util import json_service, require_scripts, require_styles
@@ -21,7 +21,8 @@ def dashboard():
     g.bundle['characters'] = campaign.characters
     g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
     g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
-    require_scripts('chat', 'character', 'updates', 'tabs', 'dm_dashboard')
+    g.bundle['fetch_item_url'] = url_for('items.get')
+    require_scripts('chat', 'character', 'items', 'updates', 'binds', 'characters', 'tabs', 'dm_dashboard')
     require_styles('character', 'tabs', 'dm/dashboard', 'dm/party', 'dm/roller', 'dm/chat', 'dm/character_info')
     return render_template("dm/dashboard.html", campaign=campaign)
 
@@ -62,7 +63,7 @@ def creation_wizard(monster_id=None, phase=None):
         flash('phase "' + phase + '" is not a valid phase')
         return redirect(url_for('dm.view'))
 
-    require_scripts('updates', 'wizard', 'monster_creation_wizard')
+    require_scripts('updates', 'wizard', 'binds', 'monster_creation_wizard')
     require_styles('wizard')
     g.bundle['monster'] = monster
     g.bundle['wizard_current_phase'] = phase

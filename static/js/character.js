@@ -1,6 +1,6 @@
 /**
  * Represents a character. Can sync data with the server.
- * @param characterData an object containing all the attributes
+ * @param {Object} characterData - an object containing all the attributes
  * @constructor
  */
 function Character(characterData) {
@@ -12,6 +12,7 @@ function Character(characterData) {
  * @param {string} attribute
  */
 Character.prototype.get = function (attribute) {
+    // for things before modifiers
     if (attribute.substring(0, 5) == 'base_') {
         return this.data[attribute.substring(5)];
     }
@@ -20,9 +21,29 @@ Character.prototype.get = function (attribute) {
 
 /**
  * @param {string} attribute
+ * @param {*} value
  */
 Character.prototype.set = function (attribute, value) {
-    if (attribute in this.data) {
+    if (attribute == 'set_item') {
+        console.log(this.get('name'), ' set item to ', value);
+        var inventory = this.get('inventory');
+        var contained = false;
+        for (var i = 0; i < inventory.length; i++) {
+            var item = inventory[i];
+            if (item['id'] == value['id']) {
+                for (var attr in value) {
+                    if (value.hasOwnProperty(attr)) {
+                        item[attr] =  value[attr];
+                        contained = true;
+                    }
+                }
+                break;
+            }
+        }
+        if (!contained) {
+            inventory.push(value);
+        }
+    } else if (attribute in this.data) {
         this.data[attribute] = value;
     } else {
         throw new Error('Invalid attribute ' + attribute + ' to ' + value);
@@ -44,13 +65,13 @@ Character.prototype.applyUpdate = function (update) {
 
 /**
  * Add a function to call when an attribute gets updated.
- * @param attribute
- * @param handler
+ * @param {string} attribute
+ * @param {function} handler
  */
 Character.prototype.addHandler = function (attribute, handler) {
 //    console.log(this.get('name') + ' (' + this.get('id') + ') binding: ' + attribute);
     if (typeof attribute != 'string') {
-        throw new TypeError('Attribute must be string, but is:' + attribute);
+        throw new TypeError('Attribute must be string, but is:' + typeof attribute + " : " + attribute);
     }
     if (typeof handler !== 'function') {
         throw new TypeError('Handler must be a function:' + handler);
@@ -74,26 +95,29 @@ Character.prototype.bindUpdates = function () {
 };
 
 /**
- * Save some data to the server.
- * @param {string} attribute
- * @param {*} value
+ * Save an attribute value to the server.
+ * @param {string} attribute - the attribute to save
+ * @param {*} value - the value to set the attribute to
  * @param {Function} [callback] - called when the server responds.
  */
 Character.prototype.saveAttribute = function (attribute, value, callback) {
     var data = {};
     data[attribute] = value;
-    $.getJSON(this.get('update_url'), data, function (responseData) {
-        updates.processResponseData(responseData);
-        if (callback) {
-            callback(responseData);
-        }
-    });
+    this.saveData(data, callback);
 };
 
 /**
- * @param n
- * @returns {number}
+ * Save some data to the server
+ * @param {Object} data - the data to send
+ * @param {Function} [callback] - call on response
  */
-Character.getAbilityModifier = function (n) {
-    return (n - 10) / 2;
+Character.prototype.saveData = function (data, callback) {
+    console.log('saving character data', data);
+    $.ajax(this.get('update_url'), {
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(data),
+        success: callback
+    });
 };

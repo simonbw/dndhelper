@@ -20,20 +20,26 @@
     </section>
     <h2>Character Details</h2>
     <section class="background">
-        <div class="backstory" data-bind-text="backstory">
+        <div class="backstory" data-bind-text="character.backstory">
             {{ character.backstory }}
         </div>
-        <div class="personality" data-bind-text="personality">
+        <div class="personality" data-bind-text="character.personality">
             {{ character.personality }}
         </div>
     </section>
     <h2>Inventory</h2>
     <section class="inventory">
-        <div>An item</div>
-        <div>An item</div>
-        <div>An item</div>
-        <div>An item</div>
-        <div>An item</div>
-        <div>An item</div>
+        <div class="give-item" data-character-id="{{ character.id }}">
+            <button>Give Item</button>
+            <select>
+                {% for item in list_items() %}
+                    <option value="{{ item.id }}">{{ item }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" min="0" value="1">
+        </div>
+        <div class="item-box">
+            {#-  Inventory will be populated by javascript  -#}
+        </div>
     </section>
 </div>

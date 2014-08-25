@@ -7,6 +7,7 @@ from models.abilities import list_abilities
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
 from models.classes import get_class
+from models.inventory import ItemType
 from models.races import list_races, get_race
 from models.skills import list_skills
 import updates
@@ -33,11 +34,12 @@ def view(character_id=None, name=None):
         g.bundle['races'] = list_races()
         g.bundle['skills'] = list_skills()
         g.bundle['abilities'] = list_abilities()
-        g.bundle['character'] = character
+        g.bundle['characters'] = [character]
         g.bundle['fetch_updates_url'] = character.fetch_updates_url
         g.bundle['stream_updates_url'] = character.stream_updates_url
+        g.bundle['fetch_item_url'] = url_for('items.get')
 
-        require_scripts('chat', 'character', 'updates', 'tabs', 'view_character')
+        require_scripts('chat', 'character', 'characters', 'binds', 'items', 'updates', 'tabs', 'view_character')
         require_styles('character', 'tabs')
 
         response = make_response(render_template('view_character.html', character=character))
@@ -48,16 +50,18 @@ def view(character_id=None, name=None):
         return redirect('/')
 
 
-@character_app.route('/<int:character_id>/update')
-@character_app.route('/<name>/update')
+@character_app.route('/<int:character_id>/update', methods=['POST'])
+@character_app.route('/<name>/update', methods=['POST'])
 @json_service
 def update(character_id=None, name=None):
     character = get_character(character_id or name)
     if character is None:
         raise ValueError('Could not find character: ' + str((character_id, name)))
-    for key in request.args:
+    json_data = request.get_json()
+    for key in json_data:
+        key = str(key)
         if key in update_handlers.keys():
-            update_handlers.get(key)(character, request.args[key])
+            update_handlers.get(key)(character, json_data[key])
         else:
             raise Exception('Invalid attribute: ' + key)
     return {'updates': updates.get_updates(character.id)}
@@ -90,13 +94,15 @@ def creation_wizard(character_id=None, name=None, phase=None):
         flash('phase "' + phase + '" is not a valid phase')
         return redirect(url_for('campaign.view'))
 
-    require_scripts('character', 'updates', 'wizard', 'character_creation_wizard')
+    require_scripts('character', 'characters', 'updates', 'binds', 'items', 'wizard', 'character_creation_wizard')
     require_styles('wizard')
-    g.bundle['character'] = character
+    g.bundle['characters'] = [character]
     g.bundle['wizard_current_phase'] = phase
     g.bundle['wizard_phases'] = creation_phases
     g.bundle['fetch_updates_url'] = character.fetch_updates_url
     g.bundle['stream_updates_url'] = character.stream_updates_url
+    g.bundle['fetch_item_url'] = url_for('items.get')
+
     done_url = character.view_url
     return render_template('wizard/wizard.html', current_phase=phase, phases=creation_phases,
                            done_url=done_url, character=character)
@@ -189,6 +195,13 @@ def init_handlers():
         character.character_class = get_class(value)
         db.session.commit()
         updates.add_character_update(character.id, 'class', character.character_class)
+
+    @handler('give_item')
+    def give_item(character, value):
+        item_type = ItemType.query.get(value[u'item_type'])
+        item = character.inventory.add_item(item_type, value[u'quantity'])
+        db.session.commit()
+        updates.add_inventory_update(character.id, item)
 
     # this is me getting a little to0 functional with python
     def make_attribute_handler(attribute_name):

@@ -2,35 +2,38 @@
 {% import 'character.html' as characterMacros %}
 
 {% block main %}
-    <a href="{{ url_for('campaign.view') }}">Home</a>
-    <br><br>
-    <div id="view-character-header">
-        {{ macros.character_header(character) }}
-    </div>
-    <br>
-    <hr>
+    <div data-character-id="{{ character.id }}">
+        <a href="{{ url_for('campaign.view') }}">Home</a>
+        <br><br>
 
-    <div class="tab-bar">
-        <div class="tab-button open" data-tab="stats">Stats</div>
-        <div class="tab-button" data-tab="inventory">Inventory</div>
-        <div class="tab-button" data-tab="spell">Spells</div>
-        <div class="tab-button" data-tab="character">Character</div>
-    </div>
-    <div id="tab-content">
-        <div id="stats-tab" class="tab open">
-            {% include 'character/stats_tab.html' %}
+        <div id="view-character-header">
+            {{ macros.character_header(character) }}
         </div>
+        <br>
+        <hr>
 
-        <div id="inventory-tab" class="tab">
-            {% include 'character/inventory_tab.html' %}
+        <div class="tab-bar">
+            <div class="tab-button open" data-tab="stats">Stats</div>
+            <div class="tab-button" data-tab="inventory">Inventory</div>
+            <div class="tab-button" data-tab="spell">Spells</div>
+            <div class="tab-button" data-tab="character">Character</div>
         </div>
+        <div class="tab-content">
+            <div id="stats-tab" class="tab open">
+                {% include 'character/stats_tab.html' %}
+            </div>
 
-        <div id="spell-tab" class="tab">
-            {% include 'character/spells_tab.html' %}
-        </div>
+            <div id="inventory-tab" class="tab">
+                {% include 'character/inventory_tab.html' %}
+            </div>
 
-        <div id="character-tab" class="tab">
-            {% include 'character/character_tab.html' %}
+            <div id="spell-tab" class="tab">
+                {% include 'character/spells_tab.html' %}
+            </div>
+
+            <div id="character-tab" class="tab">
+                {% include 'character/character_tab.html' %}
+            </div>
         </div>
     </div>
 

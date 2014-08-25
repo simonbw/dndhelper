@@ -1,7 +1,7 @@
 {% set races = list_races() %}
 
 <h1>Race</h1>
-<div class="chooser" data-bind-write="race">
+<div class="chooser" data-bind-write="character.race">
     <div class="choices">
         {% for race in races %}
             <div class="choice{{ ' chosen' if race == character.race }}" data-choice="{{ race.name }}">

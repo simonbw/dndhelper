@@ -37,7 +37,7 @@ window.tabs = (function () {
 
     /**
      * Open the tab with the name and close all others.
-     * @param tabName
+     * @param {string} tabName
      */
     function openTab(tabName) {
         if (enabled) {

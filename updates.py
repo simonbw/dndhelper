@@ -129,6 +129,16 @@ def add_new_character_update(character):
     add_update(DM_ID, update)
 
 
+def add_inventory_update(character_id, item):
+    """
+    :type character_id: int
+    :type item: Item
+    :return:
+    """
+    data = item.__serialize__()
+    add_character_update(character_id, 'set_item', data)
+
+
 def update_stream(character_id):
     """
     Create an update stream for a character or the DM.

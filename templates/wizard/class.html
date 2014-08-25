@@ -1,7 +1,7 @@
 {% set classes = list_classes() %}
 
 <h1>Class</h1>
-<div class="chooser" data-bind-write="class">
+<div class="chooser" data-bind-write="character.class">
     <div class="choices">
         {% for class in classes %}
             <div class="choice{{ ' chosen' if class == character.character_class }}" data-choice="{{ class.name }}">
