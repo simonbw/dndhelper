@@ -3,6 +3,9 @@
 
 (function () {
 
+    /** @type {Object.<number, Element|jQuery>} - map item id's to their inventory element. */
+    var itemMap = {};
+
     /**
      *
      */
@@ -14,7 +17,7 @@
             $(this).find('button').click(function () {
                 characters.fromId(characterId).saveAttribute('give_item', {
                     'item_type': $container.find('select').val(),
-                    'quantity': $container.find('input[type="number"]').val()
+                    'quantity': parseInt($container.find('input[type="number"]').val())
                 }, updates.processResponseData);
             });
         });
@@ -48,7 +51,6 @@
         character.get('inventory').forEach(function (item) {
             $itemBox.append(makeItem(item));
         });
-        console.log(character.get('name'), character.get('inventory'));
     }
 
     /**
@@ -63,8 +65,12 @@
             text('loading...')
             .attr('data-bind-text', 'item.name');
         $div.append($name);
+        var $quantity = $('<p>').
+            text(item['quantity']);
+        $div.append($quantity);
         binds.initBindsOn($div);
         items.loadOne(item['item_type']);
+        itemMap[item['id']] = $div;
         return  $div;
     }
 
@@ -99,8 +105,15 @@
     function initInventories() {
         characters.all.forEach(function (character) {
             makeInventory(character);
-            character.addHandler('set_item', function () {
-                makeInventory(character);
+            character.addHandler('set_item', function (item) {
+                if (itemMap.hasOwnProperty(item['id'])) {
+                    var $item = itemMap[item['id']]; // update this
+                    $item.replaceWith(makeItem(item));
+                }
+                else {
+                    $('#character-' + character.get('id')).find('.inventory .item-box').append(makeItem(item));
+                }
+                makeInventory(character); // TODO: Make more efficient
             });
         });
     }

@@ -40,7 +40,6 @@ window.items = (function () {
     function loadMany(ids, callback) {
         var requestData = {'item_ids[]': ids};
         $.getJSON(bundle['fetch_item_url'], requestData, function (responseData) {
-            console.log('item loaded', responseData);
             var items = responseData['items'];
             items.forEach(processItem);
             callback(items);
@@ -53,7 +52,6 @@ window.items = (function () {
      */
     function refreshHandlers(itemId) {
         if (handlers.hasOwnProperty(itemId)) {
-            console.log();
             var item = itemMap[itemId];
             handlers[itemId].forEach(function (handler) {
                 handler(item);

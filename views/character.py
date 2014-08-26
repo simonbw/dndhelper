@@ -199,7 +199,7 @@ def init_handlers():
     @handler('give_item')
     def give_item(character, value):
         item_type = ItemType.query.get(value[u'item_type'])
-        item = character.inventory.add_item(item_type, value[u'quantity'])
+        item = character.inventory.add_item(item_type, int(value[u'quantity']))
         db.session.commit()
         updates.add_inventory_update(character.id, item)
 

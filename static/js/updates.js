@@ -8,6 +8,8 @@ var updates = (function () {
     var updates_url = bundle['stream_updates_url'];
     /** @type {Object.<string, Array.<function(Object)>>} */
     var handlers = {};
+    /** Whether or not updates are successfully being received. */
+    var connected = false;
 
     if (window.EventSource === undefined || true) {
         console.log("Using polling fallback");
@@ -24,12 +26,17 @@ var updates = (function () {
 
             function poll() {
                 $.get(url, {}, function (data) {
-                    var event = {};
-                    event.data = data;
+                    connected = true;
+                    var event = {
+                        'data': data
+                    };
                     if (self.onmessage) {
                         self.onmessage(event);
                     }
                     setTimeout(poll, pollWait);
+                }).fail(function () {
+                    connected = false;
+                    alert('no longer connected');
                 });
             }
 

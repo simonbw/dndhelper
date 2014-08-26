@@ -7,9 +7,9 @@ def init_items():
     make_item('Longbow')
     make_item('Shortbow')
     make_item('Rope')
-    make_item('Gold Coin')
-    make_item('Silver Coin')
-    make_item('Copper Coin')
+    make_item('Gold Coin', stackable=True)
+    make_item('Silver Coin', stackable=True)
+    make_item('Copper Coin', stackable=True)
     db.session.commit()
 
 
@@ -55,8 +55,11 @@ class Inventory(db.Model):
         :type quantity: int
         :rtype: Item
         """
-        # self.recalculate_weight()
-        # self._weight += item_type.weight * quantity
+        if item_type.stackable:
+            item = Item.query.filter_by(inventory=self, item_type=item_type).first()
+            if item:
+                item.quantity += quantity
+                return item
         return Item(item_type=item_type, quantity=quantity, inventory=self)
 
     def recalculate_weight(self, force=False):
@@ -105,6 +108,7 @@ class ItemType(db.Model):
     A type of item, like a long sword or a rope.
     """
     id = db.Column(db.Integer, primary_key=True)
+    stackable = db.Column(db.Boolean, default=True)
     name = db.Column(db.Text)
     description = db.Column(db.Text)
     weight = db.Column(db.Float)
@@ -117,6 +121,7 @@ class ItemType(db.Model):
         o = {
             'id': self.id,
             'name': self.name,
+            'stackable': self.stackable
         }
         if self.description is not None:
             o['description'] = self.description
