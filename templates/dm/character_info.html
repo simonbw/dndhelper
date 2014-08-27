@@ -1,6 +1,8 @@
 {% import 'macros.html' as macros %}
 
 <div class="character" id="character-{{ character.id }}" data-character-id="{{ character.id }}">
+    <h1 data-bind-text="character.name">{{ character.name }}</h1>
+
     <h2>Stats</h2>
     <section class="stats">
         <div class="abilities">
@@ -18,15 +20,6 @@
             </div>
         </div>
     </section>
-    <h2>Character Details</h2>
-    <section class="background">
-        <div class="backstory" data-bind-text="character.backstory">
-            {{ character.backstory }}
-        </div>
-        <div class="personality" data-bind-text="character.personality">
-            {{ character.personality }}
-        </div>
-    </section>
     <h2>Inventory</h2>
     <section class="inventory">
         <div class="give-item" data-character-id="{{ character.id }}">
@@ -40,6 +33,15 @@
         </div>
         <div class="item-box">
             {#-  Inventory will be populated by javascript  -#}
+        </div>
+    </section>
+    <h2>Character Details</h2>
+    <section class="background">
+        <div class="backstory" data-bind-text="character.backstory">
+            {{ character.backstory }}
+        </div>
+        <div class="personality" data-bind-text="character.personality">
+            {{ character.personality }}
         </div>
     </section>
 </div>

@@ -1,37 +1,54 @@
-html, body {
-    height: 100%;
-    overflow-y: hidden;
+@media (max-width: 600px) {
+
 }
 
-#dm-container {
-    display: flex;
-    height: 100%;
-    /*padding: 8px;*/
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-content: stretch;
-    align-items: stretch;
+@media (min-width: 600px) {
+    html, body {
+        height: 100%;
+        overflow-y: hidden;
+    }
+
+    #dm-container {
+        display: flex;
+        height: 100%;
+        /*padding: 8px;*/
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-content: stretch;
+        align-items: stretch;
+    }
+
+    #dm-main {
+        height: 100%;
+        min-width: 200px;
+        width: 50%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        flex-grow: 1;
+    }
+
+    #left-bar, #right-bar {
+        display: flex;
+        height: 100%;
+        margin: 0;
+        max-width: 300px;
+        flex-flow: column nowrap;
+        width: 25%;
+    }
+
+    #left-bar {
+        border-right: 1px solid #DDDDDD;
+    }
+
+    #right-bar {
+        border-left: 1px solid #DDDDDD;
+        padding: 8px;
+        justify-content: space-between;
+    }
 }
 
-#dm-main {
-    height: 100%;
-    min-width: 200px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-
-#left-bar, #right-bar {
-    display: flex;
-    height: 100%;
-    margin: 0;
-    max-width: 300px;
-    width: 100%;
-    flex-flow: column nowrap;
-}
-
-#right-bar {
-    padding: 8px;
-    justify-content: space-between;
-    background: #DDDDDD;
+@media (min-width: 1200px) {
+    #dm-main {
+        width: calc(100% - 600px);
+    }
 }

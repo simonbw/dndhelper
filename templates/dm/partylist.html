@@ -3,8 +3,9 @@
         <div id="party-member-{{ character.id }}" data-character-id="{{ character.id }}" class="party-member">
             <h3 data-bind-text="character.name">{{ character.name }}</h3>
 
-            <div class="action-bar">
-
+            <div class="hitpoint-box">
+                <span data-bind-text="character.hitpoints">{{ character.hitpoints }}</span> /
+                <span data-bind-text="character.max_hitpoints">{{ character.max_hitpoints }}</span>
             </div>
         </div>
     {% endfor %}
