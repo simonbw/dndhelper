@@ -3,13 +3,13 @@ import random
 from flask import url_for
 
 from models import db
-from models.abilities import list_abilities, get_ability, AbilitiesComponent
+from models.abilities import list_abilities, get_ability, AbilitiesComponent, Ability
 from models.campaign import get_main_campaign
 from models.classes import get_class
 from models.inventory import Inventory
 from models.messages import Message
 from models.races import get_race
-from models.skills import list_skills, get_skill, SkillsComponent
+from models.skills import list_skills, get_skill, SkillsComponent, Skill
 
 DEFAULT_SKILL_LEVEL = 0
 
@@ -129,16 +129,20 @@ class Character(db.Model):
         """
         :rtype: int
         """
-        if isinstance(skill, str):
+        if isinstance(skill, int):
+            skill = Skill.query.get(skill)
+        elif isinstance(skill, str):
             skill = get_skill(skill)
         return self.skills.get_level(skill)
 
     def set_skill_level(self, skill, level):
         """
-        :type skill: Skill|str
+        :type skill: Skill|str|int
         :type level: int
         """
-        if isinstance(skill, basestring):
+        if isinstance(skill, int):
+            skill = Skill.query.get(skill)
+        elif isinstance(skill, str):
             skill = get_skill(skill)
         return self.skills.set_level(skill, level)
 
@@ -146,16 +150,20 @@ class Character(db.Model):
         """
         :rtype: int
         """
-        if isinstance(ability, basestring):
+        if isinstance(ability, int):
+            ability = Ability.query.get(ability)
+        elif isinstance(ability, str):
             ability = get_ability(ability)
         return self.abilities.get_score(ability)
 
     def set_ability_score(self, ability, score):
         """
-        :type ability: Skill|str
+        :type ability: Skill|str|int
         :type score: int
         """
-        if isinstance(ability, basestring):
+        if isinstance(ability, int):
+            ability = Ability.query.get(ability)
+        elif isinstance(ability, str):
             ability = get_ability(ability)
         self.abilities.set_score(ability, score)
 
@@ -166,7 +174,7 @@ class Character(db.Model):
             'name': self.name,
             'backstory': self.backstory,
             'race': getattr(self.race, 'name', ''),
-            'character_class': getattr(self.character_class, 'name', ''),
+            'class': getattr(self.character_class, 'name', ''),
             'personality': self.personality,
             'hitpoints': self.hitpoints,
             'max_hitpoints': self.max_hitpoints,

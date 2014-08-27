@@ -33,7 +33,7 @@ Character.prototype.set = function (attribute, value) {
             if (item['id'] == value['id']) {
                 for (var attr in value) {
                     if (value.hasOwnProperty(attr)) {
-                        item[attr] =  value[attr];
+                        item[attr] = value[attr];
                         contained = true;
                     }
                 }
@@ -118,6 +118,12 @@ Character.prototype.saveData = function (data, callback) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: JSON.stringify(data),
-        success: callback
+    }).done(function (responseData) {
+        if (callback) {
+            callback(responseData);
+        }
+        if (updates && updates.processResponseData) {
+            updates.processResponseData(responseData);
+        }
     });
 };

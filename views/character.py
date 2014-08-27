@@ -3,13 +3,13 @@ from flask.templating import render_template
 from flask import redirect, url_for, make_response, request, flash, Response, g
 
 from models import db
-from models.abilities import list_abilities
+from models.abilities import list_abilities, Ability
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
 from models.classes import get_class
 from models.inventory import ItemType
 from models.races import list_races, get_race
-from models.skills import list_skills
+from models.skills import list_skills, Skill
 import updates
 from util import json_service, require_scripts, require_styles
 
@@ -215,8 +215,9 @@ def init_handlers():
     for attribute in Character.list_attribute_names():
         handler(attribute)(make_attribute_handler(attribute))
 
-    def make_skill_handler(skill):
+    def make_skill_handler(skill_id):
         def skill_handler(character, value):
+            skill = Skill.query.get(skill_id)
             character.set_skill_level(skill, value)
             db.session.commit()
             updates.add_character_update(character.id, skill.name, character.get_skill_level(skill))
@@ -224,10 +225,11 @@ def init_handlers():
         return skill_handler
 
     for skill in list_skills():
-        handler(skill.name)(make_skill_handler(skill))
+        handler(skill.name)(make_skill_handler(skill.id))
 
-    def make_ability_handler(ability):
+    def make_ability_handler(ability_id):
         def ability_handler(character, value):
+            ability = Ability.query.get(ability_id)
             character.set_ability_score(ability, value)
             db.session.commit()
             updates.add_character_update(character.id, ability.name, character.get_ability_score(ability))
@@ -235,4 +237,4 @@ def init_handlers():
         return ability_handler
 
     for ability in list_abilities():
-        handler(ability.name)(make_ability_handler(ability))
+        handler(ability.name)(make_ability_handler(ability.id))

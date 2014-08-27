@@ -23,10 +23,10 @@
 {% endmacro %}
 
 {% macro character_header(character) %}
-    <div class="character-header">
+    <div class="character-header" data-character-id="{{ character.id }}">
         <div class="character-top-header">
             <div class="half-container">
-                <span class="name">{{ character.name }}</span>
+                <span class="name" data-bind-text="character.name">{{ character.name }}</span>
             </div>
             <div class="half-container">
                 <div class="health-bar-background">
@@ -39,12 +39,12 @@
             </div>
         </div>
         <div class="character-bottom-header">
-            <div class="half-container">
+            <div class="half-container" data-bind-text="character.race">
                 <span class="race">{{ character.race.name }}</span>
             </div>
             <div class="half-container">
                 <span class="separator">-</span>
-                <span class="class">{{ character.character_class.name }}</span>
+                <span class="class" data-bind-text="character.class">{{ character.character_class.name }}</span>
             </div>
         </div>
     </div>

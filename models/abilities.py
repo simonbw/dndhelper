@@ -81,6 +81,8 @@ class AbilitiesComponent(db.Model):
     # ability_scores
 
     def set_score(self, ability, score):
+        if not isinstance(ability, Ability):
+            raise ValueError("Expecting ability, instead got " + ability)
         ability_score = AbilityScore.query.filter_by(component=self, ability=ability).first()
         if ability_score is None:
             AbilityScore(ability, self, score)

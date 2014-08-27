@@ -31,6 +31,7 @@
         character = characters.all[0];
         initWizardCallbacks();
         binds.init();
+        updates.openUpdateStream();
         wizard.init();
     });
 })();

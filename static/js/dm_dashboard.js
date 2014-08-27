@@ -18,7 +18,7 @@
                 characters.fromId(characterId).saveAttribute('give_item', {
                     'item_type': $container.find('select').val(),
                     'quantity': parseInt($container.find('input[type="number"]').val())
-                }, updates.processResponseData);
+                });
             });
         });
     }
