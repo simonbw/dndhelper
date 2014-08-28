@@ -29,6 +29,8 @@
 
 #party .party-member h3 {
     display: inline;
+    font-variant: small-caps;
+    font-weight: normal;
 }
 
 #party .party-member .hitpoint-box {

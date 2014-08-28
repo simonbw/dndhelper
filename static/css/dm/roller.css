@@ -1,0 +1,56 @@
+#roller {
+
+}
+
+#roller .roll-bar {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+#roller .roll-bar select, #roller .roll-bar button {
+    display: inline-block;
+    margin: 0;
+    float: left;
+    padding: 4px;
+    width: 50%;
+}
+
+#roller .results {
+    border-collapse: collapse;
+    margin: auto;
+}
+
+#roller .results:not(:empty) {
+    border-bottom: 1px solid #DDDDDD;
+}
+
+#roller .results td {
+    width: 50%;
+    padding: 4px 8px;
+}
+
+#roller .results td:nth-of-type(1) {
+    text-align: right;
+    border-right: 1px solid #DDDDDD;
+}
+
+#roller .results td:nth-of-type(2) {
+    text-align: left;
+}
+
+#roller .results td.twenty {
+    color: #00CC00;
+    font-weight: bold;
+}
+
+#roller .results td.one {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+#roller  .results small {
+    font-weight: lighter;
+    color: #AAAAAA;
+    padding-left: 4px;
+}

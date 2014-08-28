@@ -1,14 +1,14 @@
 .character {
-
 }
 
 .character h1 {
     margin: 0;
     padding: 0;
     text-align: center;
-    font-variant: small-caps;
     font-weight: normal;
     font-size: 40px;
+    font-family: Cambria, Georgia, serif;
+    font-variant: small-caps;
 }
 
 .character h2 {
@@ -20,6 +20,8 @@
     -ms-user-select: none;
     user-select: none;
     font-weight: normal;
+    font-family: Cambria, Georgia, serif;
+    font-variant: small-caps;
 }
 
 .character h2.closed:not(:last-of-type) {
@@ -60,9 +62,9 @@
     }
 
     .character .skills .box {
-        column-gap: 2px;
-        -moz-column-gap: 2px;
-        -webkit-column-gap: 2px;
+        column-gap: 4px;
+        -moz-column-gap: 4px;
+        -webkit-column-gap: 4px;
         flex-grow: 1;
     }
 }

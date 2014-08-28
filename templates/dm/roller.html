@@ -1,16 +1,28 @@
 <div id="roller">
-    <label>
-        Roll for
-        <select>
-            {% for ability in list_abilities() %}
-                {% if ability.skills %}
-                    <optgroup label="{{ ability.name }}">
-                        {% for skill in ability.skills %}
-                            <option>{{ skill.name }}</option>
-                        {% endfor %}
-                    </optgroup>
-                {% endif %}
-            {% endfor %}
-        </select>
-    </label>
+    <div class="roll-bar">
+        <label>
+            <select>
+                <option value="Initiative">Initiative</option>
+                <optgroup label="Abilities">
+                    {% for ability in list_abilities() %}
+                        <option value="ability.{{ ability.name }}">{{ ability.name }}</option>
+                    {% endfor %}
+                </optgroup>
+                {% for ability in list_abilities() %}
+                    {% if ability.skills %}
+                        <optgroup label="{{ ability.name }}">
+                            {% for skill in ability.skills %}
+                                <option value="skill.{{ ability.name }}.{{ skill.name }}">{{ skill.name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </label>
+        <button>Roll</button>
+    </div>
+
+    <table class="results">
+
+    </table>
 </div>

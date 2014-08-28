@@ -121,6 +121,7 @@
 
     $(function () {
         characters.init(true);
+        roller.init();
         chat.setSender('DM');
         chat.setRecipients(characters.all);
         initDataBinds();
