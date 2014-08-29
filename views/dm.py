@@ -21,10 +21,14 @@ def dashboard():
     g.bundle['characters'] = campaign.characters
     g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
     g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
-    g.bundle['fetch_item_url'] = url_for('items.get')
-    require_scripts('chat', 'character', 'items', 'updates', 'roller', 'binds', 'characters', 'tabs', 'dm_dashboard')
-    require_styles('character', 'tabs', 'dm/dashboard', 'dm/party', 'dm/roller', 'dm/chat', 'dm/character_info')
-    return render_template("dm/dashboard.html", campaign=campaign)
+
+    require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'tabs', 'models/simple_model',
+                    'models/items', 'models/knowledge', 'renderers/inventory', 'renderers/knowledge', 'dm/roller',
+                    'dm/character_info', 'dm/dashboard')
+
+    require_styles('character', 'tabs', 'dm/dashboard', 'dm/party', 'dm/roller', 'dm/chat', 'dm/character_info',
+                   'dm/tools')
+    return render_template("dm/dashboard.html", campaign=campaign, title='DM')
 
 
 @dm_app.route('/fetch_updates')

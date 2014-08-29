@@ -184,7 +184,8 @@ class Character(db.Model):
             'fetch_updates_url': self.fetch_updates_url,
             'stream_updates_url': self.stream_updates_url,
             'creation_wizard_url': self.creation_wizard_url,
-            'inventory': self.inventory
+            'inventory': self.inventory,
+            'knowledge': [knowledge.id for knowledge in self.knowledge]
         }
         for skill in list_skills():
             serialized[skill.name] = self.get_skill_level(skill)

@@ -10,15 +10,17 @@ from models import db
 from models.abilities import list_abilities
 from models.classes import list_classes
 from models.inventory import list_items
+from models.knowledge import list_knowledge
 from models.races import list_races
 from models.skills import list_skills
-from util import Jsonifier
+from util import Jsonifier, require_scripts, require_styles
 from views.admin import admin_app, init_all
 from views.campaign import campaign_app
 from views.character import character_app
 from views.chat import chat_app
 from views.dm import dm_app
 from views.items import items_app
+from views.knowledge import knowledge_app
 
 
 def create_app(debug=False):
@@ -44,6 +46,7 @@ def create_app(debug=False):
     app.register_blueprint(dm_app, url_prefix='/dm')
     app.register_blueprint(chat_app, url_prefix='/chat')
     app.register_blueprint(items_app, url_prefix='/items')
+    app.register_blueprint(knowledge_app, url_prefix='/knowledge')
 
     return app
 
@@ -52,9 +55,14 @@ def before_request():
     """ Called before every request. """
     g.bundle = OrderedDict()
     g.bundle['chat_url'] = url_for('chat.chat')
+    g.bundle['fetch_item_url'] = url_for('items.get')
+    g.bundle['fetch_knowledge_url'] = url_for('knowledge.get')
 
-    g.scripts = ['lib/jquery', 'lib/jquery.autocomplete', 'dice_roller']
-    g.stylesheets = ['style', 'chat']
+    g.scripts = []
+    g.stylesheets = []
+
+    require_scripts('lib/jquery', 'lib/jquery.autocomplete', 'dice_roller')
+    require_styles('style', 'chat')
 
 
 def after_request(response):
@@ -71,6 +79,7 @@ def context_processor():
         'list_races': list_races,
         'list_classes': list_classes,
         'list_items': list_items,
+        'list_knowledge': list_knowledge,
         'bundle': g.bundle,
         'scripts': g.scripts,
         'stylesheets': g.stylesheets

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
     {% block all_scripts %}
         {% block bundle %}
             <script>

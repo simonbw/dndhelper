@@ -1,0 +1,10 @@
+<div id="knowledge-box">
+    <select>
+        {%- for knowledge in list_knowledge() %}
+            <option value="{{ knowledge.id }}">
+                {{ knowledge.name }}
+            </option>
+        {% endfor -%}
+    </select>
+    <button>New Knowledge</button>
+</div>

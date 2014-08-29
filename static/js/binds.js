@@ -25,8 +25,15 @@ window.binds = (function () {
 
     textBinds['item'] = function (element, attribute) {
         var itemTypeId = $(element).closest('[data-item-type-id]').data('item-type-id');
-        items.addHandler(itemTypeId, function (item) {
+        models.items.addHandler(itemTypeId, function (item) {
             $(element).text(item[attribute]);
+        });
+    };
+
+    textBinds['knowledge'] = function (element, attribute) {
+        var knowledgeId = $(element).closest('[data-knowledge-id]').data('knowledge-id');
+        models.knowledge.addHandler(knowledgeId, function (knowledge) {
+            $(element).text(knowledge[attribute]);
         });
     };
 
@@ -103,7 +110,7 @@ window.binds = (function () {
 
     /**
      * Binds everything in this element.
-     * @param {Element} element
+     * @param {Node} element
      */
     function initBindsOn(element) {
         $(element).find('[data-bind-text]').each(function (i, e) {

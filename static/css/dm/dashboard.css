@@ -21,9 +21,9 @@
     #dm-main {
         height: 100%;
         min-width: 200px;
-        width: 50%;
         overflow-x: hidden;
         overflow-y: auto;
+        width: 50%;
         flex-grow: 1;
     }
 
@@ -32,8 +32,8 @@
         height: 100%;
         margin: 0;
         max-width: 300px;
-        flex-flow: column nowrap;
         width: 25%;
+        flex-flow: column nowrap;
     }
 
     #left-bar {
@@ -50,4 +50,39 @@
     #dm-main {
         width: calc(100% - 600px);
     }
+}
+
+#no-main-content {
+    color: #AAAAAA;
+    font-size: 32px;
+    font-style: italic;
+    padding: 80px;
+    text-align: center;
+    width: 100%;
+}
+
+#dm-main > div:not(.active) {
+    display: none;
+}
+
+[data-main-content-id] {
+    color: #666666;
+    cursor: default;
+    overflow: hidden;
+    padding: 8px;
+    flex-grow: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+[data-main-content-id]:hover {
+    background: #EEEEEE;
+    color: #111111;
+}
+
+[data-main-content-id].active {
+    background: #DDDDDD;
+    color: #111111;
 }

@@ -2,7 +2,7 @@ from models import db
 
 
 def init_items():
-    make_item('Long Sword')
+    make_item('Long Sword', stackable=False)
     make_item('Short Sword')
     make_item('Longbow')
     make_item('Shortbow')

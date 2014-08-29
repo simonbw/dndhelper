@@ -6,25 +6,8 @@
 }
 
 #party .party-member {
-    cursor: default;
     overflow: hidden;
-    padding: 8px;
     flex-grow: 1;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    color: #666666;
-}
-
-#party .party-member:hover {
-    background: #EEEEEE;
-    color: #000000;
-}
-
-#party .party-member.active {
-    background: #DDDDDD;
-    color: #000000;
 }
 
 #party .party-member h3 {

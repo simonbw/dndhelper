@@ -45,7 +45,7 @@ def json_service(f):
 
 def require_script(script):
     """
-    :type scripts: str
+    :type script: str
     """
     if script not in g.scripts:
         g.scripts.append(script)

@@ -11,6 +11,13 @@
     font-variant: small-caps;
 }
 
+.character h1.race-and-class {
+    font-size: 22px;
+    font-style: italic;
+    font-variant: normal;
+    line-height: 20px;
+}
+
 .character h2 {
     border-top: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;

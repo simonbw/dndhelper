@@ -3,6 +3,12 @@
 <div class="character" id="character-{{ character.id }}" data-character-id="{{ character.id }}">
     <h1 data-bind-text="character.name">{{ character.name }}</h1>
 
+    <h1 class="race-and-class">
+        <small data-bind-text="character.race">{{ character.race.name }}</small>
+        -
+        <small data-bind-text="character.class">{{ character.character_class.name }}</small>
+    </h1>
+
     <h2>Stats</h2>
     <section class="stats">
         <div class="abilities">

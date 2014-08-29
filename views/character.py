@@ -187,14 +187,14 @@ def init_handlers():
     def update_race(character, value):
         character.race = get_race(value)
         db.session.commit()
-        updates.add_character_update(character.id, 'race', character.race)
+        updates.add_character_update(character.id, 'race', character.race.name)
 
 
     @handler('class')
     def update_class(character, value):
         character.character_class = get_class(value)
         db.session.commit()
-        updates.add_character_update(character.id, 'class', character.character_class)
+        updates.add_character_update(character.id, 'class', character.character_class.name)
 
     @handler('give_item')
     def give_item(character, value):
