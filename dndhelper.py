@@ -45,7 +45,7 @@ def create_app(debug=False):
     app.register_blueprint(character_app, url_prefix='/character')
     app.register_blueprint(dm_app, url_prefix='/dm')
     app.register_blueprint(chat_app, url_prefix='/chat')
-    app.register_blueprint(items_app, url_prefix='/items')
+    app.register_blueprint(items_app, url_prefix='/item-type')
     app.register_blueprint(knowledge_app, url_prefix='/knowledge')
 
     return app
@@ -55,8 +55,10 @@ def before_request():
     """ Called before every request. """
     g.bundle = OrderedDict()
     g.bundle['chat_url'] = url_for('chat.chat')
-    g.bundle['fetch_item_url'] = url_for('items.get')
+    g.bundle['fetch_item_url'] = url_for('ItemType.get')
+    g.bundle['save_item_url'] = url_for('ItemType.post')
     g.bundle['fetch_knowledge_url'] = url_for('knowledge.get')
+    g.bundle['save_knowledge_url'] = url_for('knowledge.post')
 
     g.scripts = []
     g.stylesheets = []

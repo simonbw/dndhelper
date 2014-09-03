@@ -1,8 +1,7 @@
 'use strict';
 
-if (window.renderers === undefined) {
-    window.renderers = {};
-}
+
+window.renderers = window.renderers || {};
 
 window.renderers.Inventory = (function () {
 
@@ -14,18 +13,20 @@ window.renderers.Inventory = (function () {
      * @returns {jQuery}
      */
     function makeItem(item) {
+        var itemTypeId = item['item_type'];
+        var name = models.ItemType.isLoaded(itemTypeId) ? models.ItemType.get(itemTypeId).name : 'loading...';
         var $div = $('<div>')
             .addClass('item')
-            .attr('data-item-type-id', item['item_type']);
+            .attr('data-item-type-id', itemTypeId);
         var $name = $('<h5>').
-            text('loading...')
-            .attr('data-bind-text', 'item.name');
+            text(name)
+            .attr('data-bind-read', 'item-type.name');
         $div.append($name);
         var $quantity = $('<p>').
             text(item['quantity']);
         $div.append($quantity);
         binds.initBindsOn($div);
-        models.items.loadOne(item['item_type']);
+        models.ItemType.loadOne(itemTypeId);
         itemMap[item['id']] = $div;
         return  $div;
     }

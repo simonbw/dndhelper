@@ -36,7 +36,7 @@ var updates = (function () {
                     setTimeout(poll, pollWait);
                 }).fail(function () {
                     connected = false;
-                    alert('no longer connected');
+                    console.log('no longer connected');
                 });
             }
 

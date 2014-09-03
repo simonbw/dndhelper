@@ -31,12 +31,12 @@ window.wizard = (function () {
                     $chosen = $(self).find('.choice[data-choice=' + choice + ']');
                 } else {
                     $chosen = $(choice);
-                    choice = $chosen.data('choice');
+                    choice = $chosen.attr('data-choice');
                 }
                 if (!$chosen.hasClass('chose')) {
                     $(self).find('.chosen').removeClass('chosen');
                     $chosen.addClass('chosen');
-                    $(self).val($chosen.data('choice'));
+                    $(self).val($chosen.attr('data-choice'));
                     $(self).trigger('change');
                 }
                 $(self).find('.choice-description[data-choice=' + choice + ']').addClass('chosen');
@@ -94,7 +94,7 @@ window.wizard = (function () {
         $('#wizard-previous-button').click(previousPhase);
         $('.wizard-phase').hide();
         $('.wizard-phase-button').click(function () {
-            setPhase($(this).data('phase'));
+            setPhase($(this).attr('data-phase'));
         });
         $('#wizard-done-button').click(function () {
             doneCallbacks.every(function (callback) {

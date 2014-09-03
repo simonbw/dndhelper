@@ -26,7 +26,7 @@ def list_items():
 
 class Inventory(db.Model):
     """
-    Contains items.
+    Contains ItemType.
     """
     id = db.Column(db.Integer, primary_key=True)
     # items
@@ -71,7 +71,7 @@ class Inventory(db.Model):
 
     @property
     def weight(self):
-        """Total weight of all items carried"""
+        """Total weight of all ItemType carried"""
         self.recalculate_weight()
         return self._weight
 
@@ -81,7 +81,7 @@ class Inventory(db.Model):
 
 class Item(db.Model):
     """
-    A link between an inventory and an item type. Can set the number of items.
+    A link between an inventory and an item type. Can set the number of ItemType.
     """
     id = db.Column(db.Integer, primary_key=True)
     inventory_id = db.Column(db.Integer, db.ForeignKey('inventory.id'))
@@ -109,8 +109,8 @@ class ItemType(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     stackable = db.Column(db.Boolean, default=True)
-    name = db.Column(db.Text)
-    description = db.Column(db.Text)
+    name = db.Column(db.Text, default='New Item')
+    description = db.Column(db.Text, default='description...')
     weight = db.Column(db.Float)
     value = db.Column(db.Integer)  # Base value of this item in coins
 

@@ -1,7 +1,9 @@
 'use strict';
 /*global bundle*/
 
-window.roller = (function () {
+window.dm = window.dm || {};
+
+window.dm.roller = (function () {
 
     /**
      * Roll a d20.

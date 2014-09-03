@@ -24,8 +24,8 @@ Character.prototype.get = function (attribute) {
  * @param {*} value
  */
 Character.prototype.set = function (attribute, value) {
+    console.log(this.get('name'), 'setting', attribute, 'to', value);
     if (attribute == 'set_item') {
-        console.log(this.get('name'), ' set item to ', value);
         var inventory = this.get('inventory');
         var contained = false;
         for (var i = 0; i < inventory.length; i++) {
@@ -117,7 +117,7 @@ Character.prototype.saveData = function (data, callback) {
         type: "POST",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: JSON.stringify(data),
+        data: JSON.stringify(data)
     }).done(function (responseData) {
         if (callback) {
             callback(responseData);

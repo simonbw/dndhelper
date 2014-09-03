@@ -1,12 +1,12 @@
 {% import 'macros.html' as macros %}
 
 <div class="character" id="character-{{ character.id }}" data-character-id="{{ character.id }}">
-    <h1 data-bind-text="character.name">{{ character.name }}</h1>
+    <h1 data-bind-read="character.name">{{ character.name }}</h1>
 
     <h1 class="race-and-class">
-        <small data-bind-text="character.race">{{ character.race.name }}</small>
+        <small data-bind-read="character.race">{{ character.race.name }}</small>
         -
-        <small data-bind-text="character.class">{{ character.character_class.name }}</small>
+        <small data-bind-read="character.class">{{ character.character_class.name }}</small>
     </h1>
 
     <h2>Stats</h2>
@@ -43,10 +43,10 @@
     </section>
     <h2>Character Details</h2>
     <section class="background">
-        <div class="backstory" data-bind-text="character.backstory">
+        <div class="backstory" data-bind-read="character.backstory">
             {{ character.backstory }}
         </div>
-        <div class="personality" data-bind-text="character.personality">
+        <div class="personality" data-bind-read="character.personality">
             {{ character.personality }}
         </div>
     </section>

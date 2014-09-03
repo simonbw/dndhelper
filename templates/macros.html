@@ -16,7 +16,7 @@
         {% for stat, value in stats %}
             <tr title="{{ stat.description }}">
                 <td>{{ stat }}</td>
-                <td data-bind-text="character.{{ stat }}">{{ value }}</td>
+                <td data-bind-read="character.{{ stat }}">{{ value }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -26,7 +26,7 @@
     <div class="character-header" data-character-id="{{ character.id }}">
         <div class="character-top-header">
             <div class="half-container">
-                <span class="name" data-bind-text="character.name">{{ character.name }}</span>
+                <span class="name" data-bind-read="character.name">{{ character.name }}</span>
             </div>
             <div class="half-container">
                 <div class="health-bar-background">
@@ -39,12 +39,12 @@
             </div>
         </div>
         <div class="character-bottom-header">
-            <div class="half-container" data-bind-text="character.race">
+            <div class="half-container" data-bind-read="character.race">
                 <span class="race">{{ character.race.name }}</span>
             </div>
             <div class="half-container">
                 <span class="separator">-</span>
-                <span class="class" data-bind-text="character.class">{{ character.character_class.name }}</span>
+                <span class="class" data-bind-read="character.class">{{ character.character_class.name }}</span>
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@ from models.inventory import ItemType
 from util import json_service
 
 
-items_app = Blueprint('items', __name__)
+items_app = Blueprint('ItemType', __name__)
 
 
 @items_app.route('/', methods=['GET'])
@@ -16,12 +16,17 @@ def get():
 
 @items_app.route('/', methods=['POST'])
 @json_service
-def create():
-    item_type = ItemType()
-    if 'name' in request.form:
-        item_type.name = request.form['name']
-    if 'description' in request.form:
-        item_type.name = request.form['name']
-    db.session.add(item_type)
-    db.session.commit()
+def post():
+    data = request.get_json()
+    if data['id'] == 'new':
+        item_type = ItemType()
+        db.session.add(item_type)
+        db.session.commit()
+    else:
+        item_type = ItemType.query.get(data['id'])
+    for attribute in data:
+        if attribute == 'id':
+            continue
+        if hasattr(item_type, attribute):
+            setattr(item_type, attribute, data[attribute])
     return item_type

@@ -8,66 +8,51 @@ window.binds = (function () {
      * @returns {Character}
      */
     function getBoundCharacter(element) {
-        return characters.fromId(parseInt($(element).closest('[data-character-id]').data('character-id')));
+        return characters.fromId(parseInt($(element).closest('[data-character-id]').attr('data-character-id')));
     }
 
     /**
      * Maps namespace to handler.
      * @type {Object.<string, function(Element, string)>}
      */
-    var textBinds = {};
+    var readBinds = {};
 
-    textBinds['character'] = function (element, attribute) {
+    /**
+     * Maps namespace to handler.
+     * @type {Object.<string, function(Element, string)>}
+     */
+    var writeBinds = {};
+
+    function addReadBind(type, bind) {
+        readBinds[type] = bind;
+    }
+
+    function addWriteBind(type, bind) {
+        writeBinds[type] = bind;
+    }
+
+    readBinds['character'] = function (element, attribute) {
         getBoundCharacter(element).addHandler(attribute, function (value) {
             $(element).text(value);
         });
     };
 
-    textBinds['item'] = function (element, attribute) {
-        var itemTypeId = $(element).closest('[data-item-type-id]').data('item-type-id');
-        models.items.addHandler(itemTypeId, function (item) {
-            $(element).text(item[attribute]);
-        });
-    };
-
-    textBinds['knowledge'] = function (element, attribute) {
-        var knowledgeId = $(element).closest('[data-knowledge-id]').data('knowledge-id');
-        models.knowledge.addHandler(knowledgeId, function (knowledge) {
-            $(element).text(knowledge[attribute]);
-        });
-    };
-
-    /**
-     * Maps namespace to handler.
-     * @type {Object.<string, function(Element, string)>}
-     */
-    var writeValueBinds = {};
-
-    writeValueBinds['character'] = function (element, attribute) {
-        getBoundCharacter(element).saveAttribute(attribute, $(element).val());
-    };
-
-    /**
-     * Maps namespace to handler.
-     * @type {Object.<string, function(Element, string)>}
-     */
-    var writeTextBinds = {};
-
-    writeTextBinds['character'] = function (element, attribute) {
-        getBoundCharacter(element).saveAttribute(attribute, $(element).text());
+    writeBinds['character'] = function (element, attribute) {
+        var value = $(element).val() || $(element).text();
+        getBoundCharacter(element).saveAttribute(attribute, value);
     };
 
 
     /**
-     * Initialize a text bind for this element. Must have the data-bind-text property set.
+     * Initialize a read bind for this element. Must have the data-bind-read attribute set.
      * @param {Element|jQuery} element
      */
-    function initTextBind(element) {
-        var full = $(element).data("bind-text").split('.');
+    function initReadBind(element) {
+        var full = $(element).attr("data-bind-read").split('.');
         var namespace = full[0];
         var attribute = full[1];
-        if (textBinds.hasOwnProperty(namespace)) {
-            textBinds[namespace](element, attribute);
+        if (readBinds.hasOwnProperty(namespace)) {
+            readBinds[namespace](element, attribute);
         } else {
             console.log('Unknown namespace: ', namespace);
 //            throw new Error('Unknown namespace: ' + namespace);
@@ -79,33 +64,23 @@ window.binds = (function () {
      * @param {Element} element
      */
     function initWriteBind(element) {
-        console.log('binding write');
-        var full = $(element).data("bind-write").split('.');
+        var full = $(element).attr("data-bind-write").split('.');
         var namespace = full[0];
         var attribute = full[1];
-        if (element.contentEditable == "true") {
-            $(element).on('input', function () {
-                var editTime = Date.now();
-                $(element).data('last-edit', editTime);
-                setTimeout(function () {
-                    if ($(element).data('last-edit') == editTime) {
-                        if (writeTextBinds.hasOwnProperty(namespace)) {
-                            writeTextBinds[namespace](element, attribute);
-                        } else {
-                            throw new Error('Unknown namespace: ' + namespace);
-                        }
+        var delay = 100;
+        $(element).on('input', function () {
+            var inputTime = Date.now();
+            $(element).attr('data-last-input-time', inputTime);
+            setTimeout(function () {
+                if ($(element).attr('data-last-input-time') == inputTime) {
+                    if (writeBinds.hasOwnProperty(namespace)) {
+                        writeBinds[namespace](element, attribute);
+                    } else {
+                        throw new Error('Unknown namespace: ' + namespace);
                     }
-                }, 500);
-            });
-        } else {
-            $(element).on('change', function () {
-                if (writeValueBinds.hasOwnProperty(namespace)) {
-                    writeValueBinds[namespace](element, attribute);
-                } else {
-                    throw new Error('Unknown namespace: ' + namespace);
                 }
-            });
-        }
+            }, delay);
+        });
     }
 
     /**
@@ -113,10 +88,10 @@ window.binds = (function () {
      * @param {Node} element
      */
     function initBindsOn(element) {
-        $(element).find('[data-bind-text]').each(function (i, e) {
-            initTextBind(e);
+        $(element).find('[data-bind-read]').addBack('[data-bind-read]').each(function (i, e) {
+            initReadBind(e);
         });
-        $(element).find('[data-bind-write]').each(function (i, e) {
+        $(element).find('[data-bind-write]').addBack('[data-bind-write]').each(function (i, e) {
             initWriteBind(e);
         });
     }
@@ -128,10 +103,13 @@ window.binds = (function () {
         initBindsOn(document);
     }
 
+
     return {
         'init': initAllBinds,
-        'initTextBind': initTextBind,
-        'initWriteBind': initTextBind,
-        'initBindsOn': initBindsOn
+        'initTextBind': initReadBind,
+        'initWriteBind': initReadBind,
+        'initBindsOn': initBindsOn,
+        'addReadBind': addReadBind,
+        'addWriteBind': addWriteBind
     };
 })();

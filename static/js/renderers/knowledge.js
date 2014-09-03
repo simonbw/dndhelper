@@ -1,8 +1,8 @@
 'use strict';
 
-if (window.renderers === undefined) {
-    window.renderers = {};
-}
+// TODO: Make an actual knowledge 'inventory'
+
+window.renderers = window.renderers || {};
 
 window.renderers.KnowledgeViewer = (function () {
 
@@ -19,14 +19,14 @@ window.renderers.KnowledgeViewer = (function () {
             .attr('data-knowledge-id', knowledge['id']);
         var $name = $('<h5>').
             text('loading...')
-            .attr('data-bind-text', 'knowledge.name');
+            .attr('data-bind-read', 'knowledge.name');
         var $content = $('<div>').
             text('...')
-            .attr('data-bind-text', 'knowledge.name');
+            .attr('data-bind-read', 'knowledge.name');
         $div.append($name);
         $div.append($content);
         binds.initBindsOn($div);
-        models.items.loadOne(knowledge['id']);
+        models.Knowledge.loadOne(knowledge['id']);
         knowledgeMap[knowledge['id']] = $div;
         return  $div;
     }

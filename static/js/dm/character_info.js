@@ -1,7 +1,7 @@
 'use strict';
 
-
-window.characterInfo = (function () {
+window.dm = window.dm || {};
+window.dm.characterInfo = (function () {
 
     /**
      * Initialize everything in the character info views.
@@ -22,12 +22,12 @@ window.characterInfo = (function () {
     }
 
     /**
-     * Create the items in all the characters inventories and add listeners for their change.
+     * Create the ItemType in all the characters inventories and add listeners for their change.
      */
     function initInventories() {
         $('.give-item').each(function () {
             var $container = $(this);
-            var characterId = $(this).data('character-id');
+            var characterId = $(this).attr('data-character-id');
 
             $(this).find('button').click(function () {
                 characters.fromId(characterId).saveAttribute('give_item', {

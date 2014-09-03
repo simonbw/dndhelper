@@ -2,11 +2,11 @@
     {% for character in campaign.characters %}
         <div id="party-member-{{ character.id }}" data-character-id="{{ character.id }}"
              data-main-content-id="character-{{ character.id }}" class="party-member">
-            <h3 data-bind-text="character.name">{{ character.name }}</h3>
+            <h3 data-bind-read="character.name">{{ character.name }}</h3>
 
             <div class="hitpoint-box">
-                <span data-bind-text="character.hitpoints">{{ character.hitpoints }}</span> /
-                <span data-bind-text="character.max_hitpoints">{{ character.max_hitpoints }}</span>
+                <span data-bind-read="character.hitpoints">{{ character.hitpoints }}</span> /
+                <span data-bind-read="character.max_hitpoints">{{ character.max_hitpoints }}</span>
             </div>
         </div>
     {% endfor %}

@@ -31,7 +31,7 @@ window.tabs = (function () {
      */
     function initTabListeners() {
         $('.tab-button').click(function () {
-            openTab($(this).data('tab'));
+            openTab($(this).attr('data-tab'));
         });
     }
 

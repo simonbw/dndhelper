@@ -3,6 +3,8 @@ from flask.blueprints import Blueprint
 
 from models import db
 from models.campaign import get_main_campaign
+from models.inventory import list_items
+from models.knowledge import list_knowledge
 from models.monsters import Monster, get_monster
 from updates import update_stream, get_updates
 import updates
@@ -21,13 +23,15 @@ def dashboard():
     g.bundle['characters'] = campaign.characters
     g.bundle['fetch_updates_url'] = url_for('dm.fetch_updates')
     g.bundle['stream_updates_url'] = url_for('dm.stream_updates')
+    g.bundle['knowledge'] = list_knowledge()
+    g.bundle['item-types'] = list_items()
 
     require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'tabs', 'models/simple_model',
-                    'models/items', 'models/knowledge', 'renderers/inventory', 'renderers/knowledge', 'dm/roller',
-                    'dm/character_info', 'dm/dashboard')
+                    'models/item_type', 'models/knowledge', 'renderers/inventory', 'renderers/knowledge', 'dm/roller',
+                    'dm/knowledge_edit', 'dm/items_edit', 'dm/character_info', 'dm/dashboard')
 
     require_styles('character', 'tabs', 'dm/dashboard', 'dm/party', 'dm/roller', 'dm/chat', 'dm/character_info',
-                   'dm/tools')
+                   'dm/tools', 'dm/knowledge', 'dm/items')
     return render_template("dm/dashboard.html", campaign=campaign, title='DM')
 
 

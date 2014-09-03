@@ -1,13 +1,6 @@
 'use strict';
 /*global bundle*/
 
-if (window.models === undefined) {
-    window.models = {};
-}
+window.models = window.models || {};
 
-window.models.knowledge = models.SimpleModel('Knowledge', bundle['fetch_knowledge_url']);
-
-// make sure all bundled knowledges are processed
-if (bundle.hasOwnProperty('knowledge')) {
-    bundle['knowledge'].forEach(models.knowledge.process);
-}
+window.models.Knowledge = models.createSimpleModel('knowledge', bundle['fetch_knowledge_url'], bundle['save_knowledge_url'], bundle['knowledge']);

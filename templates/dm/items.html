@@ -1,11 +1,11 @@
 <div id="items-box">
-    <select>
-        {%- for item in list_items() %}
-            <option value="{{ item.id }}">
-                {{ item.name }}
-            </option>
-        {% endfor -%}
-    </select>
-    <button>New Item</button>
-    <div class="item-display"></div>
+    <div id="items-control">
+        <button>New Item Type</button>
+        <input id="items-search" type="text">
+        <ul id="items-list">
+            {#- Will be populated later by javascript -#}
+        </ul>
+    </div>
+    <div id="current-item">
+    </div>
 </div>
