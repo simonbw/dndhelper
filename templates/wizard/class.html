@@ -4,7 +4,7 @@
 <div class="chooser" data-bind-write="character.class">
     <div class="choices">
         {% for class in classes %}
-            <div class="choice{{ ' chosen' if class == character.character_class }}" data-choice="{{ class.name }}">
+            <div class="choice{{ ' chosen' if class == character.character_class }}" data-choice="{{ class.id }}">
                 {{ class.name }}
             </div>
         {% endfor %}
@@ -12,7 +12,7 @@
     <div class="choice-descriptions">
         {% for class in classes %}
             <div class="choice-description{{ ' chosen' if class == character.character_class }}"
-                 data-choice="{{ class.name }}">
+                 data-choice="{{ class.id }}">
                 This is a description of {{ class.name }}.
                 This is a description of {{ class.name }}.
                 This is a description of {{ class.name }}.

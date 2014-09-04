@@ -4,14 +4,14 @@
 <div class="chooser" data-bind-write="character.race">
     <div class="choices">
         {% for race in races %}
-            <div class="choice{{ ' chosen' if race == character.race }}" data-choice="{{ race.name }}">
+            <div class="choice{{ ' chosen' if race == character.race }}" data-choice="{{ race.id }}">
                 {{ race.name }}
             </div>
         {% endfor %}
     </div>
     <div class="choice-descriptions">
         {% for race in races %}
-            <div class="choice-description{{ ' chosen' if race == character.race }}" data-choice="{{ race.name }}">
+            <div class="choice-description{{ ' chosen' if race == character.race }}" data-choice="{{ race.id }}">
                 This is a description of {{ race.name }}.
                 This is a description of {{ race.name }}.
                 This is a description of {{ race.name }}.

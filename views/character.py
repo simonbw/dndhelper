@@ -7,9 +7,9 @@ from models.abilities import list_abilities, Ability
 from models.alignments import Alignment
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
-from models.classes import get_class
+from models.classes import CharacterClass
 from models.inventory import ItemType
-from models.races import list_races, get_race
+from models.races import list_races, Race
 from models.skills import list_skills, Skill
 import updates
 from util import json_service, require_scripts, require_styles
@@ -185,7 +185,7 @@ def init_handlers():
 
     @handler('race')
     def update_race(character, value):
-        character.race = get_race(value)
+        character.race = Race.query.get(int(value))
         db.session.commit()
         updates.add_character_update(character.id, 'race', character.race.name)
 
@@ -197,7 +197,7 @@ def init_handlers():
 
     @handler('class')
     def update_class(character, value):
-        character.character_class = get_class(value)
+        character.character_class = CharacterClass.query.get(int(value))
         db.session.commit()
         updates.add_character_update(character.id, 'class', character.character_class.name)
 
