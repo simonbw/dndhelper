@@ -4,6 +4,7 @@ from flask.blueprints import Blueprint
 from descriptions import init_descriptions
 from models import db
 from models.abilities import init_abilities
+from models.alignments import init_alignments
 from models.characters import init_characters
 from models.classes import init_classes
 from models.inventory import init_items
@@ -41,3 +42,4 @@ def init_all():
     init_handlers()
     init_items()
     init_knowledge()
+    init_alignments()

@@ -13,7 +13,7 @@
     flex-shrink: 0;
 }
 
-#items-control button {
+#items-control button, #items-search {
     flex-shrink: 0;
     padding: 4px;
 }

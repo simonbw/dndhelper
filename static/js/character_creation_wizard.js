@@ -2,9 +2,7 @@
 /*global bundle*/
 
 (function () {
-    /**
-     * @type {Character}
-     */
+    /** @type {Character} */
     var character;
 
     /**

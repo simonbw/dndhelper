@@ -2,9 +2,6 @@ from descriptions import get_description
 from models import db
 
 
-abilities = {}
-
-
 def init_abilities():
     make_ability('Strength', 'STR')
     make_ability('Dexterity', 'DEX')

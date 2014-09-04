@@ -15,6 +15,18 @@ window.dm.itemType = (function () {
             models.ItemType.makeNew();
         });
 
+        $('#items-search').on('input', function () {
+            var searchString = $(this).val();
+            $('#items-list').find('li.item-type').each(function () {
+                var subject = $(this).text();
+                if (util.fuzzyMatch(searchString, subject)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
         // add everything that already exists
         models.ItemType.all.forEach(processNewItem);
         // add all new stuff that comes up

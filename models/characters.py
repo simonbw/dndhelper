@@ -60,6 +60,9 @@ class Character(db.Model):
     class_id = db.Column(db.Integer, db.ForeignKey('character_class.id'))
     character_class = db.relationship('CharacterClass')
 
+    alignment_id = db.Column(db.Integer, db.ForeignKey('alignment.id'))
+    alignment = db.relationship('Alignment')
+
     name = db.Column(db.String(128))  # not unique because we might have multiple no names
     backstory = db.Column(db.Text)
     personality = db.Column(db.Text)
@@ -178,6 +181,7 @@ class Character(db.Model):
             'personality': self.personality,
             'hitpoints': self.hitpoints,
             'max_hitpoints': self.max_hitpoints,
+            'alignment': self.alignment,
             'creation_phase': self.creation_phase,
             'view_url': self.view_url,
             'update_url': self.update_url,
@@ -202,8 +206,4 @@ class Character(db.Model):
         attributes = ['id', 'name', 'backstory', 'personality', 'hitpoints', 'max_hitpoints',
                       'view_url', 'update_url', 'fetch_updates_url', 'stream_updates_url', 'creation_wizard_url',
                       'creation_phase', 'initiative']
-        # for skill in list_skills():
-        # attributes.append(skill.name)
-        # for ability in list_abilities():
-        # attributes.append(ability.name)
         return attributes

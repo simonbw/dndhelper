@@ -15,6 +15,18 @@ window.dm.knowledge = (function () {
             models.Knowledge.makeNew();
         });
 
+        $('#knowledge-search').on('input', function () {
+            var searchString = $(this).val();
+            $('#knowledge-list').find('li.knowledge').each(function () {
+                var subject = $(this).text();
+                if (util.fuzzyMatch(searchString, subject)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
         // add everything that already exists
         models.Knowledge.all.forEach(processNewKnowledge);
         // add all new stuff that comes up
@@ -60,6 +72,9 @@ window.dm.knowledge = (function () {
                 .addClass('content')
                 .attr('data-bind-write', 'knowledge.content')
                 .text(models.Knowledge.isLoaded(knowledgeId) ? models.Knowledge.get(knowledgeId)['content'] : 'loading...'));
+        characters.all.forEach(function(character){
+            $knowledge.append($('<div>'));
+        });
         binds.initBindsOn($knowledge);
         models.Knowledge.loadOne(knowledgeId, function (data) {
             $knowledge.find('.name').text(data['name']).prop('contentEditable', true);

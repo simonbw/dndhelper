@@ -8,6 +8,7 @@ from flask import Flask, g, url_for
 
 from models import db
 from models.abilities import list_abilities
+from models.alignments import list_alignments
 from models.classes import list_classes
 from models.inventory import list_items
 from models.knowledge import list_knowledge
@@ -82,6 +83,7 @@ def context_processor():
         'list_classes': list_classes,
         'list_items': list_items,
         'list_knowledge': list_knowledge,
+        'list_alignments': list_alignments,
         'bundle': g.bundle,
         'scripts': g.scripts,
         'stylesheets': g.stylesheets

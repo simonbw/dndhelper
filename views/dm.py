@@ -26,7 +26,7 @@ def dashboard():
     g.bundle['knowledge'] = list_knowledge()
     g.bundle['item-types'] = list_items()
 
-    require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'tabs', 'models/simple_model',
+    require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'tabs', 'util/util', 'models/simple_model',
                     'models/item_type', 'models/knowledge', 'renderers/inventory', 'renderers/knowledge', 'dm/roller',
                     'dm/knowledge_edit', 'dm/items_edit', 'dm/character_info', 'dm/dashboard')
 

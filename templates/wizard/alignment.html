@@ -1,0 +1,22 @@
+{% set alignments = list_alignments() %}
+
+<h1>Race</h1>
+<div class="chooser" data-bind-write="character.alignment">
+    <div class="choices">
+        {% for alignment in alignments %}
+            <div class="choice{{ ' chosen' if alignment == character.alignment }}" data-choice="{{ alignment.id }}">
+                {{ alignment.name }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="choice-descriptions">
+        {% for alignment in alignments %}
+            <div class="choice-description{{ ' chosen' if alignment == character.alignment }}"
+                 data-choice="{{ alignment.id }}">
+                This is a description of {{ alignment.name }}.
+                This is a description of {{ alignment.name }}.
+                This is a description of {{ alignment.name }}.
+            </div>
+        {% endfor %}
+    </div>
+</div>

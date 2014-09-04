@@ -4,6 +4,7 @@ from flask import redirect, url_for, make_response, request, flash, Response, g
 
 from models import db
 from models.abilities import list_abilities, Ability
+from models.alignments import Alignment
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
 from models.classes import get_class
@@ -19,7 +20,7 @@ character_app = Blueprint('characters', __name__)
 update_handlers = {}
 """:type: dict[str, func]"""
 
-creation_phases = ['name', 'race', 'class', 'abilities', 'background', 'skills']
+creation_phases = ['name', 'race', 'class', 'alignment', 'abilities', 'background', 'skills']
 """The phases to go through when creating a character."""
 
 
@@ -94,14 +95,13 @@ def creation_wizard(character_id=None, name=None, phase=None):
         flash('phase "' + phase + '" is not a valid phase')
         return redirect(url_for('campaign.view'))
 
-    require_scripts('character', 'characters', 'updates', 'binds', 'ItemType', 'wizard', 'character_creation_wizard')
+    require_scripts('character', 'characters', 'updates', 'binds', 'wizard', 'character_creation_wizard')
     require_styles('wizard')
     g.bundle['characters'] = [character]
     g.bundle['wizard_current_phase'] = phase
     g.bundle['wizard_phases'] = creation_phases
     g.bundle['fetch_updates_url'] = character.fetch_updates_url
     g.bundle['stream_updates_url'] = character.stream_updates_url
-    g.bundle['fetch_item_url'] = url_for('ItemType.get')
 
     done_url = character.view_url
     return render_template('wizard/wizard.html', current_phase=phase, phases=creation_phases,
@@ -189,6 +189,11 @@ def init_handlers():
         db.session.commit()
         updates.add_character_update(character.id, 'race', character.race.name)
 
+    @handler('alignment')
+    def update_alignment(character, value):
+        character.alignment = Alignment.query.get(int(value))
+        db.session.commit()
+        updates.add_character_update(character.id, 'alignment', character.alignment.name)
 
     @handler('class')
     def update_class(character, value):
@@ -203,7 +208,7 @@ def init_handlers():
         db.session.commit()
         updates.add_inventory_update(character.id, item)
 
-    # this is me getting a little to0 functional with python
+    # this is me getting a little too functional with python
     def make_attribute_handler(attribute_name):
         def attribute_handler(character, value):
             setattr(character, attribute_name, value)

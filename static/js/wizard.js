@@ -37,6 +37,7 @@ window.wizard = (function () {
                     $(self).find('.chosen').removeClass('chosen');
                     $chosen.addClass('chosen');
                     $(self).val($chosen.attr('data-choice'));
+                    $(self).trigger('input');
                     $(self).trigger('change');
                 }
                 $(self).find('.choice-description[data-choice=' + choice + ']').addClass('chosen');
@@ -115,6 +116,9 @@ window.wizard = (function () {
         });
     }
 
+    /**
+     *
+     */
     function initControl() {
         // when nothing has focus, enter takes you to the next page
         $(document).keydown(function (event) {

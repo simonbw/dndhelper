@@ -13,7 +13,7 @@
     flex-shrink: 0;
 }
 
-#knowledge-control button {
+#knowledge-control button, #knowledge-search {
     flex-shrink: 0;
     padding: 4px;
 }
