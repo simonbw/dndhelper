@@ -50,8 +50,10 @@ class Ability(db.Model):
 
     def __serialize__(self):
         return {
+            'id': self.id,
             'name': self.name,
-            'description': self.description
+            'description': self.description,
+            'abbreviation': self.abbreviation
         }
 
     def __str__(self):

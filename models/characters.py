@@ -64,8 +64,8 @@ class Character(db.Model):
     alignment = db.relationship('Alignment')
 
     name = db.Column(db.String(128))  # not unique because we might have multiple no names
-    backstory = db.Column(db.Text)
-    personality = db.Column(db.Text)
+    backstory = db.deferred(db.Column(db.Text))
+    personality = db.deferred(db.Column(db.Text))
     hitpoints = db.Column(db.Integer)
     max_hitpoints = db.Column(db.Integer)
     initiative = db.Column(db.Integer)
@@ -191,8 +191,8 @@ class Character(db.Model):
             'inventory': self.inventory,
             'knowledge': [knowledge.id for knowledge in self.knowledge]
         }
-        for skill in list_skills():
-            serialized[skill.name] = self.get_skill_level(skill)
+        for skill, level in self.skills:
+            serialized[skill.name] = level
         for ability, score in self.abilities:
             serialized[ability.name] = score
         return serialized

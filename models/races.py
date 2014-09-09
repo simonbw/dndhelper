@@ -27,9 +27,11 @@ def list_races():
 class Race(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
+    description = db.Column(db.Text, default='...')
 
-    def __init__(self, name):
+    def __init__(self, name, description='...'):
         self.name = name
+        self.description = description
 
     def __str__(self):
         return self.name
@@ -37,5 +39,6 @@ class Race(db.Model):
     def __serialize__(self):
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
+            'description': self.description
         }

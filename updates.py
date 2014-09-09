@@ -106,16 +106,17 @@ def add_message_update(message):
     :type message: models.messages.Message
     """
     sender_id = getattr(message.sender, 'id', 0)
-    recipient_id = getattr(message.recipient, 'id', 0)
+    recipient_ids = [recipient.id for recipient in message.recipients]
     update = {
         'type': 'message',
         'id': message.id,
-        'sender': message.sender_name,
-        'recipient': message.recipient_name,
+        'sender': sender_id,
+        'recipients': recipient_ids,
         'content': message.content
     }
     add_update(sender_id, update)
-    add_update(recipient_id, update)
+    for recipient_id in recipient_ids:
+        add_update(recipient_id, update)
 
 
 def add_new_character_update(character):

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /*global bundle*/
 
 window.Chat = (function () {
@@ -19,14 +19,6 @@ window.Chat = (function () {
 var chat = (function () {
     var recipients = [];
     var sender = '';
-
-    function enable() {
-        $('#chat-pane').slideDown();
-    }
-
-    function disable() {
-        $('#chat-pane').slideUp();
-    }
 
     /**
      * Given a character or a character's name, return the character's name.
@@ -162,7 +154,7 @@ var chat = (function () {
         return color;
     }
 
-    
+
     $(function () {
         $('.chat-box textarea').keypress(function (event) {
             if (event.which == 13 && !event.shiftKey) {
@@ -188,5 +180,4 @@ var chat = (function () {
         'enable': enable,
         'disable': disable
     };
-})
-();
+})();

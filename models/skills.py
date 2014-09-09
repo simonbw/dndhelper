@@ -72,9 +72,11 @@ class Skill(db.Model):
 
     def __serialize__(self):
         return {
+            'id': self.id,
             'name': self.name,
             'description': self.description,
-            'ability': getattr(self.ability, 'name', '')
+            'ability': getattr(self.ability, 'name', ''),
+            'ability_id': self.ability.id
         }
 
     def __str__(self):
