@@ -2,7 +2,8 @@
     <h2>Messages</h2>
 
     <div class="chat-messages">
-
     </div>
-    <textarea rows="1"></textarea>
+    <textarea rows="1" class="chat-input"
+              data-recipients="{{ campaign.characters|map('attr', 'id')|join(':') }}"
+              data-sender="0"></textarea>
 </div>

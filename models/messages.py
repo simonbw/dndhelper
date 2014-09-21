@@ -21,7 +21,7 @@ class Message(db.Model):
     def __init__(self, content='', sender=None, recipients=None):
         self.content = content
         self.sender = sender
-        self.recipients = recipients
+        self.recipients = recipients or []
 
     @property
     def sender_name(self):

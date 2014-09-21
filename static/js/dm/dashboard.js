@@ -56,8 +56,7 @@
 
         dm.characterInfo.init();
 
-        chat.setSender('DM');
-        chat.setRecipients(characters.all);
+        chat.init();
 
         updates.openUpdateStream();
 

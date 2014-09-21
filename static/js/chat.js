@@ -1,102 +1,49 @@
 'use strict';
 /*global bundle*/
 
-window.Chat = (function () {
-    function Chat($input) {
-        this.$input = $input;
-        this.sender = null;
-    }
-
-    Chat.prototype.setSender = function (sender) {
-        this.sender = sender;
-    };
-
-
-    return Chat;
-})();
-
 
 var chat = (function () {
-    var recipients = [];
-    var sender = '';
 
     /**
-     * Given a character or a character's name, return the character's name.
-     * @param {Character|String|string} character
-     * @returns {string}
+     * Initialize the chat system.
      */
-    function characterName(character) {
-        if (character instanceof String) {
-            return character;
-        } else if (character instanceof Character) {
-            return String(character.get('name'));
-        } else if (typeof character == "string") {
-            return character;
-        }
-        throw new Error('Not a character: ' + character);
+    function init() {
+        // add handler to update
+        updates.addUpdateHandler('message', function (data) {
+            receiveMessage(data)
+        });
+        // bind dom
+        $('.chat-input').each(function () {
+            bindInput(this);
+        });
     }
 
     /**
-     * Add a recipient to the list of recipients.
-     * @param {Character|String|string} recipient
+     * Bind an input/textarea element to submit when hitting enter.
+     * @param element
      */
-    function addRecipient(recipient) {
-        recipient = characterName(recipient);
-        if (recipients.indexOf(recipient) < 0) {
-            recipients.push(recipient);
-        }
-    }
+    function bindInput(element) {
+        $(element).keypress(function (event) {
+            if (event.which == 13 && !event.shiftKey) {
+                var recipients = ($(this).data('recipients') || '').split(':').map(function (x) {
+                    return parseInt(x);
+                });
+                var sender = parseInt(($(this).data('sender') || 0));
+                sendMessage($(this).val(), recipients, sender);
+                $(this).val('');
 
-    /**
-     * Remove a list from the list of recipients.
-     * @param {Character|String|string} recipient
-     */
-    function removeRecipient(recipient) {
-        recipient = characterName(recipient);
-        var i = recipients.indexOf(recipient);
-        if (i >= 0) {
-            recipients.splice(i, 1);
-        }
-    }
-
-    /**
-     * Set the sender of the messages.
-     * @param {Character|String|string} s
-     */
-    function setSender(s) {
-        sender = characterName(s);
-    }
-
-    /**
-     * @returns {string} - the sender
-     */
-    function getSender() {
-        return sender;
-    }
-
-    /**
-     * @returns {Array} - the recipients
-     */
-    function getRecipients() {
-        return recipients;
-    }
-
-    /**
-     * Set the list of recipients;
-     * @param {Array.<string>} r
-     */
-    function setRecipients(r) {
-        recipients.length = 0; // sketchy way to clear an array
-        r.forEach(function (recipient) {
-            addRecipient(recipient);
+                // stop from actually inserting a new line
+                event.preventDefault();
+                return false;
+            }
         });
     }
 
     /**
      * Send a message.
      * @param {string} content
-     * @param {Array<Character|String|string>} recipients
-     * @param {Character|String|string} sender
+     * @param {Array<number>} recipients
+     * @param {number} sender
      */
     function sendMessage(content, recipients, sender) {
         var url = bundle['chat_url'];
@@ -113,71 +60,42 @@ var chat = (function () {
     }
 
     /**
-     * Add a message.
-     * @param {Character|String|string} sender
-     * @param {string} content
+     * Display a message.
+     * @param {Object} message
      */
-    function receiveMessage(sender, content) {
-        console.log('message recieved', sender, content);
-
-        var $li = $('<div>', {
-            'class': 'message'
+    function receiveMessage(message) {
+        console.log('message received', message.sender, message.content);
+        $('.chat-messages').each(function () {
+            $(this)
+                .append(makeMessageElement(message))
+                .scrollTop($(this).prop('scrollHeight')); //always scroll to bottom
         });
-        var $sender = $('<span>', {
-            'class': 'sender',
-            'text': sender
-        });
-        $sender.css('color', stringToColor(sender));
-        $li.append($sender);
-        $li.append(" : ");
-        $li.append($('<span>', {
-            'class': 'content',
-            'text': content
-        }));
-        var $messages = $('.chat-messages');
-        $messages.append($li);
-
-        $messages.scrollTop($messages.prop('scrollHeight')); //always scroll to bottom
     }
 
     /**
-     * Hash a string to a hex color string.
-     * @param {string} str
-     * @returns {string}
+     * Create a dom element for a message.
+     * @param {Object} message
      */
-    function stringToColor(str) {
-        // str to hash
-        for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
-        // int/hash to hex
-        for (var j = 0, color = "#"; j < 3; color += ("00" + ((hash >> j++ * 8) & 0xFF).toString(16)).slice(-2));
-
-        return color;
+    function makeMessageElement(message) {
+        // This is some interesting indentation for the chaining. There might be a better way to format this.
+        var sender = message.sender; // TODO: Get character name
+        return $('<div>', {
+            'class': 'message'
+        }).append($('<span>', {
+                'class': 'sender',
+                'text': sender
+            }).css('color', util.stringToColor(sender))
+        ).append(" : ")
+            .append($('<span>', {
+                'class': 'content',
+                'text': message.content
+            }));
     }
 
-
-    $(function () {
-        $('.chat-box textarea').keypress(function (event) {
-            if (event.which == 13 && !event.shiftKey) {
-                sendMessage($(this).val(), getRecipients(), getSender());
-                $(this).val('');
-                event.preventDefault();
-                return false;
-            }
-        });
-        updates.addUpdateHandler('message', function (data) {
-            receiveMessage(data.sender, data.content)
-        });
-    });
-
-    // public methods
     return {
-        'receiveMessage': receiveMessage,
-        'addRecipient': addRecipient,
-        'removeRecipient': removeRecipient,
-        'setRecipients': setRecipients,
-        'setSender': setSender,
-        'getSender': getSender,
-        'enable': enable,
-        'disable': disable
+        'init': init,
+        'bindInput': bindInput,
+        'sendMessage': sendMessage,
+        'receiveMessage': receiveMessage
     };
 })();
