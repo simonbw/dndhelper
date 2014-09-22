@@ -11,10 +11,38 @@
     margin-bottom: 8px;
 }
 
+.chat-box .recipient-list {
+    display: flex;
+    font-size: 12px;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.chat-box .recipient-list .recipient {
+    margin: 0;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    flex-grow: 1;
+    text-align: center;
+    padding: 1px 4px;
+}
+
+.chat-box .recipient-list .recipient.active {
+    background: #EEEEEE;
+}
+
+.chat-box .recipient-list .recipient:hover {
+    background: #EEEEEE;
+}
+
 .chat-box .chat-messages {
     height: 100%;
     flex-grow: 1;
     background: #EEEEEE;
+    font-size: 13px;
 }
 
 .chat-box textarea {

@@ -64,7 +64,7 @@ def before_request():
     g.scripts = []
     g.stylesheets = []
 
-    require_scripts('lib/jquery', 'lib/jquery.autocomplete', 'dice_roller')
+    require_scripts('lib/jquery', 'dice_roller')
     require_styles('style', 'chat')
 
 
@@ -93,4 +93,4 @@ def context_processor():
 
 if __name__ == '__main__':
     # Run the development server.
-    create_app(True).run(threaded=True)
+    create_app(True).run(threaded=True, host='0.0.0.0')

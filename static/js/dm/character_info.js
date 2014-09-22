@@ -9,6 +9,7 @@ window.dm.characterInfo = (function () {
     function init() {
         initSections();
         initInventories();
+        initActions();
     }
 
     /**
@@ -22,21 +23,62 @@ window.dm.characterInfo = (function () {
     }
 
     /**
+     * Initialize the action buttons.
+     */
+    function initActions() {
+        selectSubaction();
+        $('.character').each(function () {
+            var character = characters.fromId(parseInt($(this).attr('data-character-id')));
+            $(this).find('.action-button.chat-button').click(function () {
+                selectSubaction();
+                chat.setRecipients($('.chat-box'), [character]);
+            });
+            $(this).find('.action-button.give-item-button').click(function () {
+                selectSubaction();
+                new renderers.ItemTypePicker(function (itemType, quantity) {
+                    character.saveAttribute('give_item', {
+                        'item_type': itemType,
+                        'quantity': quantity
+                    });
+                });
+            });
+            $(this).find('.action-button.money-button').click(function () {
+                selectSubaction('money');
+            });
+            $(this).find('.action-button.hit-points-button').click(function () {
+                selectSubaction('hit-points');
+            });
+
+            $(this).find('.action-buttons.hit-points').on('click', '.action-button', function () {
+                var hitpointString = $(this).attr('data-hit-points');
+                var hp;
+                if (hitpointString === 'max') {
+                    hp = character.get('max_hitpoints');
+                } else {
+                    hp = character.get('hitpoints') + parseInt(hitpointString);
+                }
+                character.saveAttribute('hitpoints', hp);
+            });
+        });
+    }
+
+    /**
+     * Select a specific set of actions.
+     * @param subaction
+     */
+    function selectSubaction(subaction) {
+        console.log('selecting', subaction);
+        $('.action-buttons').hide();
+        $('.action-buttons.main').show();
+        if (subaction) {
+            $('.action-buttons.' + subaction).show();
+        }
+    }
+
+    /**
      * Create the ItemType in all the characters inventories and add listeners for their change.
      */
     function initInventories() {
-        $('.give-item').each(function () {
-            var $container = $(this);
-            var characterId = $(this).attr('data-character-id');
-
-            $(this).find('button').click(function () {
-                characters.fromId(characterId).saveAttribute('give_item', {
-                    'item_type': $container.find('select').val(),
-                    'quantity': parseInt($container.find('input[type="number"]').val())
-                });
-            });
-        });
-
         characters.all.forEach(function (character) {
             var $itemBox = $('#character-' + character.get('id')).find('.inventory .item-box');
             renderers.Inventory(character, $itemBox);

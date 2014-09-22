@@ -1,9 +1,14 @@
 <div class="chat-box">
     <h2>Messages</h2>
 
+    <div class="recipient-list">
+        {% for character in campaign.characters %}
+            <div class="recipient" data-character-id="{{ character.id }}">{{ character.name }}</div>
+        {% endfor %}
+    </div>
     <div class="chat-messages">
     </div>
     <textarea rows="1" class="chat-input"
-              data-recipients="{{ campaign.characters|map('attr', 'id')|join(':') }}"
+              data-recipients="{{ campaign.characters|map('attr', 'id')|list|tojson }}"
               data-sender="0"></textarea>
 </div>

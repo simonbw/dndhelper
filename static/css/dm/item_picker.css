@@ -1,0 +1,48 @@
+.item-type-picker {
+    background: #FFFFFF;
+    border: 2px solid #DDDDDD;
+    bottom: 10%;
+    display: flex;
+    left: 10%;
+    position: absolute;
+    right: 10%;
+    top: 10%;
+    z-index: 100000;
+    flex-flow: row;
+
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.item-type-picker .button-box {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 200px;
+    flex-shrink: 0;
+}
+
+.item-type-picker .button-box button {
+    flex-grow: 1;
+    margin: 0;
+    padding: 2px;
+    background: #DDDDDD;
+    border: none;
+}
+
+.item-type-picker .quantity {
+    width: 100%;
+}
+
+.item-type-picker .button-box button:hover {
+    background: #EEEEEE;
+}
+
+.item-type-picker .item-type-info {
+    padding: 8px;
+}
+
+.item-type-picker .item-type-info {
+    padding: 8px;
+}
+

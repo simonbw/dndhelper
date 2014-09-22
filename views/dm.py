@@ -27,11 +27,11 @@ def dashboard():
     g.bundle['item-types'] = list_items()
 
     require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'tabs', 'util/util', 'models/simple_model',
-                    'models/item_type', 'models/knowledge', 'renderers/inventory', 'renderers/knowledge', 'dm/roller',
-                    'dm/knowledge_edit', 'dm/items_edit', 'dm/character_info', 'dm/dashboard')
-
+                    'models/item_type', 'models/knowledge', 'renderers/inventory', 'renderers/item_list',
+                    'renderers/item_picker', 'renderers/knowledge', 'dm/roller', 'dm/knowledge_edit', 'dm/items_edit',
+                    'dm/character_info', 'dm/dashboard')
     require_styles('character', 'tabs', 'dm/dashboard', 'dm/party', 'dm/roller', 'dm/chat', 'dm/character_info',
-                   'dm/tools', 'dm/knowledge', 'dm/items')
+                   'dm/tools', 'dm/knowledge', 'dm/items', 'dm/item_picker')
     return render_template("dm/dashboard.html", campaign=campaign, title='DM')
 
 

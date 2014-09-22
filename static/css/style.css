@@ -210,3 +210,23 @@ section {
 .data-table td {
     padding: 3px 8px;
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+button, select {
+    margin: 0;
+    padding: 3px;
+    background: #DDDDDD;
+    border-color: transparent; /* Don't ask me why */
+}
+
+button:hover, select:hover {
+    background: #EEEEEE;
+}

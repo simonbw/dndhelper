@@ -9,11 +9,9 @@
 }
 
 #roller .roll-bar select, #roller .roll-bar button {
-    display: inline-block;
-    margin: 0;
     float: left;
-    padding: 4px;
     width: 50%;
+    height: 100%;
 }
 
 #roller .results {

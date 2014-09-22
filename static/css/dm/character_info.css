@@ -2,13 +2,13 @@
 }
 
 .character h1 {
+    font-family: Cambria, Georgia, serif;
+    font-size: 40px;
+    font-variant: small-caps;
+    font-weight: normal;
     margin: 0;
     padding: 0;
     text-align: center;
-    font-weight: normal;
-    font-size: 40px;
-    font-family: Cambria, Georgia, serif;
-    font-variant: small-caps;
 }
 
 .character h1.race-and-class {
@@ -19,16 +19,16 @@
 }
 
 .character h2 {
-    border-top: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
     cursor: default;
+    font-family: Cambria, Georgia, serif;
+    font-variant: small-caps;
+    font-weight: normal;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-weight: normal;
-    font-family: Cambria, Georgia, serif;
-    font-variant: small-caps;
 }
 
 .character h2.closed:not(:last-of-type) {
@@ -48,12 +48,38 @@
     padding: 12px;
 }
 
+.character .action-buttons {
+    background: #EEEEEE;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.character .action-button {
+    text-align: center;
+    cursor: default;
+    font-size: 12px;
+    margin: 0;
+    padding: 2px 16px;
+    flex-grow: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.character .action-button:hover {
+    background: #DDDDDD;
+}
+
 .character .stats, .character .background {
     display: flex;
+    padding: 12px;
     width: 100%;
     flex-flow: row wrap;
     justify-content: space-between;
-    padding: 12px;
 }
 
 .character .skills, .character .abilities {
@@ -95,9 +121,9 @@
 }
 
 .character .inventory .item-box .item {
-    width: 100px;
     background: #EEEEEE;
     margin: 12px;
     padding: 4px;
+    width: 100px;
     flex-grow: 1;
 }

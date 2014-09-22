@@ -12,14 +12,14 @@
     text-align: center;
 }
 
-.health {
+.character-header .health {
     background-color: #228b22;
     height: 20px;
     position: absolute;
     width: 100%;
 }
 
-.hit-points {
+.character-header .hit-points {
     color: white;
     position: relative;
     z-index: 10;

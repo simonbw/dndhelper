@@ -7,30 +7,12 @@ window.dm.itemType = (function () {
      * Init the listeners on the control elements.
      */
     function init() {
-        $('#items-list').on('click', 'li', function () {
-            selectItemType($(this).attr('data-item-type-id'));
-        });
-
-        $('#items-control').find('button').click(function () {
+        var $items = $('#items-box');
+        $items.find('.items-control').find('button').click(function () {
             models.ItemType.makeNew();
         });
 
-        $('#items-search').on('input', function () {
-            var searchString = $(this).val();
-            $('#items-list').find('li.item-type').each(function () {
-                var subject = $(this).text();
-                if (util.fuzzyMatch(searchString, subject)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-
-        // add everything that already exists
-        models.ItemType.all.forEach(processNewItem);
-        // add all new stuff that comes up
-        models.ItemType.addNewHandler(processNewItem)
+        new renderers.ItemTypeList($items.find('.items-list'), selectItemType);
     }
 
     /**

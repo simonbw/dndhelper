@@ -9,6 +9,28 @@
         <small data-bind-read="character.class">{{ character.character_class.name }}</small>
     </h1>
 
+    <div class="action-buttons main">
+        <div class="action-button chat-button">Chat</div>
+        <div class="action-button money-button">Money</div>
+        <div class="action-button give-item-button">Give Item</div>
+        <div class="action-button hit-points-button">Hit Points</div>
+    </div>
+    <div class="action-buttons money">
+        <div class="action-button">-5 GP</div>
+        <div class="action-button">-1 GP</div>
+        <div class="action-button">-1 SP</div>
+        <div class="action-button">+1 SP</div>
+        <div class="action-button">+1 GP</div>
+        <div class="action-button">+5 GP</div>
+    </div>
+    <div class="action-buttons hit-points">
+        <div class="action-button" data-hit-points="-5">-5 HP</div>
+        <div class="action-button" data-hit-points="-1">-1 HP</div>
+        <div class="action-button" data-hit-points="1">+1 HP</div>
+        <div class="action-button" data-hit-points="5">+5 HP</div>
+        <div class="action-button" data-hit-points="max">max HP</div>
+    </div>
+
     <h2>Stats</h2>
     <section class="stats">
         <div class="abilities">
@@ -28,15 +50,6 @@
     </section>
     <h2>Inventory</h2>
     <section class="inventory">
-        <div class="give-item" data-character-id="{{ character.id }}">
-            <button>Give Item</button>
-            <select>
-                {% for item in list_items() %}
-                    <option value="{{ item.id }}">{{ item }}</option>
-                {% endfor %}
-            </select>
-            <input type="number" min="0" value="1">
-        </div>
         <div class="item-box">
             {#-  Inventory will be populated by javascript  -#}
         </div>
