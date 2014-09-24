@@ -49,18 +49,18 @@ def reload_db():
 
 
 def init_all():
-    # db.drop_all()
+    db.drop_all()
     db.create_all()
-    # init_descriptions(current_app.file_root)
-    # init_abilities()
-    # init_races()
-    # init_skills()
-    # init_classes()
-    # init_characters()
+    init_descriptions(current_app.file_root)
+    init_abilities()
+    init_races()
+    init_skills()
+    init_classes()
+    init_characters()
     init_handlers()
-    # init_items()
-    # init_knowledge()
-    # init_alignments()
+    init_items()
+    init_knowledge()
+    init_alignments()
 
 
 def dump_all():

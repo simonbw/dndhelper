@@ -14,14 +14,18 @@ chat_app = Blueprint('chat', __name__)
 @json_service
 def chat():
     content = request.form.get('content', '')
-    sender = get_character(request.form.get('sender', ''))
+    sender_id = request.form.get('sender', '')
+    if sender_id == DM_ID:
+        sender = None
+    else:
+        sender = get_character(sender_id)
     recipient_ids = request.form.getlist("recipients[]")
     recipients = map(Character.query.get, recipient_ids)
     message = Message(content, sender, recipients)
     db.session.add(message)
     db.session.commit()
     add_message_update(message)
-
+    print "chat from", sender, "to", recipients
     if sender is not None:
         return {'updates': get_updates(sender.id)}
     else:

@@ -51,7 +51,7 @@
 
         updateHealthBar();
         initUpdateHandlers();
-        initChat();
+        chat.init();
         updates.openUpdateStream();
     });
 })();

@@ -53,7 +53,9 @@ window.dm.itemType = (function () {
             .append($('<div>')
                 .addClass('content')
                 .attr('data-bind-write', 'item-type.description')
-                .text(models.ItemType.isLoaded(itemTypeId) ? models.ItemType.get(itemTypeId)['description'] : 'loading...'));
+                .text(models.ItemType.isLoaded(itemTypeId) ? models.ItemType.get(itemTypeId)['description'] : 'loading...'))
+            .append($('<label>')
+                .addClass());
         binds.initBindsOn($itemType);
         models.ItemType.loadOne(itemTypeId, function (data) {
             $itemType.find('.name').text(data['name']).prop('contentEditable', true);

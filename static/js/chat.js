@@ -28,9 +28,6 @@ var chat = (function () {
      */
     function initChatBox(container) {
         console.log('initializing chat box');
-        setTimeout(function () {
-            setRecipients(container, characters.all);
-        }, 0);
         $(container).on('click', '.recipient', function (event) {
             var recipientId = parseInt($(this).attr('data-character-id'));
             var recipient = characters.fromId(recipientId);
