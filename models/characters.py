@@ -7,7 +7,7 @@ from models.abilities import list_abilities, get_ability, AbilitiesComponent, Ab
 from models.campaign import get_main_campaign
 from models.classes import get_class
 from models.inventory import Inventory
-from models.messages import Message
+from models.messages import Message, MessagesComponent
 from models.races import get_race
 from models.skills import list_skills, get_skill, SkillsComponent, Skill
 
@@ -17,6 +17,7 @@ DEFAULT_ABILITY_SCORE = 10
 
 
 def init_characters():
+    print "initializing characters"
     make_character('Simieth')
     make_character('Balthor')
     make_character('Tamora')
@@ -77,9 +78,10 @@ class Character(db.Model):
     skills = db.relationship('SkillsComponent')
 
     inventory_id = db.Column(db.ForeignKey('inventory.id'))
-    inventory = db.relationship("Inventory")
+    inventory = db.relationship('Inventory')
 
-    # messages
+    messages_id = db.Column(db.Integer, db.ForeignKey('messages_component.id'))
+    messages = db.relationship('MessagesComponent')
 
     def __init__(self, name='', max_hit_points=10, backstory='...', personality='...',
                  race='Human', character_class='Fighter', **kwargs):
@@ -95,6 +97,7 @@ class Character(db.Model):
         self.abilities = AbilitiesComponent()
         self.skills = SkillsComponent()
         self.inventory = Inventory()
+        self.messages = MessagesComponent()
 
         for ability in list_abilities():
             self.abilities.set_score(ability, kwargs.get(ability.name, DEFAULT_ABILITY_SCORE))

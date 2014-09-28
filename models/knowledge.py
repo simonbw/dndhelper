@@ -2,6 +2,7 @@ from models import db
 
 
 def init_knowledge():
+    print "initializing knowledge"
     db.session.add(Knowledge(name='Basic Info', content='trololol'))
     for i in range(3):
         db.session.add(Knowledge(name='More Basic Info: ' + str(i), content='infofofofof'))

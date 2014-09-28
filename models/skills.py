@@ -4,6 +4,7 @@ from models.abilities import get_ability
 
 
 def init_skills():
+    print "initializing skills"
     strength = get_ability('Strength')
     dexterity = get_ability('Dexterity')
     intelligence = get_ability('Intelligence')

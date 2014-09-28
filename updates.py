@@ -101,12 +101,12 @@ def add_redirect_update(character_id, location):
     add_update(character_id, update)
 
 
-def add_message_update(message):
+def add_message_update(message, sender_id, recipient_ids):
     """
     :type message: models.messages.Message
+    :type sender_id: int
+    :type recipient_ids: list[int]
     """
-    sender_id = getattr(message.sender, 'id', 0)
-    recipient_ids = [recipient.id for recipient in message.recipients]
     update = {
         'type': 'message',
         'id': message.id,

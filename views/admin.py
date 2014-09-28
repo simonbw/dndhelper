@@ -12,6 +12,7 @@ from models.characters import init_characters
 from models.classes import init_classes, list_classes, CharacterClass
 from models.inventory import init_items, list_items, ItemType
 from models.knowledge import init_knowledge
+from models.messages import init_messages
 from models.races import init_races, list_races, Race
 from models.skills import init_skills, list_skills, Skill
 from views.character import init_handlers
@@ -49,18 +50,19 @@ def reload_db():
 
 
 def init_all():
-    # db.drop_all()
+    db.drop_all()
     db.create_all()
-    # init_descriptions(current_app.file_root)
-    # init_abilities()
-    # init_races()
-    # init_skills()
-    # init_classes()
-    # init_characters()
+    init_descriptions(current_app.file_root)
+    init_abilities()
+    init_races()
+    init_skills()
+    init_classes()
+    init_messages()
+    init_characters()
     init_handlers()
-    # init_items()
-    # init_knowledge()
-    # init_alignments()
+    init_items()
+    init_knowledge()
+    init_alignments()
 
 
 def dump_all():

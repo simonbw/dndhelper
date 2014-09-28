@@ -3,6 +3,7 @@ from models import db
 
 
 def init_abilities():
+    print "initializing abilities"
     make_ability('Strength', 'STR')
     make_ability('Dexterity', 'DEX')
     make_ability('Constitution', 'CON')

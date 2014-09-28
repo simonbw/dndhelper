@@ -2,6 +2,7 @@ from models import db
 
 
 def init_alignments():
+    print "initializing alignments"
     db.session.add(Alignment('Lawful Good'))
     db.session.add(Alignment('Neutral Good'))
     db.session.add(Alignment('Chaotic Good'))
