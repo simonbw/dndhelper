@@ -12,6 +12,7 @@ from models.characters import init_characters
 from models.classes import init_classes, list_classes, CharacterClass
 from models.inventory import init_items, list_items, ItemType
 from models.knowledge import init_knowledge
+from models.messages import init_messages
 from models.races import init_races, list_races, Race
 from models.skills import init_skills, list_skills, Skill
 from views.character import init_handlers

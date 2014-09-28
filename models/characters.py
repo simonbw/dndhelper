@@ -18,14 +18,14 @@ DEFAULT_ABILITY_SCORE = 10
 
 def init_characters():
     print "initializing characters"
-    make_character('Simieth')
+    make_character('Simieth', True)
     make_character('Balthor')
     make_character('Tamora')
     make_character('Leora')
     make_character('Glenn')
 
 
-def make_character(name):
+def make_character(name, done=False):
     character = Character(name, random.randint(8, 16))
     db.session.add(character)
     db.session.commit()
@@ -35,6 +35,8 @@ def make_character(name):
         character.set_ability_score(ability, random.randint(8, 18))
     for skill in list_skills():
         character.set_skill_level(skill, random.randint(0, 6))
+    if done:
+        character.creation_phase = 'done'
     db.session.commit()
 
 

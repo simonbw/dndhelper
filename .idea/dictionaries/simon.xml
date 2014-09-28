@@ -2,6 +2,7 @@
   <dictionary name="simon">
     <words>
       <w>onmessage</w>
+      <w>stackable</w>
     </words>
   </dictionary>
 </component>

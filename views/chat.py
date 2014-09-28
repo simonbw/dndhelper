@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 
 from models import db
-from models.characters import get_character, Character
-from models.messages import Message
+from models.characters import get_character
+from models.messages import Message, get_dm_messages
 from updates import add_message_update, get_updates, DM_ID
 from util import json_service
 
@@ -33,6 +33,7 @@ def chat():
     sender = character_id_to_messages(sender_id)
     recipient_ids = map(int, request.form.getlist("recipients[]"))
     recipients = map(character_id_to_messages, recipient_ids)
+    print sender, recipients
     message = Message(content, sender, recipients)
     db.session.add(message)
     db.session.commit()

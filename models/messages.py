@@ -6,13 +6,15 @@ DM_MESSAGES_ID = 1
 
 def init_messages():
     print "initializing messages"
-    if not MessagesComponent.query.get(1):
-        db.session.add(MessagesComponent())
+    if not MessagesComponent.query.get(DM_MESSAGES_ID):
+        dm_messages = MessagesComponent()
+        db.session.add(dm_messages)
         db.session.commit()
+        print "New DM MESSAGES", dm_messages.id
 
 
 def get_dm_messages():
-    MessagesComponent.query.get(DM_MESSAGES_ID)
+    return MessagesComponent.query.get(DM_MESSAGES_ID)
 
 
 recipients_table = db.Table(
