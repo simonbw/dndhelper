@@ -2,6 +2,7 @@ from models import db
 
 
 def init_races():
+    print "initializing races"
     for race_name in ('Human', 'Elf', 'Dwarf', 'Halfling'):
         if get_race(race_name) is None:
             db.session.add(Race(race_name))

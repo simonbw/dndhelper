@@ -137,6 +137,7 @@ def handler(handler_name):
 
 
 def init_handlers():
+    print "initializing character handlers"
     @handler('name')
     def update_name(character, value):
         old_name = character.name

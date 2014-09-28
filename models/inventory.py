@@ -2,6 +2,7 @@ from models import db
 
 
 def init_items():
+    print "initializing items"
     make_item('Long Sword', stackable=False)
     make_item('Short Sword')
     make_item('Longbow')

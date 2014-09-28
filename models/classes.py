@@ -2,6 +2,7 @@ from models import db
 
 
 def init_classes():
+    print "initializing classes"
     for race_name in ('Fighter', 'Rouge', 'Cleric', 'Wizard'):
         if get_class(race_name) is None:
             db.session.add(CharacterClass(race_name))

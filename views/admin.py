@@ -56,6 +56,7 @@ def init_all():
     init_races()
     init_skills()
     init_classes()
+    init_messages()
     init_characters()
     init_handlers()
     init_items()
