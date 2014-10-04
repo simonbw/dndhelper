@@ -1,5 +1,6 @@
 #roller {
-
+    flex-grow: 1;
+    flex-basis: 1px;
 }
 
 #roller .roll-bar {
@@ -47,7 +48,7 @@
     font-weight: bold;
 }
 
-#roller  .results small {
+#roller .results small {
     font-weight: lighter;
     color: #AAAAAA;
     padding-left: 4px;

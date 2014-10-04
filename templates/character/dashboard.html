@@ -1,7 +1,12 @@
-{% extends 'layout.html' %}
+{% extends 'dashboard.html' %}
 
-{% block body %}
-    <div id="character-container">
+{% block dashboard_left %}
+    <a href="{{ url_for('admin.index') }}">Admin</a>
+{% endblock dashboard_left %}
+{% block dashboard_main %}
+{% endblock dashboard_main %}
+{% block dashboard_right %}
+    <div id="right-bar">
         {% include 'character/chatbox.html' %}
     </div>
-{% endblock body %}
+{% endblock dashboard_right %}

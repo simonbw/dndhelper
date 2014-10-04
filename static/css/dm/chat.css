@@ -1,6 +1,8 @@
 .chat-box {
     display: flex;
-    height: 50%;
+    flex-grow: 1;
+    flex-basis: 1px;
+    min-height: 100px;
     flex-flow: column nowrap;
     overflow: hidden;
     justify-content: space-between;

@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div id="dashboard-container">
+        <div id="dashboard-left">
+            {% block dashboard_left %}
+            {% endblock dashboard_left %}
+        </div>
+        <div id="dashboard-main">
+            {% block dashboard_main %}
+            {% endblock dashboard_main %}
+            <div id="no-main-content">
+                Nothing Selected
+            </div>
+        </div>
+        <div id="dashboard-right">
+            {% block dashboard_right %}
+            {% endblock dashboard_right %}
+        </div>
+    </div>
+{% endblock body %}

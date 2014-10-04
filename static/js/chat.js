@@ -153,7 +153,10 @@ var chat = (function () {
      */
     function addRecipient(container, recipient) {
         var recipients = getRecipients(container);
-        recipients.push(recipient);
+        // make sure the recipient isn't already here
+        if (recipients.indexOf(recipient) < 0) {
+            recipients.push(recipient);
+        }
         setRecipients(container, recipients);
     }
 

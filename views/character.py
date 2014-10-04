@@ -40,12 +40,11 @@ def view(character_id=None, name=None):
         g.bundle['stream_updates_url'] = character.stream_updates_url
         g.bundle['fetch_item_url'] = url_for('ItemType.get')
 
-        require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'tabs', 'util/util',
-                        'models/simple_model',
-                        'models/item_type', 'models/knowledge', 'renderers/inventory', 'renderers/item_list',
-                        'renderers/item_picker', 'renderers/knowledge', 'dm/roller', 'view_character')
-        require_styles('character', 'tabs')
-
+        require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'dashboard', 'util/util',
+                        'models/simple_model', 'models/item_type', 'models/knowledge', 'renderers/inventory',
+                        'renderers/item_list', 'renderers/item_picker', 'renderers/knowledge', 'dm/roller',
+                        'view_character')
+        require_styles('character', 'tabs', 'dashboard')
         response = make_response(render_template('character/dashboard.html', character=character))
         response.set_cookie('character', str(character.id))
         return response
@@ -138,6 +137,7 @@ def handler(handler_name):
 
 def init_handlers():
     print "initializing character handlers"
+
     @handler('name')
     def update_name(character, value):
         old_name = character.name

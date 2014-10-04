@@ -8,7 +8,7 @@
         overflow-y: hidden;
     }
 
-    #dm-container {
+    #dashboard-container {
         display: flex;
         height: 100%;
         /*padding: 8px;*/
@@ -18,7 +18,7 @@
         align-items: stretch;
     }
 
-    #dm-main {
+    #dashboard-main {
         height: 100%;
         min-width: 200px;
         overflow-x: hidden;
@@ -27,7 +27,7 @@
         flex-grow: 1;
     }
 
-    #left-bar, #right-bar {
+    #dashboard-left, #dashboard-right {
         display: flex;
         height: 100%;
         margin: 0;
@@ -36,18 +36,17 @@
         flex-flow: column nowrap;
     }
 
-    #left-bar {
+    #dashboard-left {
         border-right: 1px solid #DDDDDD;
     }
 
-    #right-bar {
+    #dashboard-right {
         border-left: 1px solid #DDDDDD;
-        justify-content: space-between;
     }
 }
 
 @media (min-width: 1200px) {
-    #dm-main {
+    #dashboard-main {
         width: calc(100% - 600px);
     }
 }
@@ -60,7 +59,7 @@
     width: 100%;
 }
 
-#dm-main > div:not(.active) {
+#dashboard-main > div:not(.active) {
     display: none;
 }
 

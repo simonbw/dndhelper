@@ -1,30 +1,23 @@
-{% extends 'layout.html' %}
+{% extends 'dashboard.html' %}
 
-{% block body %}
-    <div id="dm-container">
-        <div id="left-bar">
-            {% include 'dm/partylist.html' %}
-            <ul id="tool-list">
-                <li data-main-content-id="knowledge-box">Knowledge</li>
-                <li data-main-content-id="items-box">Items</li>
-                <li data-main-content-id="monsters-box">Monsters</li>
-                <li><a href="{{ url_for('admin.index') }}">Admin</a></li>
-            </ul>
-        </div>
-        <div id="dm-main">
-            {% for character in campaign.characters %}
-                {% include 'dm/character_info.html' %}
-            {% endfor %}
-            {% include 'dm/knowledge.html' %}
-            {% include 'dm/items.html' %}
-            {% include 'dm/monsters.html' %}
-            <div id="no-main-content">
-                Nothing Selected
-            </div>
-        </div>
-        <div id="right-bar">
-            {% include 'dm/roller.html' %}
-            {% include 'dm/chatbox.html' %}
-        </div>
-    </div>
-{% endblock body %}
+{% block dashboard_left %}
+    {% include 'dm/partylist.html' %}
+    <ul id="tool-list">
+        <li data-main-content-id="knowledge-box">Knowledge</li>
+        <li data-main-content-id="items-box">Items</li>
+        <li data-main-content-id="monsters-box">Monsters</li>
+        <li><a href="{{ url_for('admin.index') }}">Admin</a></li>
+    </ul>
+{% endblock dashboard_left %}
+{% block dashboard_main %}
+    {% for character in campaign.characters %}
+        {% include 'dm/character_info.html' %}
+    {% endfor %}
+    {% include 'dm/knowledge.html' %}
+    {% include 'dm/items.html' %}
+    {% include 'dm/monsters.html' %}
+{% endblock dashboard_main %}
+{% block dashboard_right %}
+    {% include 'dm/roller.html' %}
+    {% include 'dm/chatbox.html' %}
+{% endblock dashboard_right %}
