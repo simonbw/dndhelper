@@ -44,7 +44,7 @@ def view(character_id=None, name=None):
                         'models/simple_model', 'models/item_type', 'models/knowledge', 'renderers/inventory',
                         'renderers/item_list', 'renderers/item_picker', 'renderers/knowledge', 'dm/roller',
                         'view_character')
-        require_styles('character', 'tabs', 'dashboard')
+        require_styles('character', 'dashboard', 'chat')
         response = make_response(render_template('character/dashboard.html', character=character))
         response.set_cookie('character', str(character.id))
         return response

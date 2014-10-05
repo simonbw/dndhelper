@@ -65,7 +65,7 @@ def before_request():
     g.stylesheets = []
 
     require_scripts('lib/jquery', 'dice_roller')
-    require_styles('style', 'chat')
+    require_styles('style')
 
 
 def after_request(response):

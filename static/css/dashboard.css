@@ -1,48 +1,44 @@
-@media (max-width: 600px) {
-
+html, body {
+    height: 100%;
+    overflow-y: hidden;
+    min-width: 600px;
+    overflow-x: auto;
 }
 
-@media (min-width: 600px) {
-    html, body {
-        height: 100%;
-        overflow-y: hidden;
-    }
+#dashboard-container {
+    display: flex;
+    height: 100%;
+    /*padding: 8px;*/
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: stretch;
+}
 
-    #dashboard-container {
-        display: flex;
-        height: 100%;
-        /*padding: 8px;*/
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        align-content: stretch;
-        align-items: stretch;
-    }
+#dashboard-main {
+    height: 100%;
+    min-width: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 50%;
+    flex-grow: 1;
+}
 
-    #dashboard-main {
-        height: 100%;
-        min-width: 200px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        width: 50%;
-        flex-grow: 1;
-    }
+#dashboard-left, #dashboard-right {
+    display: flex;
+    height: 100%;
+    margin: 0;
+    max-width: 300px;
+    width: 25%;
+    flex-flow: column nowrap;
+}
 
-    #dashboard-left, #dashboard-right {
-        display: flex;
-        height: 100%;
-        margin: 0;
-        max-width: 300px;
-        width: 25%;
-        flex-flow: column nowrap;
-    }
+#dashboard-left {
+    border-right: 1px solid #DDDDDD;
+}
 
-    #dashboard-left {
-        border-right: 1px solid #DDDDDD;
-    }
-
-    #dashboard-right {
-        border-left: 1px solid #DDDDDD;
-    }
+#dashboard-right {
+    border-left: 1px solid #DDDDDD;
 }
 
 @media (min-width: 1200px) {

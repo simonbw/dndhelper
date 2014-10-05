@@ -29,7 +29,9 @@ def dashboard():
     require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'dashboard', 'util/util',
                     'models/simple_model', 'models/item_type', 'models/knowledge', 'renderers/inventory',
                     'renderers/item_list', 'renderers/item_picker', 'renderers/knowledge', 'dm/roller',
-                    'dm/knowledge_edit', 'dm/items_edit', 'dm/character_info', 'dm/dashboard'); require_styles('character', 'tabs', 'dashboard', 'dm/party', 'dm/roller', 'dm/chat', 'dm/character_info', 'dm/tools', 'dm/knowledge', 'dm/items', 'dm/item_picker')
+                    'dm/knowledge_edit', 'dm/items_edit', 'dm/character_info', 'dm/dashboard')
+    require_styles('character', 'chat', 'dashboard', 'dm/party', 'dm/roller', 'dm/character_info', 'dm/tools',
+                   'dm/knowledge', 'dm/items', 'dm/item_picker')
     return render_template("dm/dashboard.html", campaign=campaign, title='DM')
 
 
