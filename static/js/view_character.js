@@ -31,14 +31,6 @@
         });
     }
 
-    /**
-     * Initialize the chat system.
-     */
-    function initChat() {
-        chat.setSender(character);
-        chat.addRecipient('DM');
-    }
-
 
     // called onload
     $(function () {
@@ -46,12 +38,19 @@
         character = characters.all[0];
         binds.init();
 
-        // this happens automatically right now. Should it?
-        // tabs.initTabListeners();
+        models.ItemType.init();
+        models.Knowledge.init();
+
+
+        renderers.Inventory(character, $('#main-inventory'));
 
         updateHealthBar();
         initUpdateHandlers();
+
         chat.init();
+
+        dashboard.init('character-' + character.get('id'));
+
         updates.openUpdateStream();
     });
 })();

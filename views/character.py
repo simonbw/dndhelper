@@ -38,12 +38,10 @@ def view(character_id=None, name=None):
         g.bundle['characters'] = [character]
         g.bundle['fetch_updates_url'] = character.fetch_updates_url
         g.bundle['stream_updates_url'] = character.stream_updates_url
-        g.bundle['fetch_item_url'] = url_for('ItemType.get')
 
         require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'dashboard', 'util/util',
                         'models/simple_model', 'models/item_type', 'models/knowledge', 'renderers/inventory',
-                        'renderers/item_list', 'renderers/item_picker', 'renderers/knowledge', 'dm/roller',
-                        'view_character')
+                        'renderers/item_list', 'renderers/item_picker', 'renderers/knowledge', 'view_character')
         require_styles('character', 'dashboard', 'chat')
         response = make_response(render_template('character/dashboard.html', character=character))
         response.set_cookie('character', str(character.id))

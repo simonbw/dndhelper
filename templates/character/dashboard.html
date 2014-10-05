@@ -1,9 +1,20 @@
 {% extends 'dashboard.html' %}
 
+{% block body_attributes %}
+    {{ super() }}
+    data-character-id="{{ character.id }}"
+{% endblock body_attributes %}
+
 {% block dashboard_left %}
-    <a href="{{ url_for('admin.index') }}">Admin</a>
+    <div data-main-content-id="main-stats">Stats</div>
+    <div data-main-content-id="main-inventory">Inventory</div>
 {% endblock dashboard_left %}
 {% block dashboard_main %}
+    <div id="main-inventory"></div>
+    <div id="main-stats">
+        <div data-bind-read="character.hitpoints">{{ character.hitpoints }}</div>
+        This is my stats page.
+    </div>
 {% endblock dashboard_main %}
 {% block dashboard_right %}
     {% include 'character/chatbox.html' %}

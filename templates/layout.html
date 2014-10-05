@@ -27,7 +27,7 @@
         {% endblock styles %}
     {% endblock all_styles %}
 </head>
-<body>
+<body {% block body_attributes %}{% endblock body_attributes %}>
 {% block flashes %}
     <div id="flashes">
         {% for flash in get_flashed_messages() %}
