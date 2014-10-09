@@ -8,12 +8,33 @@
 {% block dashboard_left %}
     <div data-main-content-id="main-stats">Stats</div>
     <div data-main-content-id="main-inventory">Inventory</div>
+    <div data-main-content-id="main-character-details">Character Details</div>
 {% endblock dashboard_left %}
 {% block dashboard_main %}
-    <div id="main-inventory"></div>
     <div id="main-stats">
-        <div data-bind-read="character.hitpoints">{{ character.hitpoints }}</div>
-        This is my stats page.
+        <div>
+            <span data-bind-read="character.hitpoints">{{ character.hitpoints }}</span> /
+            <span data-bind-read="character.max_hitpoints">{{ character.max_hitpoints }}</span>
+        </div>
+        <div class="abilities">
+            <h4>Abilities</h4>
+
+            <div class="box">
+                {{ macros.stats_table(character.abilities) }}
+            </div>
+        </div>
+        <div class="skills">
+            <h4>Skills</h4>
+
+            <div class="box">
+                {{ macros.stats_table(character.skills) }}
+            </div>
+        </div>
+    </div>
+    <div id="main-inventory"></div>
+    <div id="main-character-details">
+        <div data-bind-read="character.backstory">{{ character.backstory }}</div>
+        <div data-bind-read="character.personality">{{ character.personality }}</div>
     </div>
 {% endblock dashboard_main %}
 {% block dashboard_right %}

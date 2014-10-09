@@ -8,7 +8,7 @@ from models.alignments import Alignment
 from models.campaign import get_main_campaign
 from models.characters import Character, get_character
 from models.classes import CharacterClass
-from models.inventory import ItemType
+from models.inventory import ItemType, Item
 from models.races import list_races, Race
 from models.skills import list_skills, Skill
 import updates
@@ -42,7 +42,7 @@ def view(character_id=None, name=None):
         require_scripts('chat', 'character', 'updates', 'binds', 'characters', 'dashboard', 'util/util',
                         'models/simple_model', 'models/item_type', 'models/knowledge', 'renderers/inventory',
                         'renderers/item_list', 'renderers/item_picker', 'renderers/knowledge', 'view_character')
-        require_styles('character', 'dashboard', 'chat')
+        require_styles('character', 'dashboard', 'chat', 'character/inventory')
         response = make_response(render_template('character/dashboard.html', character=character))
         response.set_cookie('character', str(character.id))
         return response
@@ -59,13 +59,15 @@ def update(character_id=None, name=None):
     if character is None:
         raise ValueError('Could not find character: ' + str((character_id, name)))
     json_data = request.get_json()
+    response_character_id = json_data.pop('return_updates', None)
     for key in json_data:
         key = str(key)
         if key in update_handlers.keys():
             update_handlers.get(key)(character, json_data[key])
         else:
             raise Exception('Invalid attribute: ' + key)
-    return {'updates': updates.get_updates(character.id)}
+    if response_character_id is not None:
+        return {'updates': updates.get_updates(response_character_id)}
 
 
 @character_app.route('/new/')
@@ -209,6 +211,15 @@ def init_handlers():
         item = character.inventory.add_item(item_type, int(value[u'quantity']))
         db.session.commit()
         updates.add_inventory_update(character.id, item)
+
+    @handler('equip_item')
+    def equip_item(character, value):
+        item_id = Item.query.get('item_id')
+        item = character.inventory.add_item(item_type, int(value[u'quantity']))
+        db.session.commit()
+        updates.add_inventory_update(character.id, item)
+
+
 
     # this is me getting a little too functional with python
     def make_attribute_handler(attribute_name):
