@@ -22,11 +22,14 @@ window.renderers.Inventory = (function () {
             text(name)
             .attr('data-bind-read', 'item-type.name');
         $div.append($name);
-        var $quantity = $('<p>').
-            text(item['quantity']);
+        var $quantity = $('<p>')
+            .text(item['quantity'])
+            .addClass('quantity');
         $div.append($quantity);
         binds.initBindsOn($div);
-        models.ItemType.loadOne(itemTypeId);
+        models.ItemType.loadOne(itemTypeId, function (item) {
+            $div.toggleClass('stackable', item['stackable']);
+        });
         itemMap[item['id']] = $div;
         return  $div;
     }

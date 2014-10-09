@@ -112,6 +112,9 @@ Character.prototype.saveAttribute = function (attribute, value, callback) {
  * @param {Function} [callback] - call on response
  */
 Character.prototype.saveData = function (data, callback) {
+    if (updates.UPDATE_RECEIVER_ID !== undefined && !('return_updates' in data)) {
+        data['return_updates'] = updates.UPDATE_RECEIVER_ID;
+    }
     console.log('saving character data', data);
     $.ajax(this.get('update_url'), {
         type: "POST",

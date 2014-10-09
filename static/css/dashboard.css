@@ -28,7 +28,7 @@ html, body {
     display: flex;
     height: 100%;
     margin: 0;
-    max-width: 300px;
+    max-width: 350px;
     width: 25%;
     flex-flow: column nowrap;
 }
@@ -41,9 +41,9 @@ html, body {
     border-left: 1px solid #DDDDDD;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
     #dashboard-main {
-        width: calc(100% - 600px);
+        width: calc(100% - 700px);
     }
 }
 

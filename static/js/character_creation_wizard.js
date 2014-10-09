@@ -29,6 +29,7 @@
         character = characters.all[0];
         initWizardCallbacks();
         binds.init();
+        updates.UPDATE_RECEIVER_ID = character.get('id');
         updates.openUpdateStream();
         wizard.init();
     });

@@ -51,6 +51,7 @@
 
         dashboard.init('character-' + character.get('id'));
 
+        updates.UPDATE_RECEIVER_ID = character.get('id');
         updates.openUpdateStream();
     });
 })();

@@ -1,0 +1,30 @@
+#main-inventory .item {
+    display: inline-block;
+    margin: 4px;
+    padding: 4px;
+    border: 1px solid #DDDDDD;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+#main-inventory .item h5 {
+
+}
+
+#main-inventory .item .quantity {
+    padding: 0;
+    margin: 0;
+}
+
+#main-inventory .item:not(.stackable) .quantity {
+    display: none;
+}
+
+#main-inventory .item .description {
+    padding: 0;
+    margin: 0;
+}
+
+#main-inventory .item.equipped {
+    background: #EEEEEE;
+}

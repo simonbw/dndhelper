@@ -103,6 +103,7 @@ var updates = (function () {
     return {
         'addUpdateHandler': addUpdateHandler,
         'openUpdateStream': openUpdateStream,
-        'processResponseData': processResponseData
+        'processResponseData': processResponseData,
+        "UPDATE_RECEIVER_ID": undefined
     };
 })();

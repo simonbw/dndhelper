@@ -20,6 +20,7 @@
 
         dashboard.init('dm');
 
+        updates.UPDATE_RECEIVER_ID = 0;
         updates.openUpdateStream();
     });
 })();
