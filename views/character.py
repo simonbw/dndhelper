@@ -212,6 +212,10 @@ def init_handlers():
         db.session.commit()
         updates.add_inventory_update(character.id, item)
 
+    @handler('remove_item')
+    def remove_item(character, value):
+        character.inventory.items
+
     @handler('equip_item')
     def equip_item(character, value):
         item_id = Item.query.get('item_id')

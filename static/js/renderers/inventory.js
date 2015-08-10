@@ -17,7 +17,8 @@ window.renderers.Inventory = (function () {
         var name = models.ItemType.isLoaded(itemTypeId) ? models.ItemType.get(itemTypeId).name : 'loading...';
         var $div = $('<div>')
             .addClass('item')
-            .attr('data-item-type-id', itemTypeId);
+            .attr('data-item-type-id', itemTypeId)
+            .attr('data-item-id', item['id']);
         var $name = $('<h5>').
             text(name)
             .attr('data-bind-read', 'item-type.name');
@@ -31,7 +32,7 @@ window.renderers.Inventory = (function () {
             $div.toggleClass('stackable', item['stackable']);
         });
         itemMap[item['id']] = $div;
-        return  $div;
+        return $div;
     }
 
     /**

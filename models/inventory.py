@@ -4,9 +4,9 @@ from models import db
 def init_items():
     print "initializing items"
     make_item('Long Sword', stackable=False)
-    make_item('Short Sword')
-    make_item('Longbow')
-    make_item('Shortbow')
+    make_item('Short Sword', stackable=False)
+    make_item('Longbow', stackable=False)
+    make_item('Shortbow', stackable=False)
     make_item('Rope')
     make_item('Gold Coin', stackable=True)
     make_item('Silver Coin', stackable=True)
@@ -62,6 +62,9 @@ class Inventory(db.Model):
                 item.quantity += quantity
                 return item
         return Item(item_type=item_type, quantity=quantity, inventory=self)
+
+    def remove_item(self):
+        pass
 
     def recalculate_weight(self, force=False):
         if hasattr(self, '_weight') and self._weight is not None and not force:
